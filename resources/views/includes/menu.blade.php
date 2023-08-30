@@ -14,15 +14,16 @@
                     <a class="nav-link" href="{{ url('about') }}">เกี่ยวกับเรา</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('service') }}">สมัครติวเตอร์</a>
+                    <a class="nav-link" href="{{ url('applyTutor') }}">สมัครติวเตอร์</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('contact') }}">ติดต่อเรา</a>
                 </li>
+                <br>
                 @guest
                     @if (Route::has('login'))
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                            <a class="nav-link" href="{{ route('login') }}">{{ __('เข้าสู่ระบบ') }}</a>
                         </li>
                     @endif
 

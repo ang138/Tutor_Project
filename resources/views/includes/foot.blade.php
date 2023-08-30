@@ -44,7 +44,7 @@
                 <!--footer_ul_amrc ends here-->
             </div>
 
-
+{{--
             <div class=" col-sm-4 col-md  col-12 col">
                 <h5 class="headin5_amrc col_white_amrc pt2">Follow us</h5>
                 <!--headin5_amrc ends here-->
@@ -61,7 +61,7 @@
                     </li>
                 </ul>
                 <!--footer_ul2_amrc ends here-->
-            </div>
+            </div> --}}
         </div>
     </div>
 

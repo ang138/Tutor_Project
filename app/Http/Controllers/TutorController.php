@@ -26,6 +26,11 @@ class TutorController extends Controller
     {
         return view('pages.tutorHome');
     }
+    
+    public function advisorHome()
+    {
+        return view('pages.advisorHome');
+    }
 
     public function adminHome()
     {

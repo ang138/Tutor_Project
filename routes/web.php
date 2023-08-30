@@ -22,7 +22,7 @@ Route::get('/', function ()
 
 Route::get('/', [HomeController::class, 'home']);
 Route::get('about', [HomeController::class, 'about']);
-Route::get('service', [HomeController::class, 'service']);
+Route::get('applyTutor', [HomeController::class, 'applyTutor']);
 Route::get('contact', [HomeController::class, 'contact']);
 
 // สำหรับการลงทะเบียนและเข้าสู่ระบบ
@@ -54,5 +54,6 @@ Route::middleware(['auth'])->group(function ()
 {
     // เพิ่มเส้นทางหลังเข้าสู่ระบบที่คุณต้องการที่นี่
     Route::get('tutor/home', [TutorController::class, 'tutorHome'])->name('tutor.home');
+    Route::get('advisor/home', [TutorController::class, 'advisorHome'])->name('advisor.home')->middleware('advisor');
     Route::get('admin/home', [TutorController::class, 'adminHome'])->name('admin.home')->middleware('status');
 });

@@ -15,7 +15,7 @@
                     @endif
 
                     {{ __('You are logged in!') }}
-                    Admin.
+                    Normal advisor.
                 </div>
             </div>
         </div>

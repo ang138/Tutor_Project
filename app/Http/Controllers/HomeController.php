@@ -30,8 +30,8 @@ class HomeController extends Controller
         return view('pages.about');
     }
 
-    public function service(){
-        return view('pages.service');
+    public function applyTutor(){
+        return view('pages.applyTutor');
     }
 
     public function contact(){
