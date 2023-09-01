@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdvisorController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TutorController;
+use App\Http\Middleware\Advisor;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,6 +27,9 @@ Route::get('/', [HomeController::class, 'home']);
 Route::get('about', [HomeController::class, 'about']);
 Route::get('applyTutor', [HomeController::class, 'applyTutor']);
 Route::get('contact', [HomeController::class, 'contact']);
+
+
+
 
 // สำหรับการลงทะเบียนและเข้าสู่ระบบ
 
@@ -52,8 +58,20 @@ Route::middleware(['guest'])->group(function ()
 
 Route::middleware(['auth'])->group(function ()
 {
-    // เพิ่มเส้นทางหลังเข้าสู่ระบบที่คุณต้องการที่นี่
-    Route::get('tutor/home', [TutorController::class, 'tutorHome'])->name('tutor.home');
-    Route::get('advisor/home', [TutorController::class, 'advisorHome'])->name('advisor.home')->middleware('advisor');
-    Route::get('admin/home', [TutorController::class, 'adminHome'])->name('admin.home')->middleware('status');
+    // หน้าหลังเข้าสู่ระบบของแอดมิน
+    Route::get('adminHome', [AdminController::class, 'adminHome'])->name('adminHome')->middleware('status');
+
+
+    // หน้าหลังเข้าสู่ระบบของอาจารย์ที่ปรึกษา
+    Route::get('advisorHome', [AdvisorController::class, 'advisorHome'])->name('advisorHome')->middleware('advisor');
+
+
+    // หน้าหลังเข้าสู่ระบบของนิสิต
+    Route::get('tutorHome', [TutorController::class, 'tutorHome'])->name('tutorHome');
+    Route::get('tutorProfile', [TutorController::class, 'tutorProfile']);
+
+
+
+
+
 });
