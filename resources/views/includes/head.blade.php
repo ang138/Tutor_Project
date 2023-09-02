@@ -8,3 +8,4 @@
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
 <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 <link rel="stylesheet" href="{{ asset('assets/css/login.css') }}">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-  datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js" rel="stylesheet">
