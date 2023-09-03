@@ -1,4 +1,4 @@
-@extends('layouts.tutor')
+@extends('layouts.tutor_template')
 
 @section('content')
 <div class="container">

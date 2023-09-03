@@ -8,16 +8,18 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('tutorHome') }}">หน้าหลัก <span class="sr-only"></span></a>
+                    <a class="nav-link" href="{{ url('tutorHome') }}">ข้อมูลส่วนตัว <span class="sr-only"></span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('tutorProfile') }}">โปรไฟล์</a>
+                    <a class="nav-link" href="{{ url('manageSubject') }}">จัดการรายวิชา</a>
                 </li>
-                <br>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('enrollment') }}">ดูรายการผู้ลงทะเบียน</a>
+                </li>
                 @guest
                     @if (Route::has('login'))
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">{{('เข้าสู่ระบบ')}}</a>
+                            <a class="nav-link" href="{{ route('login') }}">{{ 'เข้าสู่ระบบ' }}</a>
                         </li>
                     @endif
 
@@ -27,7 +29,26 @@
                         </li>
                     @endif
                 @else
-                    <li class="nav-item dropdown">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" role="button"
+                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            ติวเตอร์: {{ Auth::user()->name }}
+                            <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
+                            &nbsp|
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('logout') }}"
+                            onclick="event.preventDefault();
+                                     document.getElementById('logout-form').submit();">
+                            {{ __('ออกจากระบบ') }}
+                        </a>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
+                    </li>
+                    {{-- <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                             data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             {{ Auth::user()->name }}
@@ -36,7 +57,7 @@
                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                                                 document.getElementById('logout-form').submit();">
                                 {{ __('Logout') }}
                             </a>
 
@@ -44,7 +65,36 @@
                                 @csrf
                             </form>
                         </div>
+                    </li> --}}
+
+
+                    {{-- <li class="nav-item dropdown">
+                        <button class="btn " type="button" id="dropdownMenu2" data-bs-toggle="dropdown"aria-expanded="false">
+                    <li class="nav-item">
+                        <a class="nav-link">{{ Auth::user()->name }}
+                            <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
+                        </a>
                     </li>
+
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                        <li><button class="dropdown-item" type="button">Action</button></li>
+                        <li><button class="dropdown-item" type="button">Another action</button></li>
+                        <li><button class="dropdown-item" type="button">Something else here</button></li>
+
+                        <a class="dropdown-item" href="{{ route('logout') }}"
+                            onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                            {{ __('Logout') }}
+                        </a>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
+                    </ul>
+                    </li> --}}
+
+
                 @endguest
             </ul>
         </div>

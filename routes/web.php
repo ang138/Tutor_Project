@@ -68,7 +68,8 @@ Route::middleware(['auth'])->group(function ()
 
     // หน้าหลังเข้าสู่ระบบของนิสิต
     Route::get('tutorHome', [TutorController::class, 'tutorHome'])->name('tutorHome');
-    Route::get('tutorProfile', [TutorController::class, 'tutorProfile']);
+    Route::get('manageSubject', [TutorController::class, 'manageSubject']);
+    Route::get('enrollment', [TutorController::class, 'enrollment']);
 
 
 

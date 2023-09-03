@@ -77,6 +77,10 @@ label{
     padding-left: 203px;
 }
 
+.dropdown-toggle::after {
+    content: none;
+}
+
 /* .col-6 {
     padding-left: 0px;
 }

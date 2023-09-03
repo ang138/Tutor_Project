@@ -26,18 +26,12 @@ class TutorController extends Controller
     {
         return view('tutorpages.tutorHome');
     }
-    public function tutorProfile()
+    public function manageSubject()
     {
-        return view('tutorpages.tutorProfile');
+        return view('tutorpages.manageSubject');
     }
-
-    public function advisorHome()
+    public function enrollment()
     {
-        return view('pages.advisorHome');
-    }
-
-    public function adminHome()
-    {
-        return view('pages.adminHome');
+        return view('tutorpages.enrollment');
     }
 }

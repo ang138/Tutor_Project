@@ -1,0 +1,52 @@
+@font-face {
+    font-family: "Sukhumvit";
+    /*src: url('fonts/sukhumvit-set/SukhumvitSet-Bold.ttf');
+  src: url('fonts/sukhumvit-set/SukhumvitSet-Light.ttf');
+  src: url('../fonts/sukhumvit-set/SukhumvitSet-Medium.ttf') format('truetype');
+  src: url('fonts/sukhumvit-set/SukhumvitSet-SemiBold.ttf');*/
+    src: url("../fonts/sukhumvit-set/SukhumvitSet-Text.ttf");
+    /*src: url('fonts/sukhumvit-set/SukhumvitSet-Thin.ttf');*/
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+.btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #45a049;
+}
+
+.button {
+    border: none;
+        cursor: pointer;
+        outline: none;
+        margin: auto;
+        display: block;
+}
