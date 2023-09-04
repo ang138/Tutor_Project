@@ -27,5 +27,9 @@ class AdvisorController extends Controller
     {
         return view('advisorpages.advisorHome');
     }
+    public function approveTutor()
+    {
+        return view('advisorpages.approveTutor');
+    }
 
 }

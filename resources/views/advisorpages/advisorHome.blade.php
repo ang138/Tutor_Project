@@ -1,4 +1,4 @@
-@extends('layouts.main_template')
+@extends('layouts.advisor_template')
 
 @section('content')
 <div class="container">

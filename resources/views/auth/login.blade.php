@@ -92,6 +92,11 @@
                                     @enderror
                                 </div> --}}
                             </div>
+                            @if (session('error'))
+                                <div class="alert alert-danger">
+                                    {{ session('error') }}
+                                </div>
+                            @endif
 
                             <div class="button row mb-5">
                                 <button type="submit" class="btn btn-primary"> {{ __('Login') }} </button>

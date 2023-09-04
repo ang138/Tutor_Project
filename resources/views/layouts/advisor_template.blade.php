@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    @include('includes.head')
+    @include('includes.tutor_head')
 </head>
 
 <body>

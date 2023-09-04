@@ -11,7 +11,7 @@
                     <a class="nav-link" href="{{ url('/') }}">หน้าหลัก <span class="sr-only"></span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('about') }}">เกี่ยวกับเรา</a>
+                    <a class="nav-link" href="{{ url('about') }}">หาติวเตอร์</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('applyTutor') }}">สมัครติวเตอร์</a>

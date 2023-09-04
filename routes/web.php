@@ -60,10 +60,13 @@ Route::middleware(['auth'])->group(function ()
 {
     // หน้าหลังเข้าสู่ระบบของแอดมิน
     Route::get('adminHome', [AdminController::class, 'adminHome'])->name('adminHome')->middleware('status');
+    Route::get('manageStudent', [AdminController::class, 'manageStudent']);
+    Route::get('manageAdvisor', [AdminController::class, 'manageAdvisor']);
 
 
     // หน้าหลังเข้าสู่ระบบของอาจารย์ที่ปรึกษา
     Route::get('advisorHome', [AdvisorController::class, 'advisorHome'])->name('advisorHome')->middleware('advisor');
+    Route::get('approveTutor', [AdvisorController::class, 'approveTutor']);
 
 
     // หน้าหลังเข้าสู่ระบบของนิสิต

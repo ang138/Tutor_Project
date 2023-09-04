@@ -70,14 +70,13 @@
     font-size: 20px;
 }
 
-.input-box .bx-lock-alt{
+.input-box .bx-lock-alt {
     position: absolute;
     right: 90px;
     top: 58%;
     transform: translateY(-50%);
     font-size: 20px;
 }
-
 
 .button {
     padding-top: 10px;
@@ -101,13 +100,26 @@
     color: #333;
     font-weight: 600;
 }
+.btn-detail {
+    width: 98%;
+    background-color: #4caf50;
+    border: none;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
 
 .apply {
     padding-top: 10px;
     padding-left: 140px;
 }
 
-.apply-btn{
+.apply-btn {
     margin: 0;
     position: absolute;
     top: 77%;
@@ -123,5 +135,9 @@
     font-size: 16px;
     color: #333;
     font-weight: 600;
+}
+
+.detail{
+    padding: 20px;
 }
 

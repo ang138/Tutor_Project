@@ -1,7 +1,7 @@
     <!-- การเรียกใช้งาน Tempate -->
     @extends('layouts.main_template')
     @section('title')
-        บริการของเรา
+        สมัครติวเตอร์
     @endsection
     @section('content')
         <div class="container pt-5">

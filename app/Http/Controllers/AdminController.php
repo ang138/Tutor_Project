@@ -27,4 +27,12 @@ class AdminController extends Controller
     {
         return view('adminpages.adminHome');
     }
+    public function manageStudent()
+    {
+        return view('adminpages.manageStudent');
+    }
+    public function manageAdvisor()
+    {
+        return view('adminpages.manageAdvisor');
+    }
 }
