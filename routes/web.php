@@ -27,6 +27,8 @@ Route::get('/', [HomeController::class, 'home']);
 Route::get('about', [HomeController::class, 'about']);
 Route::get('applyTutor', [HomeController::class, 'applyTutor']);
 Route::get('contact', [HomeController::class, 'contact']);
+Route::get('subject', [HomeController::class, 'subject']);
+Route::get('detail', [HomeController::class, 'detail']);
 
 
 

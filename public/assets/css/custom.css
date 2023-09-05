@@ -109,6 +109,80 @@ label{
     font-weight: 600;
 }
 
+/* --------table---------- */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th {
+    padding: 8px;
+    text-align: center;
+}
+
+td {
+    padding: 8px;
+    text-align: left;
+}
+
+td {
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+.btn-detail {
+    width: 98%;
+    background-color: #4caf50;
+    border: none;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+.btn-apply {
+    width: 20%;
+    position: absolute;
+    top: 90%;
+    right: 40%;
+    background-color: #4caf50;
+    border-radius: 8px;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.btn-subject {
+    width: 40%;
+    background-color: #4caf50;
+    border: none;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
 
 
 

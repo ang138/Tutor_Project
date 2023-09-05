@@ -23,7 +23,7 @@
                                 <div class="card-body pt-3 pb-2">
                                     <form>
                                         <div class="form-group">
-                                            <label for="exampleFormControlSelect1">*คำนำหน้า (Name Title)</label>
+                                            <label for="exampleFormControlSelect1">คำนำหน้า (Name Title)</label>
                                             <select class="form-select" aria-label="Default select example">
                                                 <option selected>---คำนำหน้า---</option>
                                                 <option value="1">นาย</option>
@@ -77,9 +77,11 @@
                                             <label for="exampleFormControlSelect1">*Line ID</label>
                                             <input type="text" class="form-control" placeholder="First name">
                                         </div>
-                                        <div class="form-group pt-3 pb-3">
+                                        <div class="input-group pt-3">
                                             <label for="exampleFormControlSelect1">Facebook</label>
-                                            <input type="text" class="form-control" placeholder="First name">
+                                            <span class="input-group-text" id="basic-addon3">https://www.facebook.com/</span>
+                                            <input type="text" class="form-control" id="basic-url"
+                                                aria-describedby="basic-addon3">
                                         </div>
                                 </div>
                             </div>
@@ -100,7 +102,7 @@
                             <div class="card" style="border: 0;">
                                 <div class="card-body pt-3 pb-2">
                                     <div class="form-group">
-                                        <label for="exampleFormControlSelect1">*คำนำหน้า (Name Title)</label>
+                                        <label for="exampleFormControlSelect1">คณะ (Faculty)</label>
                                         <select class="form-select" aria-label="Default select example">
                                             <option selected>---คำนำหน้า---</option>
                                             <option value="1">นาย</option>
@@ -108,7 +110,7 @@
                                         </select>
                                     </div>
                                     <div class="form-group pt-3">
-                                        <label for="exampleFormControlSelect1">*คำนำหน้า (Name Title)</label>
+                                        <label for="exampleFormControlSelect1">สาขา (Major)</label>
                                         <select class="form-select" aria-label="Default select example">
                                             <option selected>---คำนำหน้า---</option>
                                             <option value="1">นาย</option>
@@ -116,15 +118,19 @@
                                         </select>
                                     </div>
                                     <div class="form-group pt-3">
-                                        <label for="exampleFormControlSelect1">ชื่อ</label>
+                                        <label for="exampleFormControlSelect1">เกรดเฉลี่ย (GPA)</label>
                                         <input type="text" class="form-control" placeholder="First name">
                                     </div>
                                     <div class="form-group pt-3">
-                                        <label for="exampleFormControlSelect1">นามสกุล</label>
-                                        <input type="text" class="form-control" placeholder="Last name">
+                                        <label for="exampleFormControlSelect1">ระดับการศึกษา (Degree / Certificate)</label>
+                                        <select class="form-select" aria-label="Default select example">
+                                            <option selected>---คำนำหน้า---</option>
+                                            <option value="1">นาย</option>
+                                            <option value="2">นางสาว</option>
+                                        </select>
                                     </div>
                                     <div class="form-group pt-3">
-                                        <label for="exampleInputEmail1">ชื่อเล่น</label>
+                                        <label for="exampleInputEmail1">ชั้นปี (class)</label>
                                         <input type="text" class="form-control" placeholder="First name">
                                     </div>
 
@@ -150,15 +156,11 @@
                                         </div> --}}
 
                                     <div class="mb-3 pt-3">
-                                        <label for="formFile" class="form-label">Default file input example</label>
+                                        <label for="formFile" class="form-label">กรุณาแบบเอกสารแสดงผลการศึกษา</label>
                                         <input class="form-control" type="file" id="formFile">
                                     </div>
-                                    <div class="form-group pt-1">
-                                        <label for="exampleFormControlSelect1">Facebook</label>
-                                        <input type="text" class="form-control" placeholder="First name">
-                                    </div>
-                                    <div class="apply row mb-5 pt-12">
-                                        <button type="submit" class="apply-btn btn-primary"> {{ __('Login') }}</button>
+                                    <div class="apply row mb-5">
+                                        <small class="text-muted"><a href="#" class="btn-apply">บันทึก</a></small>
                                     </div>
                                     </form>
                                 </div>

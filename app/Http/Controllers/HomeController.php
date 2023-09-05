@@ -38,4 +38,12 @@ class HomeController extends Controller
         return view('pages.contact');
     }
 
+    public function subject(){
+        return view('pages.subject');
+    }
+
+    public function detail(){
+        return view('pages.detail');
+    }
+
 }
