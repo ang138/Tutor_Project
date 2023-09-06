@@ -184,6 +184,17 @@ th {
 }
 
 
+/* ปรับขนาดของปุ่มวงกลม radio */
+.form-check-input[type="radio"] {
+    width: 18px;
+    height: 18px;
+
+}
+
+.form-check-label {
+    margin-top: 0.10em; /* ปรับขึ้นลงเพื่อจัดให้อยู่ตรงกลางของ radio button */
+}
+
 
 
 @media (max-width: 576px) {
