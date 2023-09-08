@@ -4,7 +4,6 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdvisorController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TutorController;
-use App\Http\Middleware\Advisor;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,6 +22,7 @@ Route::get('/', function ()
     return view('welcome');
 });
 
+// -------------------------------หน้าหลัก---------------------------------------------------
 Route::get('/', [HomeController::class, 'home']);
 Route::get('about', [HomeController::class, 'about']);
 Route::get('applyTutor', [HomeController::class, 'applyTutor']);
@@ -30,27 +30,7 @@ Route::get('contact', [HomeController::class, 'contact']);
 Route::get('subject', [HomeController::class, 'subject']);
 Route::get('detail', [HomeController::class, 'detail']);
 
-
-
-
-// สำหรับการลงทะเบียนและเข้าสู่ระบบ
-
-// Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
-// Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login']);
-Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
-
-// Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
-// Route::post('login', 'Auth\LoginController@login');
-// Route::post('logout', 'Auth\LoginController@logout')->name('logout');
-
-// Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
-// Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
-// Route::post('password/reset', 'Auth\ResetPasswordController@reset');
-// Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
-
-// Route::get('tutor/home', [App\Http\Controllers\HomeController::class, 'index'])->name('tutor.home');
-// Route::get('admin/home', [HomeController::class, 'adminHome'])->name('admin.home')->middleware('status');
-
+// -------------------------------หน้าสำหรับการเข้าสู่ระบบ---------------------------------------------------
 Route::middleware(['guest'])->group(function ()
 {
     Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
@@ -58,26 +38,39 @@ Route::middleware(['guest'])->group(function ()
     // Route::get('/register', [App\Http\Controllers\Auth\RegisterController::class, 'showRegistrationForm'])->name('register');
 });
 
+// -------------------------------หน้าหลังทำการเข้าสู่ระบบ---------------------------------------------------
 Route::middleware(['auth'])->group(function ()
 {
-    // หน้าหลังเข้าสู่ระบบของแอดมิน
+    // -----ออกจากระบบ-----
+    Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
+
+
+    // -------------------------------หน้าหลังเข้าสู่ระบบของแอดมิน---------------------------------------------------
     Route::get('adminHome', [AdminController::class, 'adminHome'])->name('adminHome')->middleware('status');
-    Route::get('manageStudent', [AdminController::class, 'manageStudent']);
+
+    // -----แสดงข้อมูล-----
+    Route::get('manageStudent', [AdminController::class, 'manageStudent'])->name('manageStudent');
+
+    // -----เพิ่มข้อมูล-----
+    Route::get('addStudent', [AdminController::class, 'insertstdform']);
+    Route::post('create', [AdminController::class, 'insertstd']);
+
+    // -----อัปเดตข้อมูล------
+    Route::get('edit-student/{std_id}', [AdminController::class, 'editStudent']);
+    Route::put('update-student/{std_id}', [AdminController::class, 'updateStudent']);
+
+    // -----ลบข้อมูล-----
+    Route::delete('delete-student/{std_id}', [AdminController::class, 'deleteStudent'])->name('deleteStudent');
+
+    // -------------------------------หน้าหลังเข้าสู่ระบบของอาจารย์ที่ปรึกษา---------------------------------------------------
     Route::get('manageAdvisor', [AdminController::class, 'manageAdvisor']);
 
-
-    // หน้าหลังเข้าสู่ระบบของอาจารย์ที่ปรึกษา
     Route::get('advisorHome', [AdvisorController::class, 'advisorHome'])->name('advisorHome')->middleware('advisor');
     Route::get('approveTutor', [AdvisorController::class, 'approveTutor']);
 
-
-    // หน้าหลังเข้าสู่ระบบของนิสิต
+    // -------------------------------หน้าหลังเข้าสู่ระบบของนิสิต---------------------------------------------------
     Route::get('tutorHome', [TutorController::class, 'tutorHome'])->name('tutorHome');
     Route::get('manageSubject', [TutorController::class, 'manageSubject']);
     Route::get('enrollment', [TutorController::class, 'enrollment']);
-
-
-
-
 
 });

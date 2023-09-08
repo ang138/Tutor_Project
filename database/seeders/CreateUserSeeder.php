@@ -18,7 +18,19 @@ class CreateUserSeeder extends Seeder
             [
                 'name' => 'อัง',
                 'email' => 'tutor@tutor.com',
-                'status' => '0',
+                'status' => '3',
+                'password' => bcrypt('1234')
+            ],
+            [
+                'name' => 'แอดมิน',
+                'email' => 'admin1@admin.com',
+                'status' => '1',
+                'password' => bcrypt('1234')
+            ],
+            [
+                'name' => 'อาจารย์',
+                'email' => 'advisor@advisor.com',
+                'status' => '2',
                 'password' => bcrypt('1234')
             ],
             ];
