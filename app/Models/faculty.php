@@ -5,7 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class faculty extends Model
+class Faculty extends Model
 {
-    use HasFactory;
+
+    protected $fillable = ['faculty_name'];
+
+    // Define a relationship with the Major model
+    public function majors()
+    {
+        return $this->hasMany(Major::class);
+    }
 }

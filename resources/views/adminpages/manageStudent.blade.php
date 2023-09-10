@@ -14,6 +14,7 @@
     </div> --}}
 
     <div class="container pt-5">
+        <h1 style="text-align: center; font-weight: bold;">ข้อมูลนิสิต</h1>
 
         <!-- แสดงข้อความแจ้งเตือน -->
         @if (session('success'))
@@ -22,8 +23,9 @@
             </div>
         @endif
 
-        <h1>ข้อมูลนิสิต</h1>
-        <a href="addStudent" class="btn-detail">เพิ่มข้อมูล</a>
+        <div class="d-flex justify-content-end mb-3">
+            <a href="addStudent" class="btn"><i class="fa fa-plus"></i> เพิ่มข้อมูลนิสิต</a>
+        </div>
         <table>
             <thead>
                 <tr>
@@ -44,20 +46,25 @@
                         <td>{{ $student->std_email }}</td>
                         <td>{{ $student->std_faculty }}</td>
                         <td>
-                            <a href="{{ url('edit-student/' . $student->std_id) }}" class="btn btn-primary btn-sm">Edit</a>
-                            <form action="{{ route('deleteStudent', ['std_id' => $student->std_id]) }}" method="POST" onsubmit="return confirm('ยืนยันการลบข้อมูลนิสิต?')">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                            </form>
+                            <div class="btn-group" role="group" aria-label="First group">
+                                <a href="{{ url('edit-student/' . $student->std_id) }}" class="btn btn-sm">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                            </div>
+
+                            <div class="btn-group" role="group" aria-label="Second group">
+                                <form action="{{ route('deleteStudent', ['std_id' => $student->std_id]) }}" method="POST"
+                                    onsubmit="return confirm('ยืนยันการลบข้อมูลนิสิต?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm"><i class="fas fa-trash"></i></button>
+                                </form>
+                            </div>
                         </td>
                     </tr>
                 @endforeach
                 <!-- Add more rows with data here -->
             </tbody>
         </table>
-        <div class="btn-tutor">
-            <button class="btn">Add New</button>
-        </div>
     </div>
 @endsection

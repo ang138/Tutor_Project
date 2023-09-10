@@ -5,7 +5,7 @@
     @endsection
     @section('content')
         <div class="container pt-5">
-            <h1 style="text-align: center; font-weight: bold;">แก้ไขข้อมูลนิสิต</h1>
+            <h1 style="text-align: center; font-weight: bold;">แก้ไขข้อมูลอาจารย์</h1>
             <!-- แสดงข้อความแจ้งเตือน -->
             @if (session('success'))
                 <div class="alert alert-success">
@@ -20,60 +20,61 @@
                         <div class="col-md-9 pt-1 ">
                             <div class="card" style="border: 0;">
                                 <div class="card-body pt-3 pb-2">
-                                    <form action="{{ url('update-student/' . $student->std_id) }}" method="POST">
+                                    <form action="{{ url('update-advisor/' . $advisor->advisor_id) }}" method="POST">
                                         @csrf
                                         @method('PUT')
                                         <div class="form-group pt-3 row">
-                                            <label for="name" class="col-lg-2 col-form-label">รหัสนิสิต:</label>
+                                            <label for="name" class="col-lg-2 col-form-label">รหัสอาจารย์:</label>
                                             <div class="col-lg-10">
                                                 <input type="text" class="form-control" placeholder="First name"
-                                                    name="std_id" value="{{ $student->std_id }}">
+                                                    name="advisor_id" value="{{ $advisor->advisor_id }}">
                                             </div>
                                         </div>
                                         <div class="form-group pt-3 row">
                                             <label for="name" class="col-lg-2 col-form-label">ชื่อ:</label>
                                             <div class="col-lg-10">
                                                 <input type="text" class="form-control" placeholder="ชื่อ"
-                                                    name="std_name" value="{{ $student->std_name }}">
+                                                    name="advisor_name" value="{{ $advisor->advisor_name }}">
                                             </div>
                                         </div>
                                         <div class="form-group pt-3 row">
                                             <label for="name" class="col-lg-2 col-form-label">นามสกุล:</label>
                                             <div class="col-lg-10">
                                                 <input type="text" class="form-control" placeholder="นามสกุล"
-                                                    name="std_surname" value="{{ $student->std_surname }}">
+                                                    name="advisor_surname" value="{{ $advisor->advisor_surname }}">
                                             </div>
                                         </div>
                                         <div class="form-group pt-3 row">
                                             <label for="name" class="col-lg-2 col-form-label">อีเมล:</label>
                                             <div class="col-lg-10">
                                                 <input type="email" class="form-control" placeholder="อีเมล"
-                                                    name="std_email" value="{{ $student->std_email }}">
+                                                    name="advisor_email" value="{{ $advisor->advisor_email }}">
                                             </div>
                                         </div>
                                         <div class="form-group pt-3 row">
                                             <label for="name" class="col-lg-2 col-form-label">รหัสผ่าน:</label>
                                             <div class="col-lg-10">
                                                 <input type="text" class="form-control" placeholder="รหัสผ่าน"
-                                                    name="std_password" value="{{ $student->std_password }}">
+                                                    name="advisor_password" value="{{ $advisor->advisor_password }}">
                                             </div>
                                         </div>
                                         <div class="form-group pt-3 row" style="display: none">
                                             <label for="name" class="col-lg-2 col-form-label">สถานะ:</label>
                                             <div class="col-lg-10">
-                                                <input type="hidden" name="std_status" value="3">
+                                                <input type="hidden" name="advisor_status" value="3">
                                             </div>
                                         </div>
                                         <div class="form-group pt-3 row">
                                             <label for="name" class="col-lg-2 col-form-label">คณะ:</label>
                                             <div class="col-lg-10">
                                                 <select class="form-select" aria-label="Default select example"
-                                                    name="std_faculty">
+                                                    name="advisor_faculty">
                                                     <option selected>เลือกคณะ</option>
                                                     <option value="1"
-                                                        {{ $student->std_faculty == 1 ? 'selected' : '' }}>นาย</option>
+                                                        {{ $advisor->advisor_faculty == 1 ? 'selected' : '' }}>นาย</option>
                                                     <option value="2"
-                                                        {{ $student->std_faculty == 2 ? 'selected' : '' }}>นางสาว</option>
+                                                        {{ $advisor->advisor_faculty == 2 ? 'selected' : '' }}>นางสาว
+                                                    </option>
                                                 </select>
                                             </div>
                                         </div>
@@ -81,42 +82,16 @@
                                             <label for="name" class="col-lg-2 col-form-label">สาขา:</label>
                                             <div class="col-lg-10">
                                                 <select class="form-select" aria-label="Default select example"
-                                                    name="std_major">
+                                                    name="advisor_major">
                                                     <option selected>เลือกสาขา</option>
-                                                    <option value="1" {{ $student->std_major == 1 ? 'selected' : '' }}>
-                                                        นาย</option>
-                                                    <option value="2"
-                                                        {{ $student->std_major == 2 ? 'selected' : '' }}>นางสาว</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group pt-3 row">
-                                            <label for="name" class="col-lg-2 col-form-label">ชั้นปี:</label>
-                                            <div class="col-lg-10">
-                                                <select class="form-select" aria-label="Default select example"
-                                                    name="std_class">
-                                                    <option selected>เลือกชั้นปี</option>
                                                     <option value="1"
-                                                        {{ $student->std_class == 1 ? 'selected' : '' }}>นาย</option>
+                                                        {{ $advisor->advisor_major == 1 ? 'selected' : '' }}>นาย</option>
                                                     <option value="2"
-                                                        {{ $student->std_class == 2 ? 'selected' : '' }}>นางสาว</option>
+                                                        {{ $advisor->advisor_major == 2 ? 'selected' : '' }}>นางสาว
+                                                    </option>
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="form-group pt-3 row" style="display: none">
-                                            <label for="name"
-                                                class="col-lg-2 col-form-label">เกรดเฉลี่ยสะสม(GPAX):</label>
-                                            <div class="col-lg-10">
-                                                <input type="hidden" name="std_gpax" value="">
-                                            </div>
-                                        </div>
-                                        <div class="form-group pt-3 row" style="display: none">
-                                            <label for="name" class="col-lg-2 col-form-label">ใบเกรด:</label>
-                                            <div class="col-lg-10">
-                                                <input type="hidden" name="std_grade" value="">
-                                            </div>
-                                        </div>
-
                                 </div>
                             </div>
                         </div>
@@ -125,11 +100,11 @@
 
                     <div class="d-flex justify-content-center mt-3">
                         <div class="btn-group" role="group" aria-label="First group">
-                            <a href="{{ url('manageStudent') }}" class="btn btn-danger btn-sm me-2">ย้อนกลับ</a>
+                            <a href="{{ url('manageAdvisor') }}" class="btn btn-danger btn-sm me-2">ย้อนกลับ</a>
                             </a>
                         </div>
                         <div class="btn-group" role="group" aria-label="Second group">
-                            <button type="submit" value="Update student"
+                            <button type="submit" value="Update advisor"
                                 class="btn btn-primary btn-sm">ยืนยันแก้ไข</button>
                         </div>
                     </div>
