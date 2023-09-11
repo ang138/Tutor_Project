@@ -34,6 +34,8 @@
                     <th>นามสกุล</th>
                     <th>อีเมล</th>
                     <th>คณะ</th>
+                    <th>สาขา</th>
+                    <th>ชั้นปี</th>
                     <th>แก้ไข</th>
                 </tr>
             </thead>
@@ -44,7 +46,9 @@
                         <td>{{ $student->std_name }}</td>
                         <td>{{ $student->std_surname }}</td>
                         <td>{{ $student->std_email }}</td>
-                        <td>{{ $student->std_faculty }}</td>
+                        <td>{{ $student->faculty_name }}</td>
+                        <td>{{ $student->major_name }}</td>
+                        <td>{{ $student->std_class }}</td>
                         <td>
                             <div class="btn-group" role="group" aria-label="First group">
                                 <a href="{{ url('edit-student/' . $student->std_id) }}" class="btn btn-sm">

@@ -7,13 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Major extends Model
 {
-
-    protected $tables = ['majors'];
-
-    // Define a relationship with the Faculty model
-    public function faculty()
-    {
-        return $this->belongsTo(Faculty::class);
-    }
-
+    use HasFactory;
 }

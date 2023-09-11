@@ -63,24 +63,21 @@
                                             </div>
                                         </div>
                                         <div class="form-group pt-3 row">
-                                            <label for="name" class="col-lg-2 col-form-label">คณะ:</label>
+                                            <label for="advisor_faculty" class="col-lg-2 col-form-label">คณะ:</label>
                                             <div class="col-lg-10">
-                                                <select class="form-select" aria-label="Default select example"
-                                                    name="std_faculty">
-                                                    <option selected>เลือกคณะ</option>
-                                                    <option value="1">นาย</option>
-                                                    <option value="2">นางสาว</option>
+                                                <select id="faculty-dd" class="form-control" name="std_faculty">
+                                                    <option value="">เลือกคณะ</option>
+                                                    @foreach ($faculties as $faculty)
+                                                        <option value="{{ $faculty->id }}">{{ $faculty->name }}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="form-group pt-3 row">
-                                            <label for="name" class="col-lg-2 col-form-label">สาขา:</label>
+                                            <label for="advisor_major" class="col-lg-2 col-form-label">สาขา:</label>
                                             <div class="col-lg-10">
-                                                <select class="form-select" aria-label="Default select example"
-                                                    name="std_major">
-                                                    <option selected>เลือกสาขา</option>
-                                                    <option value="1">นาย</option>
-                                                    <option value="2">นางสาว</option>
+                                                <select id="major-dd" class="form-control" name="std_major">
+                                                    <option value="">เลือกสาขา</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -90,8 +87,10 @@
                                                 <select class="form-select" aria-label="Default select example"
                                                     name="std_class">
                                                     <option selected>เลือกชั้นปี</option>
-                                                    <option value="1">นาย</option>
-                                                    <option value="2">นางสาว</option>
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="4">4</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -128,4 +127,28 @@
                 </div>
             </div>
         </div>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script>
+            $('#faculty-dd').on('change', function() {
+                var idFaculty = this.value;
+                $("#major-dd").html('');
+                $.ajax({
+                    url: "{{ url('api/fetch-majors') }}",
+                    type: "POST",
+                    data: {
+                        faculty_id: idFaculty,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    dataType: 'json',
+                    success: function(result) {
+                        $('#major-dd').html('<option value="">เลือกสาขา</option>');
+                        $.each(result.majors, function(key, value) {
+                            $("#major-dd").append('<option value="' + value.id + '">' + value.name +
+                                '</option>');
+                        });
+                    }
+                });
+            });
+        </script>
     @endsection

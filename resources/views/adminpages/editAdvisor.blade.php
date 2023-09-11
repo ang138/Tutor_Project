@@ -23,13 +23,13 @@
                                     <form action="{{ url('update-advisor/' . $advisor->advisor_id) }}" method="POST">
                                         @csrf
                                         @method('PUT')
-                                        <div class="form-group pt-3 row">
+                                        {{-- <div class="form-group pt-3 row">
                                             <label for="name" class="col-lg-2 col-form-label">รหัสอาจารย์:</label>
                                             <div class="col-lg-10">
                                                 <input type="text" class="form-control" placeholder="First name"
                                                     name="advisor_id" value="{{ $advisor->advisor_id }}">
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         <div class="form-group pt-3 row">
                                             <label for="name" class="col-lg-2 col-form-label">ชื่อ:</label>
                                             <div class="col-lg-10">
@@ -67,28 +67,29 @@
                                         <div class="form-group pt-3 row">
                                             <label for="name" class="col-lg-2 col-form-label">คณะ:</label>
                                             <div class="col-lg-10">
-                                                <select class="form-select" aria-label="Default select example"
-                                                    name="advisor_faculty">
-                                                    <option selected>เลือกคณะ</option>
-                                                    <option value="1"
-                                                        {{ $advisor->advisor_faculty == 1 ? 'selected' : '' }}>นาย</option>
-                                                    <option value="2"
-                                                        {{ $advisor->advisor_faculty == 2 ? 'selected' : '' }}>นางสาว
-                                                    </option>
+                                                <select id="faculty-dd" class="form-select" aria-label="Default select example" name="advisor_faculty">
+                                                    <option value="">เลือกคณะ</option>
+                                                    @foreach ($faculties as $faculty)
+                                                        <option value="{{ $faculty->id }}" {{ $advisor->advisor_faculty == $faculty->id ? 'selected' : '' }}>
+                                                            {{ $faculty->name }}
+                                                        </option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>
+
                                         <div class="form-group pt-3 row">
                                             <label for="name" class="col-lg-2 col-form-label">สาขา:</label>
                                             <div class="col-lg-10">
-                                                <select class="form-select" aria-label="Default select example"
-                                                    name="advisor_major">
-                                                    <option selected>เลือกสาขา</option>
-                                                    <option value="1"
-                                                        {{ $advisor->advisor_major == 1 ? 'selected' : '' }}>นาย</option>
-                                                    <option value="2"
-                                                        {{ $advisor->advisor_major == 2 ? 'selected' : '' }}>นางสาว
-                                                    </option>
+                                                <select id="major-dd" class="form-select" aria-label="Default select example" name="advisor_major">
+                                                    <option value="">เลือกสาขา</option>
+                                                    @foreach ($majors as $major)
+                                                        @if ($advisor->advisor_faculty == $major->faculty_id)
+                                                            <option value="{{ $major->id }}" {{ $advisor->advisor_major == $major->id ? 'selected' : '' }}>
+                                                                {{ $major->name }}
+                                                            </option>
+                                                        @endif
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>
@@ -112,4 +113,28 @@
                 </div>
             </div>
         </div>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script>
+            $('#faculty-dd').on('change', function() {
+                var idFaculty = this.value;
+                $("#major-dd").html('');
+                $.ajax({
+                    url: "{{ url('api/fetch-majors') }}",
+                    type: "POST",
+                    data: {
+                        faculty_id: idFaculty,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    dataType: 'json',
+                    success: function(result) {
+                        $('#major-dd').html('<option value="">เลือกสาขา</option>');
+                        $.each(result.majors, function(key, value) {
+                            $("#major-dd").append('<option value="' + value.id + '">' + value.name +
+                                '</option>');
+                        });
+                    }
+                });
+            });
+        </script>
     @endsection

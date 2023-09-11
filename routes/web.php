@@ -6,6 +6,7 @@ use App\Http\Controllers\FacultyController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ManageAdvisorController;
 use App\Http\Controllers\ManageStudentController;
+use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TutorController;
 use Illuminate\Support\Facades\Route;
 
@@ -48,43 +49,53 @@ Route::middleware(['auth'])->group(function ()
     Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 
 
+    // -----แสดงสาขาวิชา-----
+    Route::post('api/fetch-majors', [AdvisorController::class, 'fetchMajors']);
+
+
     // -------------------------------หน้าหลังเข้าสู่ระบบของแอดมิน---------------------------------------------------
     Route::get('adminHome', [AdminController::class, 'adminHome'])->name('adminHome')->middleware('status');
+    Route::post('/admin/store', [AdminController::class, 'store'])->name('admin.store');
+
+    Route::put('/admin/images/{id}', [AdminController::class, 'updateImage'])->name('admin.image.update');
+
+    Route::delete('/admin/images/{id}', [AdminController::class, 'deleteImage'])->name('admin.image.delete');
+
+
 
     // -------------------------------จัดการข้อมุลนิสิต------------------------------------
     // -----แสดงข้อมูลนิสิต-----
-    Route::get('manageStudent', [AdminController::class, 'manageStudent'])->name('manageStudent');
+    Route::get('manageStudent', [StudentController::class, 'manageStudent'])->name('manageStudent');
 
     // -----เพิ่มข้อมูลนิสิต-----
-    Route::get('addStudent', [AdminController::class, 'insertstdform']);
-    Route::post('insert-student', [AdminController::class, 'insertstd']);
+    Route::get('addStudent', [StudentController::class, 'insertstdform']);
+    Route::post('insert-student', [StudentController::class, 'insertstd']);
 
     // -----อัปเดตข้อมูลนิสิต------
-    Route::get('edit-student/{std_id}', [AdminController::class, 'editStudent']);
-    Route::put('update-student/{std_id}', [AdminController::class, 'updateStudent']);
+    Route::get('edit-student/{std_id}', [StudentController::class, 'editStudent']);
+    Route::put('update-student/{std_id}', [StudentController::class, 'updateStudent']);
 
     // -----ลบข้อมูลนิสิต-----
-    Route::delete('delete-student/{std_id}', [AdminController::class, 'deleteStudent'])->name('deleteStudent');
+    Route::delete('delete-student/{std_id}', [StudentController::class, 'deleteStudent'])->name('deleteStudent');
 
 
 
 
     // -------------------------------จัดการข้อมุลอาจารย์------------------------------------
     // -----แสดงข้อมูลอาจารย์-----
-    Route::get('manageAdvisor', [AdminController::class, 'manageAdvisor'])->name('manageAdvisor');
+    Route::get('manageAdvisor', [AdvisorController::class, 'manageAdvisor'])->name('manageAdvisor');
 
     // -----เพิ่มข้อมูลอาจารย์-----
-    Route::get('/addAdvisor', [AdminController::class, 'insertadvisorform']);
-    Route::get('/get-majors/{facultyId}', [AdminController::class, 'getMajors']);
-    Route::post('/insert-advisor', [AdminController::class, 'insertadvisor']);
+    Route::get('/addAdvisor', [AdvisorController::class, 'insertadvisorform']);
+    Route::post('/insert-advisor', [AdvisorController::class, 'insertadvisor']);
 
 
     // -----อัปเดตข้อมูลอาจารย์------
-    Route::get('edit-advisor/{advisor_id}', [AdminController::class, 'editAdvisor']);
-    Route::put('update-advisor/{advisor_id}', [AdminController::class, 'updateAdvisor']);
+    Route::get('edit-advisor/{advisor_id}', [AdvisorController::class, 'editAdvisor']);
+    Route::put('update-advisor/{advisor_id}', [AdvisorController::class, 'updateAdvisor']);
 
      // -----ลบข้อมูลนิสิต-----
-     Route::delete('delete-advisor/{advisor_id}', [AdminController::class, 'deleteAdvisor'])->name('deleteAdvisor');
+     Route::delete('delete-advisor/{advisor_id}', [AdvisorController::class, 'deleteAdvisor'])->name('deleteAdvisor');
 
 
 
@@ -93,8 +104,8 @@ Route::middleware(['auth'])->group(function ()
     Route::get('approveTutor', [AdvisorController::class, 'approveTutor']);
 
     // -------------------------------หน้าหลังเข้าสู่ระบบของนิสิต---------------------------------------------------
-    Route::get('tutorHome', [TutorController::class, 'tutorHome'])->name('tutorHome');
-    Route::get('manageSubject', [TutorController::class, 'manageSubject']);
-    Route::get('enrollment', [TutorController::class, 'enrollment']);
+    Route::get('tutorHome', [StudentController::class, 'tutorHome'])->name('tutorHome');
+    Route::get('manageSubject', [StudentController::class, 'manageSubject']);
+    Route::get('enrollment', [StudentController::class, 'enrollment']);
 
 });

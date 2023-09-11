@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Image;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,7 +24,10 @@ class HomeController extends Controller
      */
 
      public function home(){
-        return view('pages.home');
+
+        $images = Image::all(); // ดึงข้อมูลรูปภาพทั้งหมด
+
+        return view('pages.home', compact('images'));
     }
 
     public function about(){

@@ -6,31 +6,22 @@
     <!-- Slide Image -->
     <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-indicators">
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
-                aria-current="true" aria-label="Slide 1"></button>
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
-                aria-label="Slide 2"></button>
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
-                aria-label="Slide 3"></button>
+            @foreach($images as $key => $image)
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{ $key }}" {{ $key == 0 ? 'class=active' : '' }}></button>
+            @endforeach
         </div>
         <div class="carousel-inner">
-            <div class="carousel-item active c-item">
-                <img src="{{ asset('assets/images/slide1.jpg') }}" class="d-block w-100 c-img" alt="ภาพที่ 1">
-            </div>
-            <div class="carousel-item c-item">
-                <img src="{{ asset('assets/images/slide2.jpg') }}" class="d-block w-100 c-img" alt="ภาพที่ 2">
-            </div>
-            <div class="carousel-item c-item">
-                <img src="{{ asset('assets/images/slide3.jpg') }}" class="d-block w-100 c-img" alt="ภาพที่ 3">
-            </div>
+            @foreach($images as $key => $image)
+                <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                    <img src="{{ asset($image->image_path) }}" class="d-block w-100 mx-auto" alt="{{ $image->alt_text }}" style="max-width: 88%; height: 600px;">
+                </div>
+            @endforeach
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
-            data-bs-slide="prev">
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Previous</span>
         </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
-            data-bs-slide="next">
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Next</span>
         </button>

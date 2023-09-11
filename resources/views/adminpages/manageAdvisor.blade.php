@@ -66,22 +66,22 @@
     <table>
         <thead>
             <tr>
-                <th>รหัสนิสิต</th>
                 <th>ชื่อ</th>
                 <th>นามสกุล</th>
                 <th>อีเมล</th>
                 <th>คณะ</th>
+                <th>สาขา</th>
                 <th>แก้ไข</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($advisors as $advisor)
                 <tr>
-                    <td>{{ $advisor->advisor_id }}</td>
                     <td>{{ $advisor->advisor_name }}</td>
                     <td>{{ $advisor->advisor_surname }}</td>
                     <td>{{ $advisor->advisor_email }}</td>
-                    <td>{{ $advisor->advisor_faculty }}</td>
+                    <td>{{ $advisor->faculty_name }}</td>
+                    <td>{{ $advisor->major_name }}</td>
                     <td>
                         <div class="btn-group" role="group" aria-label="First group">
                             <a href="{{ url('edit-advisor/' . $advisor->advisor_id) }}" class="btn btn-sm">
