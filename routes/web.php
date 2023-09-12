@@ -34,6 +34,15 @@ Route::get('contact', [HomeController::class, 'contact']);
 Route::get('subject', [HomeController::class, 'subject']);
 Route::get('detail', [HomeController::class, 'detail']);
 
+// routes/web.php
+Route::get('/searchStudent', [HomeController::class, 'showTutorForm'])->name('applyTutorForm');
+Route::post('/searchStudent', [HomeController::class, 'searchStudent'])->name('searchStudent');
+
+Route::put('/updateStudent/{std_id}', [HomeController::class, 'updateStudent'])->name('updateStudent');
+
+Route::get('checkTutorStatus', [HomeController::class, 'checkTutorStatus'])->name('checkTutorStatus');
+
+
 // -------------------------------หน้าสำหรับการเข้าสู่ระบบ---------------------------------------------------
 Route::middleware(['guest'])->group(function ()
 {

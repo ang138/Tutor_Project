@@ -10,6 +10,7 @@
 
 body {
     font-family: "Sukhumvit", sans-serif;
+    background-color: #FCF6F5;
 }
 .navbar {
     background-color: #6a9bbe;
@@ -143,6 +144,48 @@ th {
     width: 98%;
     background-color: #4caf50;
     border: none;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+.btn-search {
+    width: 100px;
+    background-color: #4caf50;
+    border: none;
+    border-radius: 3px;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+.btn-submittutor {
+    width: 120px;
+    background-color: #4caf50;
+    border: none;
+    border-radius: 3px;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+.btn-back {
+    width: 130px;
+    background-color: #4caf50;
+    border: none;
+    border-radius: 3px;
     color: white;
     padding: 10px;
     text-align: center;

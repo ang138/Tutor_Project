@@ -43,6 +43,37 @@
                                             </div>
                                         </div>
                                         <div class="form-group pt-3 row">
+                                            <label for="birthdate" class="col-lg-2 col-form-label">วันเกิด:</label>
+                                            <div class="col-lg-10">
+                                                <div class="row">
+                                                    <div class="col-lg-4">
+                                                        <select class="form-select" name="birth_day">
+                                                            <option value="">วัน</option>
+                                                            @for ($day = 1; $day <= 31; $day++)
+                                                                <option value="{{ $day }}">{{ $day }}</option>
+                                                            @endfor
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <select class="form-select" name="birth_month">
+                                                            <option value="">เดือน</option>
+                                                            @for ($month = 1; $month <= 12; $month++)
+                                                                <option value="{{ $month }}">{{ $month }}</option>
+                                                            @endfor
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <select class="form-select" name="birth_year">
+                                                            <option value="">ปี</option>
+                                                            @for ($year = date("Y"); $year >= 1900; $year--)
+                                                                <option value="{{ $year }}">{{ $year }}</option>
+                                                            @endfor
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group pt-3 row">
                                             <label for="name" class="col-lg-2 col-form-label">อีเมล:</label>
                                             <div class="col-lg-10">
                                                 <input type="email" class="form-control" placeholder="อีเมล"
@@ -105,6 +136,25 @@
                                             <label for="name" class="col-lg-2 col-form-label">ใบเกรด:</label>
                                             <div class="col-lg-10">
                                                 <input type="hidden" name="std_grade" value="">
+                                            </div>
+                                        </div>
+                                        <div class="form-group pt-3 row" style="display: none">
+                                            <label for="name"
+                                                class="col-lg-2 col-form-label">เบอร์มือถือ:</label>
+                                            <div class="col-lg-10">
+                                                <input type="hidden" name="std_tel" value="">
+                                            </div>
+                                        </div>
+                                        <div class="form-group pt-3 row" style="display: none">
+                                            <label for="name" class="col-lg-2 col-form-label">Facebook:</label>
+                                            <div class="col-lg-10">
+                                                <input type="hidden" name="std_facebook" value="">
+                                            </div>
+                                        </div>
+                                        <div class="form-group pt-3 row" style="display: none">
+                                            <label for="name" class="col-lg-2 col-form-label">Line ID:</label>
+                                            <div class="col-lg-10">
+                                                <input type="hidden" name="std_line" value="">
                                             </div>
                                         </div>
 

@@ -21,5 +21,6 @@ class Student extends Model
         'std_class',
         'std_gpax',
         'std_grade ',
+        'birthdate ',
     ];
 }

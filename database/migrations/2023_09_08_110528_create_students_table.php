@@ -23,6 +23,10 @@ return new class extends Migration
             $table->string('std_class');
             $table->decimal('std_gpax', 4, 2)->nullable();
             $table->string('std_grade')->nullable();
+            $table->date('birthdate');
+            $table->string('std_tel')->nullable();
+            $table->string('std_facebook')->nullable();
+            $table->string('std_line')->nullable();
             $table->timestamps();
         });
     }

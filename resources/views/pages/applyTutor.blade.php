@@ -1,265 +1,125 @@
-    <!-- การเรียกใช้งาน Tempate -->
-    @extends('layouts.main_template')
-    @section('title')
-        สมัครติวเตอร์
-    @endsection
-    @section('content')
-        <div class="container pt-5">
-            <h1 style="text-align: center; font-weight: bold;">สมัครติวเตอร์</h1>
-            <div class="card col-md-8 mx-auto" style="border: 1;">
-                <div class="card-body">
-                    {{-- ------------------------ --}}
-                    <div class="row" style="padding-left: 10px; padding-right: 10px">
-                        <div class="card" style="background-color: #6A9BBE; width: 28rem;">
-                            <div class="card-body pt-3 pb-2">
-                                <h4 style="text-align: center; font-weight: bold;">ข้อมูลส่วนตัว (Personal Information)</h4>
+@extends('layouts.main_template')
+@section('title')
+    สมัครติวเตอร์
+@endsection
+@section('content')
+<div class="container pt-5">
+    <h1 style="text-align: center; font-weight: bold;">ค้นหาข้อมูลนิสิต</h1>
+    <h3 style="text-align: center;">เพื่อทำการสมัครติวเตอร์/ตรวจสอบสถานะการเป็นติวเตอร์</h3>
+    <!-- Tutor Application Form -->
+    @if (session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
+    <div class="container pt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">ข้อมูลส่วนตัว (Personal Information)</div>
+                    <div class="card-body">
+                        <!-- แบบฟอร์มค้นหานิสิต -->
+                        <form method="POST" action="{{ route('searchStudent') }}" onsubmit="return validateSearchForm()">
+                            @csrf
+                            <div class="form-group">
+                                <label for="std_id">ค้นหานิสิตโดยรหัสนิสิต (Student ID):</label>
+                                <input type="text" class="form-control" id="std_id" name="std_id"
+                                    placeholder="กรอกรหัสนิสิต">
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="row justify-content-center">
-                        <div class="col-md-9 pt-1 ">
-                            <div class="card" style="border: 0;">
-                                <div class="card-body pt-3 pb-2">
-                                    <form>
-
-                                        <div class="form-group row">
-                                            <label for="name" class="col-lg-2 col-form-label">คำนำหน้า:</label>
-                                            <div class="col-lg-10">
-                                                <select class="form-select" aria-label="Default select example">
-                                                    <option selected>---คำนำหน้า---</option>
-                                                    <option value="1">นาย</option>
-                                                    <option value="2">นางสาว</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group pt-3 row">
-                                            <label for="name" class="col-lg-2 col-form-label">ชื่อ:</label>
-                                            <div class="col-lg-10">
-                                                <input type="text" class="form-control" placeholder="First name">
-                                            </div>
-                                        </div>
-                                        <div class="form-group pt-3 row">
-                                            <label for="name" class="col-lg-2 col-form-label">นามสกุล:</label>
-                                            <div class="col-lg-10">
-                                                <input type="text" class="form-control" placeholder="Last name">
-                                            </div>
-                                        </div>
-                                        <div class="form-group pt-3 row">
-                                            <label for="name" class="col-lg-2 col-form-label">วันเกิด:</label>
-                                            <div class="col-lg-10">
-                                                <div class="row g-3">
-                                                    <div class="col-sm-3">
-                                                        <select class="form-select" aria-label="Default select example">
-                                                            <option selected>วันที่</option>
-                                                            <option value="1">นาย</option>
-                                                            <option value="2">นางสาว</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-sm-5">
-                                                        <select class="form-select" aria-label="Default select example">
-                                                            <option selected>เดือน</option>
-                                                            <option value="1">นาย</option>
-                                                            <option value="2">นางสาว</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-sm">
-                                                        <select class="form-select" aria-label="Default select example">
-                                                            <option selected>ปี</option>
-                                                            <option value="1">นาย</option>
-                                                            <option value="2">นางสาว</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group pt-3 row">
-                                            <label for="name" class="col-lg-2 col-form-label">เบอร์มือถือ:</label>
-                                            <div class="col-lg-10">
-                                                <input type="tel" class="form-control" name="mobile_number"
-                                                    id="mobile_number" pattern="[0-9]{10}" maxlength="10" required>
-                                                <span id="mobile_error" class="text-danger"></span>
-                                            </div>
-                                        </div>
-                                        <div class="form-group pt-3 row">
-                                            <label for="name" class="col-lg-2 col-form-label">Line ID:</label>
-                                            <div class="col-lg-10">
-                                                <input type="text" class="form-control" placeholder="Last name">
-                                            </div>
-                                        </div>
-                                        <div class="form-group pt-3 row">
-                                            <label for="name" class="col-lg-2 col-form-label">Facebook:</label>
-                                            <div class="col-lg-10">
-                                                <div class="input-group">
-                                                    <span class="input-group-text"
-                                                        id="basic-addon3">https://www.facebook.com/</span>
-                                                    <input type="text" class="form-control" id="basic-url"
-                                                        aria-describedby="basic-addon3">
-                                                </div>
-                                            </div>
-                                        </div>
+                            <div class="form-group pt-3 row">
+                                <label for="birthdate" class="col-lg-2 col-form-label">วันเกิด:</label>
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <select class="form-select" name="birth_day" id="birth_day">
+                                            <option value="">วัน</option>
+                                            @for ($day = 1; $day <= 31; $day++)
+                                                <option value="{{ $day }}">{{ $day }}</option>
+                                            @endfor
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <select class="form-select" name="birth_month" id="birth_month">
+                                            <option value="">เดือน</option>
+                                            @for ($month = 1; $month <= 12; $month++)
+                                                <option value="{{ $month }}">{{ $month }}</option>
+                                            @endfor
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <select class="form-select" name="birth_year" id="birth_year">
+                                            <option value="">ปี</option>
+                                            @for ($year = date('Y'); $year >= 1900; $year--)
+                                                <option value="{{ $year }}">{{ $year }}</option>
+                                            @endfor
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    {{-- ------------------------------ --}}
-                    <div class="row pt-3" style="padding-left: 10px; padding-right: 10px">
-                        <div class="card" style="background-color: #6A9BBE; width: 30rem;">
-                            <div class="card-body pt-3 pb-2">
-                                <h4 style="text-align: center; font-weight: bold;">การศึกษา (Education)</h4>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row justify-content-center">
-                        <div class="col-md-9 pt-1 ">
-                            <div class="card" style="border: 0;">
-                                <div class="card-body pt-3 pb-2">
-                                    <div class="form-group row">
-                                        <label for="name" class="col-lg-2 col-form-label">คณะ:</label>
-                                        <div class="col-lg-10">
-                                            <select class="form-select" aria-label="Default select example">
-                                                <option selected>---คำนำหน้า---</option>
-                                                <option value="1">นาย</option>
-                                                <option value="2">นางสาว</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group pt-3 row">
-                                        <label for="name" class="col-lg-2 col-form-label">สาขา:</label>
-                                        <div class="col-lg-10">
-                                            <select class="form-select" aria-label="Default select example">
-                                                <option selected>---คำนำหน้า---</option>
-                                                <option value="1">นาย</option>
-                                                <option value="2">นางสาว</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group pt-3 row">
-                                        <label for="name" class="col-lg-2 col-form-label">ชั้นปี:</label>
-                                        <div class="col-lg-10">
-                                            <select class="form-select" aria-label="Default select example">
-                                                <option selected>---คำนำหน้า---</option>
-                                                <option value="1">นาย</option>
-                                                <option value="2">นางสาว</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group pt-3 row">
-                                        <label for="name" class="col-lg-2 col-form-label">เกรดเฉลี่ย:</label>
-                                        <div class="col-lg-10">
-                                            <input type="text" class="form-control" placeholder="GPAX">
-                                        </div>
-                                    </div>
-                                    <div class="form-group pt-3 row">
-                                        <label for="name" class="col-lg-2 col-form-label">ใบเกรด:</label>
-                                        <div class="col-lg-10">
-                                            <input class="form-control" type="file" id="formFile">
-                                        </div>
-                                    </div>
-                                    </form>
+                            <div class="d-flex justify-content-center mt-3">
+                                <div class="btn-group" role="group">
+                                    <button type="submit" class="btn-search">ค้นหา</button>
                                 </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
-
-                    {{-- ------------------------------ --}}
-                    <div class="row pt-3" style="padding-left: 10px; padding-right: 10px">
-                        <div class="card" style="background-color: #6A9BBE; width: 35rem;">
-                            <div class="card-body pt-3 pb-2">
-                                <h4 style="text-align: center; font-weight: bold;">ประสบการณ์การสอน (Teaching experience)
-                                </h4>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row justify-content-center">
-                        <div class="col-md-9 pt-1 ">
-                            <div class="card" style="border: 0;">
-                                <div class="card-body pt-3 pb-2">
-                                    <div class="form-group row">
-                                        <label for="experience" class="col-lg-4 col-form-label">ประสบการณ์การสอน:</label>
-                                        <div class="col-lg-8">
-                                            <div class="form-check pt-1">
-                                                <input class="form-check-input" type="radio" name="experience" id="no_experience" value="no_experience">
-                                                <label class="form-check-label" for="no_experience">ยังไม่มีประสบการณ์การสอน</label>
-                                            </div>
-                                            <div class="form-check pt-3">
-                                                <input class="form-check-input" type="radio" name="experience" id="has_experience" value="has_experience">
-                                                <label class="form-check-label" for="has_experience">มีประสบการณ์การสอน</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <hr class="hr" />
-
-                                    <!-- แบบฟอร์มเพิ่มเมือเลือก -> มีประสบการณ์การสอน -->
-                                    <div class="form-group row" id="additional_form" style="display: none;">
-                                        <!-- แบบฟอร์มเพิ่ม -->
-                                        <div class="form-group pt-3 row">
-                                            <label for="name" class="col-lg-2 col-form-label">สาขา:</label>
-                                            <div class="col-lg-10">
-                                                <select class="form-select" aria-label="Default select example">
-                                                    <option selected>---คำนำหน้า---</option>
-                                                    <option value="1">นาย</option>
-                                                    <option value="2">นางสาว</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group pt-3 row">
-                                            <label for="name" class="col-lg-2 col-form-label">ชั้นปี:</label>
-                                            <div class="col-lg-10">
-                                                <select class="form-select" aria-label="Default select example">
-                                                    <option selected>---คำนำหน้า---</option>
-                                                    <option value="1">นาย</option>
-                                                    <option value="2">นางสาว</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="apply row mb-5">
-                                        <small class="text-muted"><a href="#" class="btn-apply">บันทึก</a></small>
-                                    </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {{-- ------------------------------ --}}
                 </div>
             </div>
         </div>
-        <script>
-            document.getElementById('mobile_number').addEventListener('input', function() {
-                const mobileNumber = this.value;
-                const mobileError = document.getElementById('mobile_error');
+    </div>
+</div>
 
-                // เช็ครูปแบบเบอร์มือถือ (ต้องเป็นตัวเลขและมี 10 หลัก)
-                const mobilePattern = /^[0-9]{10}$/;
+<!-- JavaScript to toggle form visibility and validate the search form -->
+<script>
+    // Function to validate the search form
+    function validateSearchForm() {
+        // Get the values from the form fields
+        const std_id = document.getElementById('std_id').value;
+        const birth_day = document.getElementById('birth_day').value;
+        const birth_month = document.getElementById('birth_month').value;
+        const birth_year = document.getElementById('birth_year').value;
 
-                if (mobilePattern.test(mobileNumber)) {
-                    // ถ้าเบอร์มือถือถูกต้อง
-                    mobileError.textContent = ''; // ลบข้อความผิดพลาด (ถ้ามี)
-                } else {
-                    // ถ้าเบอร์มือถือไม่ถูกต้อง
-                    mobileError.textContent = 'กรุณากรอกเบอร์มือถือ 10 หลัก';
-                }
-            });
-        </script>
+        // Check if any of the fields are empty or not valid
+        if (std_id === '' || birth_day === '' || birth_month === '' || birth_year === '') {
+            // Display an error message
+            alert('กรุณากรอกข้อมูลให้ครบถ้วนและถูกต้อง');
+            return false; // Prevent form submission
+        }
 
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script>
-            $(document).ready(function() {
-                // เมื่อ radio button ถูกเลือก
-                $("input[name='experience']").change(function() {
-                    if ($(this).val() === "has_experience") {
-                        // ถ้าเลือก "มีประสบการณ์การสอน" แสดงแบบฟอร์มเพิ่ม
-                        $("#additional_form").show();
-                    } else {
-                        // ถ้าเลือก "ยังไม่มีประสบการณ์การสอน" ซ่อนแบบฟอร์มเพิ่ม
-                        $("#additional_form").hide();
-                    }
-                });
-            });
-        </script>
-    @endsection
+        // Add additional validation logic if needed
+        // ...
+
+        return true; // Allow form submission
+    }
+
+    $(document).ready(function() {
+        $("input[name='experience']").change(function() {
+            if ($(this).val() === "has_experience") {
+                $("#tutorApplicationForm").show();
+                $("#tutorApplicationSubForm").show();
+            } else {
+                $("#tutorApplicationForm").hide();
+                $("#tutorApplicationSubForm").hide();
+            }
+        });
+
+        // Add this code to show/hide the form based on the search result
+        $("#tutorApplicationForm").hide(); // Initially hide the form
+        $("#tutorApplicationSubForm").hide(); // Initially hide the sub-form
+
+        $("form").on("submit", function(e) {
+            e.preventDefault(); // Prevent the form from submitting normally
+
+            // Perform your search here and check if a student is found
+            var studentFound = true; // Replace with your actual search logic
+
+            if (studentFound) {
+                $("#tutorApplicationForm").show(); // Show the form if a student is found
+                $("#tutorApplicationSubForm").show(); // Show the sub-form if a student is found
+            } else {
+                // Display an error message or handle the case when no student is found
+                alert("Student not found!");
+            }
+        });
+    });
+</script>
+@endsection

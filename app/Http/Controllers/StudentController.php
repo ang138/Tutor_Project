@@ -32,6 +32,8 @@ class StudentController extends Controller
         // $std_major    = $request->input('std_major');
         // $std_class    = $request->input('std_class');
 
+        $birthdate = $request->input('birth_year') . '-' . $request->input('birth_month') . '-' . $request->input('birth_day');
+
         $request->validate([
             'std_id'       => 'required',
             'std_name'     => 'required',
@@ -42,6 +44,9 @@ class StudentController extends Controller
             'std_faculty'  => 'required',
             'std_major'    => 'required',
             'std_class'    => 'required',
+            'birth_day'    => 'required',
+            'birth_month'  => 'required',
+            'birth_year'   => 'required',
         ]);
 
         // เก็บข้อมูลเข้าฐานข้อมูล
@@ -55,8 +60,8 @@ class StudentController extends Controller
             'std_faculty'  => $request->input('std_faculty'),
             'std_major'    => $request->input('std_major'),
             'std_class'    => $request->input('std_class'),
-            'std_gpax'     => null, // เก็บค่าว่างในฐานข้อมูล
-            'std_grade' => null, // เก็บค่าว่างในฐานข้อมูล
+            'std_gpax'     => null,
+            'birthdate'    => $birthdate, // Insert birthdate
         ]);
 
         return redirect('manageStudent')->with('success', 'เพิ่มข้อมูลนิสิตเรียบร้อยแล้ว');
@@ -82,9 +87,12 @@ class StudentController extends Controller
             return redirect()->back()->with('error', 'Student not found.');
         }
 
-        // Pass the student data to the view for editing
+        // Extract the birthdate into separate variables (day, month, year)
+        list($birth_year, $birth_month, $birth_day) = explode('-', $student->birthdate);
 
-        return view('adminpages.editStudent', compact('student', 'faculties', 'majors'));
+        // Pass the student data to the view for editing, including birthdate variables
+
+        return view('adminpages.editStudent', compact('student', 'faculties', 'majors', 'birth_year', 'birth_month', 'birth_day'));
 
     }
 
@@ -93,6 +101,9 @@ class StudentController extends Controller
         // Validate the incoming request data here
 
         // Use the query builder to update the student's information
+
+        $birthdate = $request->input('birth_year') . '-' . $request->input('birth_month') . '-' . $request->input('birth_day');
+
         DB::table('students')
             ->where('std_id', $std_id)
             ->update([
@@ -106,7 +117,9 @@ class StudentController extends Controller
                 'std_major'    => $request->input('std_major'),
                 'std_class'    => $request->input('std_class'),
                 'std_gpax'     => $request->input('std_gpax'),
-                'std_grade'    => $request->input('std_grade'),
+
+                // Update the birthdate
+                'birthdate'    => $birthdate,
 
                 // Add more fields to update as needed
             ]);

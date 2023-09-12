@@ -44,6 +44,44 @@
                                                     name="std_surname" value="{{ $student->std_surname }}">
                                             </div>
                                         </div>
+                                        <!-- แก้ไขส่วนนี้เพื่อรับข้อมูลวัน เดือน ปีเกิด -->
+                                        <div class="form-group pt-3 row">
+                                            <label for="name" class="col-lg-2 col-form-label">วันเกิด:</label>
+                                            <div class="col-lg-10">
+                                                <div class="row">
+                                                    <div class="col-lg-4">
+                                                        <select class="form-select" name="birth_day">
+                                                            <option value="">วัน</option>
+                                                            @for ($day = 1; $day <= 31; $day++)
+                                                                <option value="{{ $day }}"
+                                                                    {{ $birth_day == $day ? 'selected' : '' }}>
+                                                                    {{ $day }}</option>
+                                                            @endfor
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <select class="form-select" name="birth_month">
+                                                            <option value="">เดือน</option>
+                                                            @for ($month = 1; $month <= 12; $month++)
+                                                                <option value="{{ $month }}"
+                                                                    {{ $birth_month == $month ? 'selected' : '' }}>
+                                                                    {{ $month }}</option>
+                                                            @endfor
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <select class="form-select" name="birth_year">
+                                                            <option value="">ปี</option>
+                                                            @for ($year = date('Y'); $year >= 1900; $year--)
+                                                                <option value="{{ $year }}"
+                                                                    {{ $birth_year == $year ? 'selected' : '' }}>
+                                                                    {{ $year }}</option>
+                                                            @endfor
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="form-group pt-3 row">
                                             <label for="name" class="col-lg-2 col-form-label">อีเมล:</label>
                                             <div class="col-lg-10">
@@ -67,10 +105,12 @@
                                         <div class="form-group pt-3 row">
                                             <label for="name" class="col-lg-2 col-form-label">คณะ:</label>
                                             <div class="col-lg-10">
-                                                <select id="faculty-dd" class="form-select" aria-label="Default select example" name="std_faculty">
+                                                <select id="faculty-dd" class="form-select"
+                                                    aria-label="Default select example" name="std_faculty">
                                                     <option value="">เลือกคณะ</option>
                                                     @foreach ($faculties as $faculty)
-                                                        <option value="{{ $faculty->id }}" {{ $student->std_faculty == $faculty->id ? 'selected' : '' }}>
+                                                        <option value="{{ $faculty->id }}"
+                                                            {{ $student->std_faculty == $faculty->id ? 'selected' : '' }}>
                                                             {{ $faculty->name }}
                                                         </option>
                                                     @endforeach
@@ -81,11 +121,13 @@
                                         <div class="form-group pt-3 row">
                                             <label for="name" class="col-lg-2 col-form-label">สาขา:</label>
                                             <div class="col-lg-10">
-                                                <select id="major-dd" class="form-select" aria-label="Default select example" name="std_major">
+                                                <select id="major-dd" class="form-select"
+                                                    aria-label="Default select example" name="std_major">
                                                     <option value="">เลือกสาขา</option>
                                                     @foreach ($majors as $major)
                                                         @if ($student->std_faculty == $major->faculty_id || old('std_faculty') == $major->faculty_id)
-                                                            <option value="{{ $major->id }}" {{ $student->std_major == $major->id ? 'selected' : '' }}>
+                                                            <option value="{{ $major->id }}"
+                                                                {{ $student->std_major == $major->id ? 'selected' : '' }}>
                                                                 {{ $major->name }}
                                                             </option>
                                                         @endif
@@ -99,7 +141,8 @@
                                                 <select class="form-select" aria-label="Default select example"
                                                     name="std_class">
                                                     <option selected>เลือกชั้นปี</option>
-                                                    <option value="1" {{ $student->std_class == 1 ? 'selected' : '' }}>
+                                                    <option value="1"
+                                                        {{ $student->std_class == 1 ? 'selected' : '' }}>
                                                         1</option>
                                                     <option value="2"
                                                         {{ $student->std_class == 2 ? 'selected' : '' }}>2</option>
@@ -115,12 +158,6 @@
                                                 class="col-lg-2 col-form-label">เกรดเฉลี่ยสะสม(GPAX):</label>
                                             <div class="col-lg-10">
                                                 <input type="hidden" name="std_gpax" value="">
-                                            </div>
-                                        </div>
-                                        <div class="form-group pt-3 row" style="display: none">
-                                            <label for="name" class="col-lg-2 col-form-label">ใบเกรด:</label>
-                                            <div class="col-lg-10">
-                                                <input type="hidden" name="std_grade" value="">
                                             </div>
                                         </div>
                                 </div>
