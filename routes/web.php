@@ -112,6 +112,9 @@ Route::middleware(['auth'])->group(function ()
     Route::get('advisorHome', [AdvisorController::class, 'advisorHome'])->name('advisorHome')->middleware('advisor');
     Route::get('approveTutor', [AdvisorController::class, 'approveTutor']);
 
+    Route::get('detail-student/{std_id}', [AdvisorController::class, 'detailStudent']);
+    //  Route::put('update-advisor/{advisor_id}', [AdvisorController::class, 'updateAdvisor']);
+
     // -------------------------------หน้าหลังเข้าสู่ระบบของนิสิต---------------------------------------------------
     Route::get('tutorHome', [StudentController::class, 'tutorHome'])->name('tutorHome');
     Route::get('manageSubject', [StudentController::class, 'manageSubject']);

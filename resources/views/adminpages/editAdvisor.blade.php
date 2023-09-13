@@ -61,7 +61,7 @@
                                         <div class="form-group pt-3 row" style="display: none">
                                             <label for="name" class="col-lg-2 col-form-label">สถานะ:</label>
                                             <div class="col-lg-10">
-                                                <input type="hidden" name="advisor_status" value="3">
+                                                <input type="hidden" name="advisor_status" value="2">
                                             </div>
                                         </div>
                                         <div class="form-group pt-3 row">

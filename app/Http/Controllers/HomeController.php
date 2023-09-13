@@ -29,6 +29,9 @@ class HomeController extends Controller
             ->select('students.*', 'faculties.name as faculty_name', 'majors.name as major_name')
             ->first();
 
+        $faculties = Faculty::all();
+        $majors    = Major::all();
+
         if ($student)
         {
             if ($student->std_status == 4 || $student->std_status == 5)

@@ -21,24 +21,12 @@ class StudentController extends Controller
 
     public function insertstd(Request $request)
     {
-        // รับข้อมูลจากคำขอ HTTP
-        // $std_id       = $request->input('std_id');
-        // $std_name     = $request->input('std_name');
-        // $std_surname  = $request->input('std_surname');
-        // $std_email    = $request->input('std_email');
-        // $std_password = $request->input('std_password');
-        // $std_status   = $request->input('std_status');
-        // $std_faculty  = $request->input('std_faculty');
-        // $std_major    = $request->input('std_major');
-        // $std_class    = $request->input('std_class');
-
-        $birthdate = $request->input('birth_year') . '-' . $request->input('birth_month') . '-' . $request->input('birth_day');
-
+        // ทำการ validate ข้อมูล
         $request->validate([
-            'std_id'       => 'required',
+            'std_id'       => 'required|unique:students',
             'std_name'     => 'required',
             'std_surname'  => 'required',
-            'std_email'    => 'required|email',
+            'std_email'    => 'required|email|unique:students|unique:users,email',
             'std_password' => 'required',
             'std_status'   => 'required',
             'std_faculty'  => 'required',
@@ -49,23 +37,33 @@ class StudentController extends Controller
             'birth_year'   => 'required',
         ]);
 
-        // เก็บข้อมูลเข้าฐานข้อมูล
+        $birthdate = $request->input('birth_year') . '-' . $request->input('birth_month') . '-' . $request->input('birth_day');
+
+        // เพิ่มข้อมูลในตาราง 'students' โดยใช้ Query Builder
         DB::table('students')->insert([
             'std_id'       => $request->input('std_id'),
             'std_name'     => $request->input('std_name'),
             'std_surname'  => $request->input('std_surname'),
             'std_email'    => $request->input('std_email'),
-            'std_password' => $request->input('std_password'),
+            'std_password' => bcrypt($request->input('std_password')),
             'std_status'   => $request->input('std_status'),
             'std_faculty'  => $request->input('std_faculty'),
             'std_major'    => $request->input('std_major'),
             'std_class'    => $request->input('std_class'),
             'std_gpax'     => null,
-            'birthdate'    => $birthdate, // Insert birthdate
+            'birthdate'    => $birthdate,
+        ]);
+
+        // เพิ่มข้อมูลในตาราง 'users' โดยใช้ Query Builder
+        DB::table('users')->insert([
+            'name'     => $request->input('std_name'),
+            'email'    => $request->input('std_email'),
+            'password' => bcrypt($request->input('std_password')),
+            'status'   => $request->input('std_status'),
+            'user_id'  => $request->input('std_id'),
         ]);
 
         return redirect('manageStudent')->with('success', 'เพิ่มข้อมูลนิสิตเรียบร้อยแล้ว');
-
     }
 
     // -----สิ้นสุดการเพิ่มข้อมูลนิสิต-----
@@ -99,6 +97,21 @@ class StudentController extends Controller
     public function updateStudent(Request $request, $std_id)
     {
         // Validate the incoming request data here
+        $request->validate([
+            'std_id'       => 'required',
+            'std_name'     => 'required',
+            'std_surname'  => 'required',
+            'std_email'    => 'required|email',
+            'std_password' => 'required',
+            'std_status'   => 'required',
+            'std_faculty'  => 'required',
+            'std_major'    => 'required',
+            'std_class'    => 'required',
+            'std_gpax'     => 'nullable|numeric',
+            'birth_day'    => 'required',
+            'birth_month'  => 'required',
+            'birth_year'   => 'required',
+        ]);
 
         // Use the query builder to update the student's information
 
@@ -124,6 +137,17 @@ class StudentController extends Controller
                 // Add more fields to update as needed
             ]);
 
+        DB::table('users')
+            ->where('user_id', $std_id)
+            ->update([
+                'name'     => $request->input('std_name'),
+                'email'    => $request->input('std_email'),
+                'password' => bcrypt($request->input('std_password')),
+                'status'   => $request->input('std_status'),
+                'user_id'  => $request->input('std_id'), // หากคุณต้องการอัปเดต user_id
+                // เพิ่มคอลัมน์อื่นๆ ที่คุณต้องการอัปเดต
+            ]);
+
         return redirect('manageStudent')->with('success', 'แก้ไขข้อมูลนิสิตเรียบร้อยแล้ว');
 
     }
@@ -133,12 +157,29 @@ class StudentController extends Controller
 
     public function deleteStudent($std_id)
     {
-        // Delete the student record from the database
-        DB::table('students')->where('std_id', $std_id)->delete();
+        // ตรวจสอบว่ามีข้อมูลนิสิตที่ตรงกับ $std_id หรือไม่
+        $student = DB::table('students')
+            ->where('std_id', $std_id)
+            ->first();
 
-        // Redirect to the "manageStudent" page with a success message
+        if ($student)
+        {
+            // ถ้ามีข้อมูลนิสิต ให้ลบข้อมูลนิสิตในตาราง 'students'
+            DB::table('students')
+                ->where('std_id', $std_id)
+                ->delete();
 
-        return redirect()->route('manageStudent')->with('success', 'ลบข้อมูลนิสิตเรียบร้อยแล้ว');
+            // ลบข้อมูลผู้ใช้ในตาราง 'users' โดยใช้ email เพื่อระบุ
+            DB::table('users')
+                ->where('user_id', $std_id)
+                ->delete();
+
+            return redirect('manageStudent')->with('success', 'ลบข้อมูลนิสิตเรียบร้อยแล้ว');
+        }
+        else
+        {
+            return redirect('manageStudent')->with('error', 'ไม่พบข้อมูลนิสิตที่ตรงกับรหัสนิสิตที่ระบุ');
+        }
     }
 
     // -----สิ้นสุดการลบข้อมูลนิสิต-----
