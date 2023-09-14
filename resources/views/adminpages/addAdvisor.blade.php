@@ -23,13 +23,13 @@
                             <div class="card-body pt-3 pb-2">
                                 <form action="{{ url('/insert-advisor') }}" method="POST">
                                     @csrf
-                                    {{-- <div class="form-group pt-3 row">
+                                    <div class="form-group pt-3 row" style="display: none">
                                         <label for="advisor_id" class="col-lg-2 col-form-label">รหัสอาจารย์:</label>
                                         <div class="col-lg-10">
                                             <input type="text" class="form-control" placeholder="รหัสอาจารย์"
                                                 name="advisor_id">
                                         </div>
-                                    </div> --}}
+                                    </div>
                                     <div class="form-group pt-3 row">
                                         <label for="advisor_name" class="col-lg-2 col-form-label">ชื่อ:</label>
                                         <div class="col-lg-10">

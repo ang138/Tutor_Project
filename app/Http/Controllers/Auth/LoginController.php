@@ -53,7 +53,7 @@ class LoginController extends Controller
                 return redirect()->route('adminHome');
             }elseif (auth()->user()->status == 2) {
                 return redirect()->route('advisorHome');
-            } else {
+            } elseif (auth()->user()->status == 5) {
                 return redirect()->route('tutorHome');
             }
         }else {

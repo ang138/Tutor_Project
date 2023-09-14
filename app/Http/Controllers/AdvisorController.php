@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Faculty;
 use App\Models\Major;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class AdvisorController extends Controller
@@ -29,6 +30,7 @@ class AdvisorController extends Controller
     public function insertadvisor(Request $request)
     {
         $request->validate([
+
             'advisor_name'     => 'required',
             'advisor_surname'  => 'required',
             'advisor_email'    => 'required|email',
@@ -62,7 +64,7 @@ class AdvisorController extends Controller
                 'email'    => $request->input('advisor_email'),
                 'password' => bcrypt($request->input('advisor_password')),
                 'status'   => $request->input('advisor_status'),
-                'user_id'  => $advisorId,
+                 'user_id'  => $advisorId, // Insert the 'advisor_id' from the advisors table
             ]);
 
             return redirect('manageAdvisor')->with('success', 'เพิ่มข้อมูลอาจารย์เรียบร้อยแล้ว');
@@ -182,6 +184,7 @@ class AdvisorController extends Controller
 
     }
 
+
     /**
      * Create a new controller instance.
      *
@@ -205,13 +208,18 @@ class AdvisorController extends Controller
     public function approveTutor()
     {
         // ดึงข้อมูลนักศึกษาจากฐานข้อมูล
-        $students = DB::table('students')
-            ->join('faculties', 'students.std_faculty', '=', 'faculties.id')
-            ->join('majors', 'students.std_major', '=', 'majors.id')
-            ->select('students.*', 'faculties.name as faculty_name', 'majors.name as major_name')
+        $advisorId = Auth::user()->user_id; // Adjust this according to your user structure
+
+        // Query the student_advisor table to get students under the advisor's supervision
+        $students = DB::table('student_advisors')
+            ->join('students', 'student_advisors.std_id', '=', 'students.std_id')
+            ->where('student_advisors.advisor_id', $advisorId)
+            ->select('students.*')
             ->get();
 
+        // Pass the $students data to the view
         return view('advisorpages.approveTutor', ['students' => $students]);
+
     }
 
 }
