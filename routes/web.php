@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdvisorController;
+use App\Http\Controllers\CourseController;
 use App\Http\Controllers\FacultyController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ManageAdvisorController;
@@ -113,11 +114,24 @@ Route::middleware(['auth'])->group(function ()
     Route::get('approveTutor', [AdvisorController::class, 'approveTutor']);
 
     Route::get('detail-student/{std_id}', [AdvisorController::class, 'detailStudent']);
+    Route::post('approve-student/{std_id}', [AdvisorController::class, 'approveStudent'])->name('approveStudent');
     //  Route::put('update-advisor/{advisor_id}', [AdvisorController::class, 'updateAdvisor']);
 
     // -------------------------------หน้าหลังเข้าสู่ระบบของนิสิต---------------------------------------------------
     Route::get('tutorHome', [StudentController::class, 'tutorHome'])->name('tutorHome');
     Route::get('manageSubject', [StudentController::class, 'manageSubject']);
     Route::get('enrollment', [StudentController::class, 'enrollment']);
+
+    // -----เพิ่มข้อรายวิชา-----
+    Route::get('addCourse', [CourseController::class, 'addcourseform']);
+    Route::post('insert-course', [CourseController::class, 'insertcourse']);
+    // Route::post('insert-student', [StudentController::class, 'insertstd']);
+
+    // -----อัปเดตรายวิชา------
+    Route::get('/course-details/{course_id}', [CourseController::class, 'viewCourseDetails']);
+    Route::get('edit-course/{course_id}', [CourseController::class, 'editCourse']);
+    Route::put('update-course/{course_id}', [CourseController::class, 'updatenewCourse']);
+
+
 
 });

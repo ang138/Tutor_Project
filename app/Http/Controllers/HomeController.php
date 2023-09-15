@@ -88,6 +88,11 @@ class HomeController extends Controller
                 'std_line'     => $request->input('std_line'),
                 'std_status'   => 4, // Update status to 4
             ]);
+        DB::table('users')
+            ->where('user_id', $std_id)
+            ->update([
+                'status'   => 4, // Update status to 4
+            ]);
 
         // Redirect with a success message
 

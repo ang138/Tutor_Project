@@ -5,170 +5,53 @@
 @endsection
 @section('content')
     <div class="container pt-5">
-        <h1 style="text-align: center; font-weight: bold;">รายวิชาที่ต้องการเปิดสอน</h1>
-        <div class="card col-md-8 mx-auto" style="border: 1;">
-            <div class="card-body">
-                {{-- ------------------------ --}}
-                <div class="row" style="padding-left: 10px; padding-right: 10px">
-                    <div class="card" style="background-color: #6A9BBE; width: 28rem;">
-                        <div class="card-body pt-3 pb-2">
-                            <h4 style="text-align: center; font-weight: bold;">รายวิชาที่ต้องการเปิดสอน</h4>
-                        </div>
-                    </div>
-                </div>
+        <h1 style="text-align: center; font-weight: bold;">ข้อมูลรายวิชาที่เปิดสอน</h1>
 
-                <div class="row justify-content-center">
-                    <div class="col-md-8 pt-1 ">
-                        <div class="card" style="border: 0;">
-                            <div class="card-body pt-3 pb-2">
-                                <form>
-                                    <div class="form-group">
-                                        <label for="exampleFormControlSelect1">*คำนำหน้า (Name Title)</label>
-                                        <select class="form-select" aria-label="Default select example">
-                                            <option selected>---คำนำหน้า---</option>
-                                            <option value="1">นาย</option>
-                                            <option value="2">นางสาว</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group pt-3">
-                                        <label for="exampleFormControlSelect1">ชื่อ</label>
-                                        <input type="text" class="form-control" placeholder="First name">
-                                    </div>
-                                    <div class="form-group pt-3">
-                                        <label for="exampleFormControlSelect1">นามสกุล</label>
-                                        <input type="text" class="form-control" placeholder="Last name">
-                                    </div>
-                                    <div class="form-group pt-3">
-                                        <label for="exampleInputEmail1">ชื่อเล่น</label>
-                                        <input type="text" class="form-control" placeholder="First name">
-                                    </div>
-                                    <div class="form-group pt-3">
-                                        <label for="startDate">วันเกิด</label>
-                                        <input id="startDate" class="form-control" type="date" />
-                                    </div>
-
-                                    {{-- <div class="row pt-3">
-                                    <div class="col">
-                                        <label for="exampleFormControlSelect1">ชื่อ</label>
-                                        <input type="text" class="form-control" placeholder="First name">
-                                    </div>
-                                    <div class="col">
-                                        <label for="exampleFormControlSelect1">นามสกุล</label>
-                                        <input type="text" class="form-control" placeholder="Last name">
-                                    </div>
-                                </div>
-                                <div class="row pt-3">
-                                    <div class="col">
-                                        <label for="exampleInputEmail1">ชื่อเล่น</label>
-                                        <input type="text" class="form-control" placeholder="First name">
-                                    </div>
-                                    <div class="col">
-                                        <label for="startDate">วันเกิด</label>
-                                        <input id="startDate" class="form-control" type="date" />
-                                    </div>
-                                </div> --}}
-
-                                    <div class="form-group pt-3">
-                                        <label for="exampleFormControlSelect1">เบอร์โทรศัพท์</label>
-                                        <input type="text" class="form-control" placeholder="First name">
-                                    </div>
-
-                                    <div class="form-group pt-3">
-                                        <label for="exampleFormControlSelect1">*Line ID</label>
-                                        <input type="text" class="form-control" placeholder="First name">
-                                    </div>
-                                    <div class="form-group pt-3 pb-3">
-                                        <label for="exampleFormControlSelect1">Facebook</label>
-                                        <input type="text" class="form-control" placeholder="First name">
-                                    </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {{-- ------------------------------ --}}
-                <div class="row pt-3" style="padding-left: 10px; padding-right: 10px">
-                    <div class="card" style="background-color: #6A9BBE; width: 30rem;">
-                        <div class="card-body pt-3 pb-2">
-                            <h4 style="text-align: center; font-weight: bold;">รายวิชาที่ต้องการเปิดสอน</h4>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row justify-content-center">
-                    <div class="col-md-8 pt-1 ">
-                        <div class="card" style="border: 0;">
-                            <div class="card-body pt-3 pb-2">
-                                <div class="form-group">
-                                    <label for="exampleFormControlSelect1">*คำนำหน้า (Name Title)</label>
-                                    <select class="form-select" aria-label="Default select example">
-                                        <option selected>---คำนำหน้า---</option>
-                                        <option value="1">นาย</option>
-                                        <option value="2">นางสาว</option>
-                                    </select>
-                                </div>
-                                <div class="form-group pt-3">
-                                    <label for="exampleFormControlSelect1">*คำนำหน้า (Name Title)</label>
-                                    <select class="form-select" aria-label="Default select example">
-                                        <option selected>---คำนำหน้า---</option>
-                                        <option value="1">นาย</option>
-                                        <option value="2">นางสาว</option>
-                                    </select>
-                                </div>
-                                <div class="form-group pt-3">
-                                    <label for="exampleFormControlSelect1">ชื่อ</label>
-                                    <input type="text" class="form-control" placeholder="First name">
-                                </div>
-                                <div class="form-group pt-3">
-                                    <label for="exampleFormControlSelect1">นามสกุล</label>
-                                    <input type="text" class="form-control" placeholder="Last name">
-                                </div>
-                                <div class="form-group pt-3">
-                                    <label for="exampleInputEmail1">ชื่อเล่น</label>
-                                    <input type="text" class="form-control" placeholder="First name">
-                                </div>
-
-                                {{-- <div class="row pt-3">
-                                    <div class="col">
-                                        <label for="exampleFormControlSelect1">ชื่อ</label>
-                                        <input type="text" class="form-control" placeholder="First name">
-                                    </div>
-                                    <div class="col">
-                                        <label for="exampleFormControlSelect1">นามสกุล</label>
-                                        <input type="text" class="form-control" placeholder="Last name">
-                                    </div>
-                                </div>
-                                <div class="row pt-3">
-                                    <div class="col">
-                                        <label for="exampleInputEmail1">ชื่อเล่น</label>
-                                        <input type="text" class="form-control" placeholder="First name">
-                                    </div>
-                                    <div class="col">
-                                        <label for="startDate">วันเกิด</label>
-                                        <input id="startDate" class="form-control" type="date" />
-                                    </div>
-                                </div> --}}
-
-                                <div class="mb-3 pt-3">
-                                    <label for="formFile" class="form-label">Default file input example</label>
-                                    <input class="form-control" type="file" id="formFile">
-                                </div>
-                                <div class="form-group pt-1">
-                                    <label for="exampleFormControlSelect1">Facebook</label>
-                                    <input type="text" class="form-control" placeholder="First name">
-                                </div>
-                                <div class="apply row mb-5 pt-12">
-                                    <button type="submit" class="apply-btn btn-primary"> {{ __('Login') }}</button>
-                                </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {{-- ------------------------------ --}}
+        <!-- แสดงข้อความแจ้งเตือน -->
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
             </div>
+        @endif
+
+        <div class="d-flex justify-content-end mb-3">
+            <a href="addCourse" class="btn"><i class="fa fa-plus"></i> เพิ่มราวิชาที่ต้องการสอน</a>
         </div>
-
-
-
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>รายวิชา</th>
+                        <th>จำนวนนิสิต</th>
+                        <th>สถานที่</th>
+                        <th>ดูรายเอียด</th>
+                        <th>เปิด-ปิดรายวิชา</th>
+                        <!-- Add more course-related columns here -->
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($courses as $course)
+                        <tr>
+                            <td>{{ $course->subject_name }}</td>
+                            <td>{{ $course->number_of_students }}</td>
+                            <td>{{ $course->location }}</td>
+                            <td>
+                                <div class="btn-group" role="group" aria-label="First group">
+                                    <a href="{{ url('edit-course/' . $course->course_id) }}" class="btn btn-sm">
+                                        ดูรายละเอียด
+                                    </a>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
+                                  </div>
+                            </td>
+                            <!-- Add more course-related data here -->
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
 @endsection

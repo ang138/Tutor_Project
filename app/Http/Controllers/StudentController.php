@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Faculty;
 use App\Models\Major;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class StudentController extends Controller
@@ -216,8 +217,22 @@ class StudentController extends Controller
     }
     public function manageSubject()
     {
-        return view('tutorpages.manageSubject');
+        // Get the currently logged-in tutor's ID
+
+        $stdId = Auth::user()->user_id; // Adjust this according to your user structure
+
+        // Query the student_advisor table to get students under the advisor's supervision
+
+        $courses = DB::table('student_courses')
+            ->join('courses', 'student_courses.course_id', '=', 'courses.course_id')
+            ->join('subjects', 'courses.course_name', '=', 'subjects.subject_id')
+            ->where('student_courses.std_id', $stdId)
+            ->select('courses.*', 'subjects.subject_name')
+            ->get();
+
+        return view('tutorpages.manageSubject', ['courses' => $courses]);
     }
+
     public function enrollment()
     {
         return view('tutorpages.enrollment');
