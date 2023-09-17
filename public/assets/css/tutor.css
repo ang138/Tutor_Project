@@ -50,3 +50,19 @@ th {
         margin: auto;
         display: block;
 }
+
+.red-button {
+    background-color: red;
+    color: white;
+    /* เพิ่มสไตล์ CSS อื่น ๆ ตามต้องการ */
+}
+
+/* Style the profile picture */
+.profile-picture {
+    cursor: pointer; /* Change cursor to a pointer when hovering over the picture */
+}
+
+/* Style the edit button */
+#editProfilePictureButton {
+    margin-top: 10px; /* Add spacing below the picture */
+}

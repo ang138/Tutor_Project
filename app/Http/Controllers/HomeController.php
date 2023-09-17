@@ -131,11 +131,6 @@ class HomeController extends Controller
         return view('pages.home', compact('images'));
     }
 
-    public function about()
-    {
-        return view('pages.about');
-    }
-
     public function applyTutor()
     {
         return view('pages.applyTutor');
@@ -144,11 +139,6 @@ class HomeController extends Controller
     public function contact()
     {
         return view('pages.contact');
-    }
-
-    public function subject()
-    {
-        return view('pages.subject');
     }
 
     public function detail()

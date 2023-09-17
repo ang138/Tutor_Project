@@ -64,6 +64,7 @@
                                     </label>
                                 </div>
 
+
                                 <div id="numberOfStudentsDiv">
                                     <div class="form-group pt-3">
                                         <label for="number_of_students">จำนวนผู้เรียน</label>
@@ -88,7 +89,7 @@
                                     @enderror
                                 </div>
                                 <div class="form-group pt-3">
-                                    <label for="exampleFormControlSelect1">ราคา/ชั่วโมง</label>
+                                    <label for="exampleFormControlSelect1">ราคาคอร์ส</label>
                                     <input type="text" class="form-control" placeholder="ราคา" name="course_price">
                                     @error('course_price')
                                         <span class="text-danger">{{ $message }}</span>

@@ -4,77 +4,179 @@
     หาติวเตอร์
 @endsection
 @section('content')
-    <!--ส่วนของ Feature -->
-    <div class="container pt-5">
-        <h1 style="text-align: center; font-weight: bold;">รายละเอียดรายวิชา และ ติวเตอร์</h1>
-        <div class="card col-md-12 mx-auto" style="border: 1;">
-            <div class="card-body">
-                <div class="row row-cols-1 row-cols-md-2 g-4">
-
-                    <div class="col-md-4 text-center">
-                        <div class="card bg-light">
-                            <img src="{{ asset('assets/images/tutor.jpg') }}" class="card-img-top mx-auto pt-2" style="width: 18rem; alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">วิชาคอมพิวเตอร์</h5>
+    <div class="container py-5">
+        <h1 style="text-align: center; font-weight: bold;">ข้อมูลรายละเอียดคอร์สและติวเตอร์</h1>
+        <div class="row pt-3">
+            <div class="col-lg-4">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="text-center">
+                        <img src="{{ asset($students->std_image) }}"
+                            style="width: 200px; height: 185px;">
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">ชื่อ</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">{{ $students->std_name }}</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">นามสกุล</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">{{ $students->std_surname }}</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">คณะ</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">{{ $students->faculty_name }}</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">สาขา</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">{{ $students->major_name }}</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">ชั้นปี</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">{{ $students->std_class }}</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">GPAX</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">{{ $students->std_gpax }}</p>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-8 text-center">
-                        <div class="card bg-light" style="height: 100%;">
-                            <div class="card-body">
-                                <h5 class="card-title">
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi enim magnam, ex
-                                        provident
-                                        doloribus
-                                        reprehenderit doloremque tenetur pariatur temporibus quisquam excepturi. Totam iusto
-                                        aliquam
-                                        nostrum
-                                        praesentium soluta laudantium quibusdam. Accusamus!</p>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi enim magnam, ex
-                                        provident
-                                        doloribus
-                                        reprehenderit doloremque tenetur pariatur temporibus quisquam excepturi. Totam iusto
-                                        aliquam
-                                        nostrum
-                                        praesentium soluta laudantium quibusdam. Accusamus!</p>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi enim magnam, ex
-                                        provident
-                                        doloribus
-                                        reprehenderit doloremque tenetur pariatur temporibus quisquam excepturi. Totam iusto
-                                        aliquam
-                                        nostrum
-                                        praesentium soluta laudantium quibusdam. Accusamus!</p>
-                                </h5>
-                                <small class="text-muted">
-                                    <button type="submit" class="btn-detail"> {{ __('Login') }} </button>
-                                </small>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    {{-- <div class="col">
-                      <div class="card h-70 w-50 bg-light">
-                        <img src="{{ asset('assets/images/computer.png') }}" class="card-img-top" alt="...">
-                        <div class="card-body">
-                          <h5 class="card-title">วิชาคอมพิวเตอร์</h5>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col">
-                      <div class="card h-60 bg-light">
-                        <img src="{{ asset('assets/images/slide2.jpg') }}" class="card-img-top" alt="...">
-                        <div class="card-body">
-                          <h5 class="card-title">Card title</h5>
-                        </div>
-                        <div class="card-footer">
-                            <small class="text-muted"><a href="{{ url('subject') }}" class="btn-detail">หาติวเตอร์</a></small>
-                        </div>
-                      </div>
-                    </div> --}}
                 </div>
-
-
+                <div class="card mb-4 mb-lg-0">
+                    <div class="card-body p-0">
+                        <ul class="list-group list-group-flush rounded-3">
+                            <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                <i class="fa fa-envelope fa-lg"></i>
+                                <p class="mb-0">{{ $students->std_email }}</p>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                <i class="fa fa-phone-square fa-lg"></i>
+                                <p class="mb-0">{{ $students->std_tel }}</p>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                <i class="fab fa-facebook-f fa-lg" style="color: #3b5998;"></i>
+                                <p class="mb-0">{{ $students->std_facebook }}</p>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                <i class="fab fa-line fa-lg" style="color: #59ca3d;"></i>
+                                <p class="mb-0">{{ $students->std_line }}</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">รายวิชา</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">{{ $students->subject_name }}</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">เนื้อหาที่จะสอน</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">{!! $students->course_content !!}</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">สถานที่สะดวกสอน</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">{{ $students->location }}</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">การสอน</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">{{ $students->course_type }}</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">วันที่สะดวกสอน</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">{{ $students->teaching_days }}</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">เวลาที่สะดวกสอน</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">{{ $students->teaching_times }}</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">ราคาคอร์ส</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">{{ $students->course_price }}</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">ข้อความถึงผู้เรียน</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">{{ $students->message_to_students }}</p>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center mt-3">
+                            <div class="btn-group" role="group" aria-label="First group">
+                                <a href="{{ url('course-open', ['id' => $students->subject_id]) }}" class="btn-detail">ย้อนกลับ</a>
+                            </div>
+                            <div class="btn-group" role="group" aria-label="Second group">
+                                <a href="{{ url('enroll-form', ['course_id' => $course->course_id]) }}" class="btn btn-danger btn-sm me-2">ลงทะเบียนเรียน</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

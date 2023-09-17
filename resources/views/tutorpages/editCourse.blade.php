@@ -40,10 +40,9 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <hr>
 
                                     <!-- Course Content -->
-                                    <div class="form-group">
+                                    <div class="form-group pt-3">
                                         <label for="course_content">รายละเอียด</label>
                                         <textarea class="form-control" id="task_textarea" name="course_content" rows="4">{{ $course->course_content }}</textarea>
                                     </div>
@@ -83,14 +82,14 @@
                                             <label class="form-check-label" for="flexRadioDefault2">สอนตัวต่อตัว</label>
                                         </div>
                                     </div>
-                                    <hr>
 
                                     <!-- Number of Students -->
-                                    <div class="form-group">
+                                    <div class="form-group pt-3">
                                         <label for="number_of_students">จำนวนผู้เรียนที่เปิดรับ</label>
                                         <input type="number" class="form-control" id="number_of_students"
                                             name="number_of_students" value="{{ $course->number_of_students }}">
                                     </div>
+                                    <hr>
 
                                     <!-- Teaching Days -->
                                     <div class="form-group">
@@ -108,7 +107,7 @@
 
                                     <!-- Course Price -->
                                     <div class="form-group">
-                                        <label for="course_price">ราคา/ชั่วโมง</label>
+                                        <label for="course_price">ราคาคอร์ส</label>
                                         <input type="text" class="form-control" id="course_price" name="course_price"
                                             value="{{ $course->course_price }}">
                                     </div>
@@ -126,7 +125,7 @@
 
                                     <div class="form-group">
                                         <label for="image_file">อัปโหลดรูปใบชำระเงินใหม่ (หากต้องการแทนที่):</label>
-                                        <input type="file" class="form-control-file" id="image_file"
+                                        <input type="file" class="form-control-file" id="payment_receipt"
                                             name="payment_receipt" value="{{ $course->payment_receipt }}"
                                             accept="image/*">
                                     </div>

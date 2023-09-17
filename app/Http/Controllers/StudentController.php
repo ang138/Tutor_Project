@@ -7,6 +7,7 @@ use App\Models\Major;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class StudentController extends Controller
 {
@@ -200,6 +201,36 @@ class StudentController extends Controller
         return view('adminpages.manageStudent', ['students' => $students]);
     }
 
+    public function studentImageProfile(Request $request, $std_id)
+    {
+        $validator = Validator::make($request->all(), [
+            'std_image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            // Add validation rules for other fields as needed
+        ]);
+
+        if ($validator->fails())
+        {
+            return back()->withErrors($validator)->withInput();
+        }
+
+        $stdId = Auth::user()->user_id;
+
+        if ($request->hasFile('std_image'))
+        {
+            $file      = $request->file('std_image');
+            $extension = $file->getClientOriginalExtension();
+            $fileName  = time() . '.' . $extension;
+            $file->move('assets/images', $fileName);
+
+            // Update the 'payment_receipt' column in the database
+            DB::table('students')
+                ->where('std_id', $stdId)
+                ->update(['std_image' => 'assets/images/' . $fileName]);
+        }
+
+        return redirect('tutorHome')->with('success', 'อัปเดตข้อมูลรูปภาพเรียบร้อยแล้ว');
+    }
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -213,13 +244,42 @@ class StudentController extends Controller
 
     public function tutorHome()
     {
-        return view('tutorpages.tutorHome');
+        $stdId = Auth::user()->user_id;
+
+        $students = DB::table('students')
+            ->join('faculties', 'students.std_faculty', '=', 'faculties.id')
+            ->join('majors', 'students.std_major', '=', 'majors.id')
+            ->where('students.std_id', $stdId)
+            ->select('students.*', 'faculties.name as faculty_name', 'majors.name as major_name')
+            ->first();
+
+        if (!$students)
+        {
+            // Handle case when tutor information is not found
+            return redirect()->route('home')->with('error', 'Tutor information not found');
+        }
+
+        return view('tutorpages.tutorHome', ['students' => $students]);
     }
+
     public function manageSubject()
     {
         // Get the currently logged-in tutor's ID
 
         $stdId = Auth::user()->user_id; // Adjust this according to your user structure
+
+        $students = DB::table('students')
+            ->join('faculties', 'students.std_faculty', '=', 'faculties.id')
+            ->join('majors', 'students.std_major', '=', 'majors.id')
+            ->where('students.std_id', $stdId)
+            ->select('students.*', 'faculties.name as faculty_name', 'majors.name as major_name')
+            ->first();
+
+        if (!$students)
+        {
+            // Handle case when tutor information is not found
+            return redirect()->route('home')->with('error', 'Tutor information not found');
+        }
 
         // Query the student_advisor table to get students under the advisor's supervision
 
@@ -230,11 +290,38 @@ class StudentController extends Controller
             ->select('courses.*', 'subjects.subject_name')
             ->get();
 
-        return view('tutorpages.manageSubject', ['courses' => $courses]);
+        return view('tutorpages.manageSubject', ['courses' => $courses,'students' => $students]);
     }
 
     public function enrollment()
     {
-        return view('tutorpages.enrollment');
+
+       // Get the currently logged-in tutor's ID
+
+       $stdId = Auth::user()->user_id; // Adjust this according to your user structure
+
+       $students = DB::table('students')
+           ->join('faculties', 'students.std_faculty', '=', 'faculties.id')
+           ->join('majors', 'students.std_major', '=', 'majors.id')
+           ->where('students.std_id', $stdId)
+           ->select('students.*', 'faculties.name as faculty_name', 'majors.name as major_name')
+           ->first();
+
+       if (!$students)
+       {
+           // Handle case when tutor information is not found
+           return redirect()->route('home')->with('error', 'Tutor information not found');
+       }
+
+       // Query the student_advisor table to get students under the advisor's supervision
+
+       $courses = DB::table('student_courses')
+           ->join('courses', 'student_courses.course_id', '=', 'courses.course_id')
+           ->join('subjects', 'courses.course_name', '=', 'subjects.subject_id')
+           ->where('student_courses.std_id', $stdId)
+           ->select('courses.*', 'subjects.subject_name')
+           ->get();
+
+        return view('tutorpages.enrollment', ['courses' => $courses,'students' => $students]);
     }
 }

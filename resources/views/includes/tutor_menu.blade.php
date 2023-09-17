@@ -30,10 +30,11 @@
                     @endif
                 @else
                     <li class="nav-item">
-                        <a class="nav-link" href="#" role="button"
-                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                        <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false" v-pre>
                             ติวเตอร์: {{ Auth::user()->name }}
-                            <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
+                            <img class="img-profile rounded-circle" src="{{ asset($students->std_image) }}"
+                                style="width: 30px; height: 30px;">
                             &nbsp|
                         </a>
                     </li>

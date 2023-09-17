@@ -6,7 +6,9 @@ use App\Models\course;
 use App\Models\student_course;
 use App\Models\subject;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
 class CourseController extends Controller
@@ -15,7 +17,22 @@ class CourseController extends Controller
     {
         $subjects = Subject::all();
 
-        return view('tutorpages.addCourse', ['subjects' => $subjects]);
+        $stdId = Auth::user()->user_id; // Adjust this according to your user structure
+
+        $students = DB::table('students')
+            ->join('faculties', 'students.std_faculty', '=', 'faculties.id')
+            ->join('majors', 'students.std_major', '=', 'majors.id')
+            ->where('students.std_id', $stdId)
+            ->select('students.*', 'faculties.name as faculty_name', 'majors.name as major_name')
+            ->first();
+
+        if (!$students)
+        {
+            // Handle case when tutor information is not found
+            return redirect()->route('home')->with('error', 'Tutor information not found');
+        }
+
+        return view('tutorpages.addCourse', ['subjects' => $subjects, 'students' => $students]);
     }
 
     public function insertCourse(Request $request)
@@ -24,7 +41,7 @@ class CourseController extends Controller
         $validator = Validator::make($request->all(), [
             'subject_id'          => 'required',
             'course_content'      => 'required',
-            'course_type'         => 'nullable',
+            'course_type'         => 'required',
             'number_of_students'  => 'nullable|numeric|min:1',
             'teaching_days'       => 'required',
             'teaching_times'      => 'required',
@@ -94,12 +111,27 @@ class CourseController extends Controller
             return redirect()->back()->with('error', 'Course not found');
         }
 
+        $stdId = Auth::user()->user_id; // Adjust this according to your user structure
+
+        $students = DB::table('students')
+            ->join('faculties', 'students.std_faculty', '=', 'faculties.id')
+            ->join('majors', 'students.std_major', '=', 'majors.id')
+            ->where('students.std_id', $stdId)
+            ->select('students.*', 'faculties.name as faculty_name', 'majors.name as major_name')
+            ->first();
+
+        if (!$students)
+        {
+            // Handle case when tutor information is not found
+            return redirect()->route('home')->with('error', 'Tutor information not found');
+        }
+
         // Query the subjects table to get the subject name
         $subject = DB::table('subjects')->where('subject_id', $course->course_name)->value('subject_name');
 
         // Pass the course and subject details to a view and return it
 
-        return view('tutorpages.courseDetails', ['course' => $course, 'subject' => $subject]);
+        return view('tutorpages.courseDetails', ['course' => $course, 'subject' => $subject, 'students' => $students]);
     }
 
     public function editCourse($course_id)
@@ -112,6 +144,21 @@ class CourseController extends Controller
             return redirect()->back()->with('error', 'Course not found');
         }
 
+        $stdId = Auth::user()->user_id; // Adjust this according to your user structure
+
+        $students = DB::table('students')
+            ->join('faculties', 'students.std_faculty', '=', 'faculties.id')
+            ->join('majors', 'students.std_major', '=', 'majors.id')
+            ->where('students.std_id', $stdId)
+            ->select('students.*', 'faculties.name as faculty_name', 'majors.name as major_name')
+            ->first();
+
+        if (!$students)
+        {
+            // Handle case when tutor information is not found
+            return redirect()->route('home')->with('error', 'Tutor information not found');
+        }
+
         // Retrieve the subject name based on course_name
         $subject = Subject::where('subject_id', $course->course_name)->value('subject_name');
 
@@ -120,7 +167,7 @@ class CourseController extends Controller
 
         $locations = explode(', ', $course->location);
 
-        return view('tutorpages.editCourse', compact('course', 'subject', 'subjects', 'locations'));
+        return view('tutorpages.editCourse', compact('course', 'subject', 'subjects', 'locations', 'students'));
 
     }
 
@@ -137,7 +184,7 @@ class CourseController extends Controller
             'course_price'        => 'required',
             'message_to_students' => 'required',
             'course_status'       => 'required',
-            'payment_receipt'     => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'payment_receipt'     => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             // Add validation rules for other fields as needed
         ]);
 
@@ -213,4 +260,66 @@ class CourseController extends Controller
         return redirect('manageSubject')->with('success', 'แก้ไขข้อมูลนิสิตเรียบร้อยแล้ว');
     }
 
+    public function updateCourseStatus(Request $request, $course_id)
+    {
+        $course = DB::table('courses')->where('course_id', $course_id)->first();
+
+        if (!$course)
+        {
+            return redirect()->back()->with('error', 'ไม่พบรายวิชานี้');
+        }
+
+        $currentStatus = $course->course_status;
+        $newStatus     = $currentStatus == 1 ? 2 : 1; // เปลี่ยนสถานะ
+
+        // ใช้ SQL เพื่ออัปเดตสถานะของรายวิชา
+        DB::table('courses')
+            ->where('course_id', $course_id)
+            ->update(['course_status' => $newStatus]);
+
+        $message = $newStatus == 2 ? 'รายวิชาถูกปิดลงทะเบียนแล้ว' : 'รายวิชาถูกเปิดลงทะเบียนแล้ว';
+
+        Session::flash('success', $message);
+
+        return redirect()->back();
+    }
+
+    public function viewUserEnroll($course_id)
+    {
+        // Query the database to get the course details based on $course_id
+        $course = DB::table('courses')->where('course_id', $course_id)->first();
+
+        if (!$course)
+        {
+            return redirect()->back()->with('error', 'Course not found');
+        }
+
+        $stdId = Auth::user()->user_id; // Adjust this according to your user structure
+
+        $students = DB::table('students')
+            ->join('faculties', 'students.std_faculty', '=', 'faculties.id')
+            ->join('majors', 'students.std_major', '=', 'majors.id')
+            ->where('students.std_id', $stdId)
+            ->select('students.*', 'faculties.name as faculty_name', 'majors.name as major_name')
+            ->first();
+
+        if (!$students)
+        {
+            // Handle case when tutor information is not found
+            return redirect()->route('home')->with('error', 'Tutor information not found');
+        }
+
+        $subject = DB::table('subjects')->where('subject_id', $course->course_name)->value('subject_name');
+
+
+        $enrollments = DB::table('enrollment_courses')
+            ->join('enrollments', 'enrollment_courses.cus_email', '=', 'enrollments.cus_email')
+            ->where('enrollment_courses.course_id', $course_id)
+            ->select('enrollments.*')
+            ->get();
+
+        // Pass the course and subject details to a view and return it
+
+        return view('tutorpages.userEnroll', ['course' => $course, 'subject' => $subject, 'students' => $students,'enrollments' => $enrollments]);
+    }
 }
