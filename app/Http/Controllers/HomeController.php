@@ -91,7 +91,7 @@ class HomeController extends Controller
         DB::table('users')
             ->where('user_id', $std_id)
             ->update([
-                'status'   => 4, // Update status to 4
+                'status' => 4, // Update status to 4
             ]);
 
         // Redirect with a success message
@@ -107,6 +107,59 @@ class HomeController extends Controller
         // Return the tutor status view with the student's information
 
         return view('pages.tutorStatus', compact('student'));
+    }
+
+    public function searcheEroll(Request $request)
+    {
+        $cus_email   = $request->input('cus_email');
+        $birth_day   = $request->input('birth_day');
+        $birth_month = $request->input('birth_month');
+        $birth_year  = $request->input('birth_year');
+
+        // Query the students table and join with faculties and majors
+        $enrollments = DB::table('enrollment_courses')
+            ->where('enrollment_courses.cus_email', $cus_email)
+            ->join('enrollments', 'enrollment_courses.cus_email', '=', 'enrollments.cus_email')
+            ->join('courses', 'enrollment_courses.course_id', '=', 'courses.course_id')
+            ->join('subjects', 'courses.course_name', '=', 'subjects.subject_id')
+            ->join('student_courses', 'courses.course_id', '=', 'student_courses.course_id')
+            ->join('students', 'student_courses.std_id', '=', 'students.std_id')
+            ->select(
+                'enrollments.cus_name',
+                'enrollments.cus_surname',
+                'enrollments.cus_email',
+                'courses.course_name',
+                'subjects.subject_name',
+                'students.std_name'
+            )
+            ->groupBy(
+                'enrollments.cus_name',
+                'enrollments.cus_surname',
+                'enrollments.cus_email',
+                'courses.course_name',
+                'subjects.subject_name',
+                'students.std_name'
+            )
+            ->get();
+
+        if ($enrollments->count() > 0)
+        {
+            return view('pages.checkEnrollHistory', compact('enrollments'));
+        }
+        else
+        {
+            return view('pages.enrollHistory')->with('error', 'ไม่พบข้อมูลการลงทะเบียน');
+        }
+
+        if ($enrollments)
+        {
+            return view('pages.checkEnrollHistory', compact('enrollments'));
+        }
+        else
+        {
+            // Student not found, display a message or handle it as needed
+            return view('pages.enrollHistory')->with('error', 'ไม่พบนิสิตด้วยรหัสนิสิตที่ระบุ');
+        }
     }
     /**
      * Create a new controller instance.
@@ -131,6 +184,10 @@ class HomeController extends Controller
         return view('pages.home', compact('images'));
     }
 
+    public function enrollHistory()
+    {
+        return view('pages.enrollHistory');
+    }
     public function applyTutor()
     {
         return view('pages.applyTutor');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Advisor;
 use App\Models\Faculty;
 use App\Models\Major;
 use Illuminate\Http\Request;
@@ -25,6 +26,31 @@ class AdvisorController extends Controller
         $data['majors'] = Major::where("faculty_id", $request->faculty_id)->get(["name", "id"]);
 
         return response()->json($data);
+    }
+
+    public function fetchAdvisors(Request $request)
+    {
+        $facultyId = $request->input('faculty_id');
+        $majorId   = $request->input('major_id');
+
+        $advisors = Advisor::where('advisor_faculty', $facultyId)
+            ->where('advisor_major', $majorId)
+            ->get();
+
+        return response()->json(['advisors' => $advisors]);
+    }
+
+    public function fetchAdvisors2(Request $request)
+    {
+        $facultyId = $request->input('faculty_id');
+        $majorId   = $request->input('major_id');
+
+        // ดำเนินการค้นหาอาจารย์ที่ปรึกษาคนที่ 2 ตามเงื่อนไขที่คุณต้องการ
+        $advisors2 = Advisor::where('advisor_faculty', $facultyId)
+            ->where('advisor_major', $majorId)
+            ->get();
+
+        return response()->json(['advisors2' => $advisors2]);
     }
 
     public function insertadvisor(Request $request)
@@ -220,7 +246,23 @@ class AdvisorController extends Controller
 
     public function advisorHome()
     {
-        return view('advisorpages.advisorHome');
+
+        $advisorId = Auth::user()->user_id;
+
+        $advisors = DB::table('advisors')
+            ->join('faculties', 'advisors.advisor_faculty', '=', 'faculties.id')
+            ->join('majors', 'advisors.advisor_major', '=', 'majors.id')
+            ->where('advisors.advisor_id', $advisorId)
+            ->select('advisors.*', 'faculties.name as faculty_name', 'majors.name as major_name')
+            ->first();
+
+        if (!$advisors)
+        {
+            // Handle case when tutor information is not found
+            return redirect()->route('home')->with('error', 'Tutor information not found');
+        }
+
+        return view('advisorpages.advisorHome', ['advisors' => $advisors]);
     }
     public function approveTutor()
     {
@@ -230,7 +272,11 @@ class AdvisorController extends Controller
         // Query the student_advisor table to get students under the advisor's supervision
         $students = DB::table('student_advisors')
             ->join('students', 'student_advisors.std_id', '=', 'students.std_id')
-            ->where('student_advisors.advisor_id', $advisorId)
+            ->where(function ($query) use ($advisorId)
+        {
+                $query->where('student_advisors.advisor1_id', $advisorId)
+                    ->orWhere('student_advisors.advisor2_id', $advisorId);
+            })
             ->where('students.std_status', 4)
             ->select('students.*')
             ->get();

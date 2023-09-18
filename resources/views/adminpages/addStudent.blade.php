@@ -50,7 +50,8 @@
                                                         <select class="form-select" name="birth_day">
                                                             <option value="">วัน</option>
                                                             @for ($day = 1; $day <= 31; $day++)
-                                                                <option value="{{ $day }}">{{ $day }}</option>
+                                                                <option value="{{ $day }}">{{ $day }}
+                                                                </option>
                                                             @endfor
                                                         </select>
                                                     </div>
@@ -58,15 +59,17 @@
                                                         <select class="form-select" name="birth_month">
                                                             <option value="">เดือน</option>
                                                             @for ($month = 1; $month <= 12; $month++)
-                                                                <option value="{{ $month }}">{{ $month }}</option>
+                                                                <option value="{{ $month }}">{{ $month }}
+                                                                </option>
                                                             @endfor
                                                         </select>
                                                     </div>
                                                     <div class="col-lg-4">
                                                         <select class="form-select" name="birth_year">
                                                             <option value="">ปี</option>
-                                                            @for ($year = date("Y"); $year >= 1900; $year--)
-                                                                <option value="{{ $year }}">{{ $year }}</option>
+                                                            @for ($year = date('Y'); $year >= 1900; $year--)
+                                                                <option value="{{ $year }}">{{ $year }}
+                                                                </option>
                                                             @endfor
                                                         </select>
                                                     </div>
@@ -93,25 +96,48 @@
                                                 <input type="hidden" name="std_status" value="3">
                                             </div>
                                         </div>
+                                        <!-- Faculty Dropdown -->
                                         <div class="form-group pt-3 row">
-                                            <label for="advisor_faculty" class="col-lg-2 col-form-label">คณะ:</label>
+                                            <label for="faculty" class="col-lg-2 col-form-label">คณะ:</label>
                                             <div class="col-lg-10">
-                                                <select id="faculty-dd" class="form-control" name="std_faculty">
-                                                    <option value="">เลือกคณะ</option>
+                                                <select id="faculty-dd" class="form-select" name="std_faculty">
+                                                    <option value="">Select Faculty</option>
                                                     @foreach ($faculties as $faculty)
                                                         <option value="{{ $faculty->id }}">{{ $faculty->name }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
                                         </div>
+
+                                        <!-- Major Dropdown (Initially disabled) -->
                                         <div class="form-group pt-3 row">
-                                            <label for="advisor_major" class="col-lg-2 col-form-label">สาขา:</label>
+                                            <label for="major" class="col-lg-2 col-form-label">สาขา:</label>
                                             <div class="col-lg-10">
-                                                <select id="major-dd" class="form-control" name="std_major">
-                                                    <option value="">เลือกสาขา</option>
+                                                <select id="major-dd" class="form-select" name="std_major" disabled>
+                                                    <option value="">Select Major</option>
                                                 </select>
                                             </div>
                                         </div>
+
+                                        <!-- Advisor Dropdown (Initially disabled) -->
+                                        <div class="form-group pt-3 row">
+                                            <label for="advisor" class="col-lg-2 col-form-label">อาจารที่ปรึกษา:</label>
+                                            <div class="col-lg-10">
+                                                <select id="advisor-dd" class="form-select" name="advisor1_id" disabled>
+                                                    <option value="">Select Advisor</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group pt-3 row">
+                                            <label for="advisor" class="col-lg-2 col-form-label">อาจารที่ปรึกษาคนที่2
+                                                (ถ้ามี):</label>
+                                            <div class="col-lg-10">
+                                                <select id="advisor2-dd" class="form-select" name="advisor2_id" disabled>
+                                                    <option value="">Select Advisor</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
                                         <div class="form-group pt-3 row">
                                             <label for="name" class="col-lg-2 col-form-label">ชั้นปี:</label>
                                             <div class="col-lg-10">
@@ -125,6 +151,7 @@
                                                 </select>
                                             </div>
                                         </div>
+
                                         <div class="form-group pt-3 row" style="display: none">
                                             <label for="name"
                                                 class="col-lg-2 col-form-label">เกรดเฉลี่ยสะสม(GPAX):</label>
@@ -139,8 +166,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group pt-3 row" style="display: none">
-                                            <label for="name"
-                                                class="col-lg-2 col-form-label">เบอร์มือถือ:</label>
+                                            <label for="name" class="col-lg-2 col-form-label">เบอร์มือถือ:</label>
                                             <div class="col-lg-10">
                                                 <input type="hidden" name="std_tel" value="">
                                             </div>
@@ -178,25 +204,112 @@
             </div>
         </div>
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <!-- Include jQuery library if not already included -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
         <script>
-            $('#faculty-dd').on('change', function() {
-                var idFaculty = this.value;
-                $("#major-dd").html('');
-                $.ajax({
-                    url: "{{ url('api/fetch-majors') }}",
-                    type: "POST",
-                    data: {
-                        faculty_id: idFaculty,
-                        _token: '{{ csrf_token() }}'
-                    },
-                    dataType: 'json',
-                    success: function(result) {
-                        $('#major-dd').html('<option value="">เลือกสาขา</option>');
-                        $.each(result.majors, function(key, value) {
-                            $("#major-dd").append('<option value="' + value.id + '">' + value.name +
-                                '</option>');
-                        });
+            $(document).ready(function() {
+                $('#faculty-dd').on('change', function() {
+                    var facultyId = this.value;
+
+                    // Enable the major dropdown
+                    $('#major-dd').prop('disabled', false);
+
+                    // Clear and disable the advisor dropdown
+                    $('#advisor-dd').html('<option value="">Select Advisor</option>').prop('disabled', true);
+
+                    // Clear and disable the advisor 2 dropdown
+                    $('#advisor2-dd').html('<option value="">Select Advisor</option>').prop('disabled', true);
+
+                    // Send an AJAX request to fetch majors based on the selected faculty
+                    $.ajax({
+                        url: "{{ route('fetch-majors') }}",
+                        type: "POST",
+                        data: {
+                            faculty_id: facultyId,
+                            _token: '{{ csrf_token() }}'
+                        },
+                        dataType: 'json',
+                        success: function(result) {
+                            $('#major-dd').html('<option value="">Select Major</option>');
+                            $.each(result.majors, function(key, value) {
+                                $("#major-dd").append('<option value="' + value.id + '">' +
+                                    value.name + '</option>');
+                            });
+                        }
+                    });
+                });
+
+                $('#major-dd').on('change', function() {
+                    var facultyId = $('#faculty-dd').val();
+                    var majorId = this.value;
+
+                    // Enable the advisor dropdown
+                    $('#advisor-dd').prop('disabled', false);
+
+                    // Send an AJAX request to fetch advisors based on the selected faculty and major
+                    $.ajax({
+                        url: "{{ route('fetch-advisors') }}",
+                        type: "POST",
+                        data: {
+                            faculty_id: facultyId,
+                            major_id: majorId,
+                            _token: '{{ csrf_token() }}'
+                        },
+                        dataType: 'json',
+                        success: function(result) {
+                            $('#advisor-dd').html('<option value="">Select Advisor</option>');
+                            $.each(result.advisors, function(key, value) {
+                                $("#advisor-dd").append('<option value="' + value
+                                    .advisor_id +
+                                    '">' + value.advisor_name + '</option>');
+                            });
+                        }
+                    });
+
+                    // Enable the advisor 2 dropdown
+                    $('#advisor2-dd').prop('disabled', false);
+
+                    // Send an AJAX request to fetch advisors 2 based on the selected faculty and major
+                    $.ajax({
+                        url: "{{ route('fetch-advisors-2') }}",
+                        type: "POST",
+                        data: {
+                            faculty_id: facultyId,
+                            major_id: majorId,
+                            _token: '{{ csrf_token() }}'
+                        },
+                        dataType: 'json',
+                        success: function(result) {
+                            $('#advisor2-dd').html('<option value="">Select Advisor</option>');
+                            $.each(result.advisors2, function(key, value) {
+                                $("#advisor2-dd").append('<option value="' + value
+                                    .advisor_id +
+                                    '">' + value.advisor_name + '</option>');
+                            });
+                        }
+                    });
+                });
+
+                // Add change event handler for advisor dropdown
+                $('#advisor-dd').on('change', function() {
+                    var advisor1 = this.value;
+                    var advisor2 = $('#advisor2-dd').val();
+
+                    if (advisor1 === advisor2) {
+                        alert('คุณไม่สามารถเลือกอาจารย์คนที่ 1 และ 2 เหมือนกันได้');
+                        $(this).val('').trigger('change'); // Reset the selected value
+                    }
+                });
+
+                // Add change event handler for advisor 2 dropdown
+                $('#advisor2-dd').on('change', function() {
+                    var advisor1 = $('#advisor-dd').val();
+                    var advisor2 = this.value;
+
+                    if (advisor1 === advisor2) {
+                        alert('คุณไม่สามารถเลือกอาจารย์คนที่ 1 และ 2 เหมือนกันได้');
+                        $(this).val('').trigger('change'); // Reset the selected value
                     }
                 });
             });

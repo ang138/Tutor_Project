@@ -48,7 +48,6 @@
                                     <input id="email" type="email" placeholder="Enter Email"
                                         @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}"
                                         required autocomplete="email" autofocus>
-                                    <i class='bx bx-envelope'></i>
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -73,7 +72,6 @@
                                     <input id="password" type="password" placeholder="Enter Password"
                                         @error('password') is-invalid @enderror" name="password"
                                         requiredautocomplete="current-password">
-                                    <i class='bx bx-lock-alt'></i>
                                     @error('password')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>

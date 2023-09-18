@@ -13,7 +13,7 @@
         <p>ใครอยากเป็นติวเตอร์</p>
     </div> --}}
 
-    <div class="container">
+    <div class="container pt-5">
         <h1>รายการนิสิตที่อยู่ในการดูแล</h1>
         <table>
             <thead>

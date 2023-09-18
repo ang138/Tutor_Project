@@ -13,8 +13,6 @@
                         <th>รายวิชา</th>
                         <th>สถานที่</th>
                         <th>รูปแบบการสอน</th>
-                        <th>วันที่สะดวกสอน</th>
-                        <th>เวลาที่สะดวกสอน</th>
                         <th>ดูรายเอียด</th>
                         <!-- Add more course-related columns here -->
                     </tr>
@@ -26,8 +24,6 @@
                             <td>{{ $course->subject_name }}</td>
                             <td>{{ $course->location }}</td>
                             <td>{{ $course->course_type }}</td>
-                            <td>{{ $course->teaching_days }}</td>
-                            <td>{{ $course->teaching_times }}</td>
                             <td>
                                 <div class="btn-group" role="group" aria-label="First group">
                                     <a href="{{ url('user-enroll/' . $course->course_id) }}" class="btn btn-sm">

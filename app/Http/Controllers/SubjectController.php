@@ -36,6 +36,14 @@ class SubjectController extends Controller
             ->select('courses.*', 'students.*', 'subjects.subject_name')
             ->get();
 
+        $registeredUsersCount = DB::table('courses')
+            ->where('courses.course_name', '=', $subject_id)
+            ->join('enrollment_courses', function ($join)
+        {
+                $join->on('courses.course_id', '=', 'enrollment_courses.course_id');
+            })
+            ->count();
+
         // $tutors = DB::table('student_courses')
         //     ->join('students', 'student_courses.std_id', '=', 'students.std_id')
         //     ->join('courses', 'student_courses.course_id', '=', 'courses.course_id')
@@ -43,7 +51,7 @@ class SubjectController extends Controller
         //     ->select('students.std_id', 'students.std_name', 'students.std_email')
         //     ->get();
 
-        return view('pages.courseOpen', ['subjects' => $subjects, 'courses' => $courses]);
+        return view('pages.courseOpen', ['subjects' => $subjects, 'courses' => $courses, 'registeredUsersCount' => $registeredUsersCount]);
     }
 
     public function courseOpenDetail($course_id)
@@ -95,7 +103,7 @@ class SubjectController extends Controller
         $validator = Validator::make($request->all(), [
             'cus_name'     => 'required|string',
             'cus_surname'  => 'required|string',
-            'cus_email'    => 'required|email|unique:enrollments,cus_email',
+            'cus_email'    => 'required|email',
             'birth_day'    => 'required|numeric',
             'birth_month'  => 'required|numeric',
             'birth_year'   => 'required|numeric',
@@ -112,17 +120,35 @@ class SubjectController extends Controller
             return back()->withErrors($validator)->withInput();
         }
 
-        // Create a new enrollment record
-        $enrollment                = new Enrollment();
-        $enrollment->cus_name      = $request->input('cus_name');
-        $enrollment->cus_surname   = $request->input('cus_surname');
-        $enrollment->cus_email     = $request->input('cus_email');
-        $enrollment->cus_birthdate = $request->input('birth_year') . '-' . $request->input('birth_month') . '-' . $request->input('birth_day');
-        $enrollment->cus_tel       = $request->input('cus_tel');
-        $enrollment->cus_facebook  = $request->input('cus_facebook');
-        $enrollment->cus_line      = $request->input('cus_line');
+        $isEnrolled = DB::table('enrollment_courses')
+            ->where('cus_email', $request->input('cus_email'))
+            ->where('course_id', $course_id)
+            ->exists();
 
-        $enrollment->save();
+        if ($isEnrolled)
+        {
+            return back()->with('error', 'คุณได้ลงทะเบียนในคอร์สนี้แล้ว');
+        }
+
+        $emailExists = DB::table('enrollments')
+            ->where('cus_email', $request->input('cus_email'))
+            ->exists();
+
+        if (!$emailExists)
+        {
+            // Create a new enrollment record
+            $enrollment                = new Enrollment();
+            $enrollment->cus_name      = $request->input('cus_name');
+            $enrollment->cus_surname   = $request->input('cus_surname');
+            $enrollment->cus_email     = $request->input('cus_email');
+            $enrollment->cus_birthdate = $request->input('birth_year') . '-' . $request->input('birth_month') . '-' . $request->input('birth_day');
+            $enrollment->cus_tel       = $request->input('cus_tel');
+            $enrollment->cus_facebook  = $request->input('cus_facebook');
+            $enrollment->cus_line      = $request->input('cus_line');
+
+            $enrollment->save();
+
+        }
 
         $enrollmentCourse            = new enrollment_course();
         $enrollmentCourse->cus_email = $request->input('cus_email'); // Assuming you are getting the student's ID from authentication
@@ -139,7 +165,18 @@ class SubjectController extends Controller
 
         $enrollmentCourse->save();
 
-        return redirect('subject')->with('success', 'เพิ่มข้อมูลนิสิตเรียบร้อยแล้ว');
+        $enrollmentsCount = DB::table('enrollment_courses')->where('course_id', $course_id)->count();
+        $course           = DB::table('courses')->where('course_id', $course_id)->first();
+
+        if ($enrollmentsCount >= $course->number_of_students)
+        {
+            // อัปเดตสถานะของคอร์สเป็น "เต็ม" หรือสถานะที่คุณต้องการ
+            DB::table('courses')
+                ->where('course_id', $course_id)
+                ->update(['course_status' => 3]);
+        }
+
+        return redirect('subject')->with('success', 'ลงทะเบียนเรียนเสร็จสิ้น');
     }
 
 }

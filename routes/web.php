@@ -38,6 +38,11 @@ Route::get('enroll-form/{course_id}', [SubjectController::class, 'enrollForm'])-
 Route::post('/insert-enroll-course/{course_id}', [SubjectController::class, 'insertEnrollCourseAction'])
     ->name('insertEnrollCourseAction');
 
+Route::get('enrollHistory', [HomeController::class, 'enrollHistory']);
+
+Route::post('/searchEnroll', [HomeController::class, 'searcheEroll'])->name('searchEnroll');
+
+
 Route::get('applyTutor', [HomeController::class, 'applyTutor']);
 Route::get('contact', [HomeController::class, 'contact']);
 
@@ -64,7 +69,10 @@ Route::middleware(['auth'])->group(function ()
     Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 
     // -----แสดงสาขาวิชา-----
-    Route::post('api/fetch-majors', [AdvisorController::class, 'fetchMajors']);
+
+    Route::post('api/fetch-majors', [AdvisorController::class, 'fetchMajors'])->name('fetch-majors');
+    Route::post('/fetch-advisors', [AdvisorController::class, 'fetchAdvisors'])->name('fetch-advisors');
+    Route::post('/fetch-advisors-2', [AdvisorController::class, 'fetchAdvisors2'])->name('fetch-advisors-2');
 
     // -------------------------------หน้าหลังเข้าสู่ระบบของแอดมิน---------------------------------------------------
     Route::get('adminHome', [AdminController::class, 'adminHome'])->name('adminHome')->middleware('status');
@@ -122,6 +130,8 @@ Route::middleware(['auth'])->group(function ()
     Route::get('enrollment', [StudentController::class, 'enrollment']);
 
     Route::get('/user-enroll/{course_id}', [CourseController::class, 'viewUserEnroll']);
+
+    Route::get('user-detail/{cus_id}', [CourseController::class, 'viewUserDetail']);
 
     // -----เพิ่มข้อรายวิชา-----
     Route::get('addCourse', [CourseController::class, 'addcourseform']);

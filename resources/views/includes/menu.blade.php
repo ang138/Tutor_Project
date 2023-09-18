@@ -1,6 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-light fixed-top">
     <div class="container">
-        <a class="navbar-brand" href="{{ url('/') }}">TSU Tutor</a>
+        <a class="navbar-brand" href=""><img src="{{ url('/assets/images/logoweb.jpg') }}" alt=""
+                style="width: 120px; height: 45px;"></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -9,6 +10,9 @@
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('/') }}">หน้าหลัก <span class="sr-only"></span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('enrollHistory') }}">สำหรับผู้ใช้ทั่วไป</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('subject') }}">หาติวเตอร์</a>
@@ -22,7 +26,7 @@
                 @guest
                     @if (Route::has('login'))
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">{{('เข้าสู่ระบบ')}}</a>
+                            <a class="nav-link" href="{{ route('login') }}">{{ 'เข้าสู่ระบบ' }}</a>
                         </li>
                     @endif
 

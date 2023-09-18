@@ -27,6 +27,7 @@
                 <thead>
                     <tr>
                         <th>รายวิชา</th>
+                        <th>รายวิชา</th>
                         <th>สถานที่</th>
                         <th>รูปแบบการสอน</th>
                         <th>วันที่สะดวกสอน</th>
@@ -39,6 +40,7 @@
                 <tbody>
                     @foreach ($courses as $course)
                         <tr>
+                            <td>{{ $course->course_id }}</td>
                             <td>{{ $course->subject_name }}</td>
                             <td>{{ $course->location }}</td>
                             <td>{{ $course->course_type }}</td>
@@ -52,23 +54,30 @@
                                 </div>
                             </td>
                             <td>
-                                <form action="{{ route('updateCourseStatus', ['course_id' => $course->course_id]) }}"
-                                    method="POST" id="course-status-form">
-                                    @csrf
-                                    <div class="d-flex align-items-center">
-                                        <label for="toggle-button-label">
-                                            @if ($course->course_status == 1)
-                                                เปิดลงทะเบียนแล้ว
-                                            @else
-                                                ปิดลงทะเบียนแล้ว
-                                            @endif
-                                        </label>
-                                        <button class="@if ($course->course_status == 1) red-button @endif btn btn-sm"
-                                            type="submit" id="toggle-button">
-                                            {{ $course->course_status == 2 ? 'เปิดลงทะเบียน' : 'ปิดลงทะเบียน' }}
-                                        </button>
-                                    </div>
-                                </form>
+                                @if ($course->course_status == 3)
+                                    ลงทะเบียนเต็มแล้ว
+                                @else
+                                    <form action="{{ route('updateCourseStatus', ['course_id' => $course->course_id]) }}"
+                                        method="POST" id="course-status-form">
+                                        @csrf
+                                        <div class="d-flex align-items-center">
+                                            <label for="toggle-button-label">
+                                                @if ($course->course_status == 1)
+                                                    เปิดลงทะเบียนแล้ว
+                                                @else
+                                                    ปิดลงทะเบียนแล้ว
+                                                @endif
+                                            </label>
+                                            <button
+                                                class="@if ($course->course_status == 1) red-button @endif btn btn-sm toggle-button"
+                                                type="submit" id="toggle-button" data-course-id="{{ $course->course_id }}"
+                                                data-status="{{ $course->course_status }}"
+                                                @if ($course->course_status == 3) disabled @endif>
+                                                {{ $course->course_status == 2 ? 'เปิดลงทะเบียน' : 'ปิดลงทะเบียน' }}
+                                            </button>
+                                        </div>
+                                    </form>
+                                @endif
                             </td>
                             <!-- Add more course-related data here -->
                         </tr>

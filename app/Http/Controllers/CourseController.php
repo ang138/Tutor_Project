@@ -311,15 +311,60 @@ class CourseController extends Controller
 
         $subject = DB::table('subjects')->where('subject_id', $course->course_name)->value('subject_name');
 
-
         $enrollments = DB::table('enrollment_courses')
-            ->join('enrollments', 'enrollment_courses.cus_email', '=', 'enrollments.cus_email')
             ->where('enrollment_courses.course_id', $course_id)
+            ->join('enrollments', 'enrollment_courses.cus_email', '=', 'enrollments.cus_email')
             ->select('enrollments.*')
             ->get();
 
         // Pass the course and subject details to a view and return it
 
-        return view('tutorpages.userEnroll', ['course' => $course, 'subject' => $subject, 'students' => $students,'enrollments' => $enrollments]);
+        return view('tutorpages.userEnroll', ['course' => $course, 'subject' => $subject, 'students' => $students, 'enrollments' => $enrollments]);
+    }
+
+    public function viewUserDetail($cus_id)
+    {
+        // Query the database to get the course details based on $course_id
+        $user = DB::table('enrollments')->where('cus_id', $cus_id)
+            ->join('enrollment_courses', 'enrollments.cus_email', '=', 'enrollment_courses.cus_email')
+            ->join('courses', 'enrollment_courses.course_id', '=', 'courses.course_id')
+            ->select('enrollments.*', 'enrollment_courses.cus_bill', 'courses.*')
+            ->first();
+
+        if (!$user)
+        {
+            return redirect()->back()->with('error', 'Course not found');
+        }
+
+        $facebookLink = $user->cus_facebook;
+
+        if ($facebookLink)
+        {
+            // สร้างลิงก์ HTML สำหรับแสดงลิงก์เฟสบุ๊ค
+            $facebookLink = '<a href="' . $facebookLink . '" target="_blank">ไปยัง Facebook</a>';
+        }
+        else
+        {
+            // จัดการกรณีที่ไม่มีลิงก์เฟสบุ๊ค
+        }
+
+        $stdId = Auth::user()->user_id; // Adjust this according to your user structure
+
+        $students = DB::table('students')
+            ->join('faculties', 'students.std_faculty', '=', 'faculties.id')
+            ->join('majors', 'students.std_major', '=', 'majors.id')
+            ->where('students.std_id', $stdId)
+            ->select('students.*', 'faculties.name as faculty_name', 'majors.name as major_name')
+            ->first();
+
+        if (!$students)
+        {
+            // Handle case when tutor information is not found
+            return redirect()->route('home')->with('error', 'Tutor information not found');
+        }
+
+        // Pass the course and subject details to a view and return it
+
+        return view('tutorpages.userDetail', ['students' => $students, 'user' => $user]);
     }
 }

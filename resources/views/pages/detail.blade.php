@@ -169,10 +169,10 @@
                         </div>
                         <div class="d-flex justify-content-center mt-3">
                             <div class="btn-group" role="group" aria-label="First group">
-                                <a href="{{ url('course-open', ['id' => $students->subject_id]) }}" class="btn-detail">ย้อนกลับ</a>
+                                <a href="{{ url('course-open', ['id' => $students->subject_id]) }}" class="btn-detail btn-sm">ย้อนกลับ</a>
                             </div>
                             <div class="btn-group" role="group" aria-label="Second group">
-                                <a href="{{ url('enroll-form', ['course_id' => $course->course_id]) }}" class="btn btn-danger btn-sm me-2">ลงทะเบียนเรียน</a>
+                                <a href="{{ url('enroll-form', ['course_id' => $course->course_id]) }}" class="btn-detail btn-sm">ลงทะเบียนเรียน</a>
                             </div>
                         </div>
                     </div>

@@ -68,15 +68,16 @@
         </div>
     </div> --}}
     <!-- แสดงข้อความแจ้งเตือน -->
-    @if (session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-    @endif
+
 
     <div class="container pt-5">
-        <h1 style="text-align: center; font-weight: bold;">หาติวเตอร์ สอนพิเศษ</h1>
+        <h1 style="text-align: center; font-weight: bold;">หาติวเตอร์ คอร์สเรียนพิเศษ</h1>
         <h1>เลือกรายวิชา</h1>
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
         <div class="card col-md-12 mx-auto" style="border: 1;">
             <div class="card-body">
                 <div class="row row-cols-1 row-cols-md-4 g-4">
@@ -84,8 +85,8 @@
                         <div class="col">
                             <div class="card h-60 bg-light">
                                 <!-- แสดงรายวิชา -->
-                                <img src="{{ asset("assets/images/{$subject->subject_name}.png") }}" class="card-img-top"
-                                    style="height: 190px;" alt="...">
+                                <img src="{{ asset($subject->subject_image) }}" class="card-img-top" style="height: 190px;"
+                                    alt="...">
                                 <div class="card-body">
                                     <div class="subject-title">
                                         <h5 class="card-title">วิชา{{ $subject->subject_name }}</h5>
