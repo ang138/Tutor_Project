@@ -161,7 +161,7 @@
                                     <div class="form-group pt-1 row">
                                         <label for="name" class="col-lg-2 col-form-label">GPAX:</label>
                                         <div class="col-lg-10">
-                                            <input type="text" class="form-control" placeholder="เกรดเฉลี่ยสะสม"
+                                            <input type="number" min=0 max=4 class="form-control" placeholder="เกรดเฉลี่ยสะสม"
                                                 name="std_gpax" value="{{ old('std_gpax', $student->std_gpax) }}">
                                         </div>
                                     </div>

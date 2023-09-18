@@ -121,7 +121,7 @@ Route::middleware(['auth'])->group(function ()
     //  Route::put('update-advisor/{advisor_id}', [AdvisorController::class, 'updateAdvisor']);
 
     // -------------------------------หน้าหลังเข้าสู่ระบบของนิสิต---------------------------------------------------
-    Route::get('tutorHome', [StudentController::class, 'tutorHome'])->name('tutorHome');
+    Route::get('/tutorHome', [StudentController::class, 'tutorHome'])->name('tutorHome')->middleware('tutor');
 
     Route::put('/student/images/{std_id}', [StudentController::class, 'studentImageProfile'])->name('std.image.profile');
 

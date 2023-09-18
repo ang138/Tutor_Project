@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
+use App\Models\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 
@@ -18,7 +18,7 @@ class LoginController extends Controller
     | redirecting them to your home screen. The controller uses a trait
     | to conveniently provide its functionality to your applications.
     |
-    */
+     */
 
     use AuthenticatesUsers;
 
@@ -44,21 +44,50 @@ class LoginController extends Controller
         $input = $request->all();
 
         $this->validate($request, [
-            'email' => 'required|email',
-            'password' => 'required'
+            'email'    => 'required|email',
+            'password' => 'required',
         ]);
 
-        if (auth()->attempt(array('email' => $input['email'], 'password' => $input['password']))) {
-            if (auth()->user()->status == 1) {
+        if (auth()->attempt(array('email' => $input['email'], 'password' => $input['password'])))
+        {
+            $user = auth()->user();
+
+            if ($user->status == 1)
+            {
                 return redirect()->route('adminHome');
-            }elseif (auth()->user()->status == 2) {
+            }
+            elseif ($user->status == 2)
+            {
                 return redirect()->route('advisorHome');
-            } elseif (auth()->user()->status == 5) {
+            }
+            elseif ($user->status == 3)
+            {
+                return view('auth.login');
+                // return redirect('login')->with('error', 'You need to register as a tutor before.');
+            }
+            elseif ($user->status == 4)
+            {
+                return redirect('login')->with('error', 'Please wait for admin approval.');
+            }
+            elseif ($user->status == 5)
+            {
                 return redirect()->route('tutorHome');
             }
-        }else {
-            return redirect()->route('login')->with('error','Email and Password are wrong.');
+        }
+        else
+        {
+            // Authentication failed
+            $userWithEmail = User::where('email', $input['email'])->first();
 
+            // if ($userWithEmail) {
+            //     if ($userWithEmail->status !== 1 && $userWithEmail->status !== 2 && $userWithEmail->status !== 5) {
+            //         // Email exists in the database, but status is not 1, 2, or 5
+            //         return redirect('login')->with('error', 'Invalid status for this email.');
+            //     }
+            // }
+
+            // // Email and Password are wrong
+            return redirect('login')->with('error', 'Email and Password are wrong.');
         }
     }
 }

@@ -259,7 +259,7 @@ class AdvisorController extends Controller
         if (!$advisors)
         {
             // Handle case when tutor information is not found
-            return redirect()->route('home')->with('error', 'Tutor information not found');
+            return redirect()->route('login')->with('error', 'Tutor information not found');
         }
 
         return view('advisorpages.advisorHome', ['advisors' => $advisors]);
