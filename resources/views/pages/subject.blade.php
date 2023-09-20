@@ -102,34 +102,37 @@
                         </div>
                     @endforeach
                 </div>
-            @endsection
+            </div>
+        </div>
+    </div>
+@endsection
 
-            <script>
-                document.addEventListener("DOMContentLoaded", function() {
-                    // Get all buttons with class "btn-detail"
-                    const buttons = document.querySelectorAll(".btn-detail");
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Get all buttons with class "btn-detail"
+        const buttons = document.querySelectorAll(".btn-detail");
 
-                    // Add click event listeners to each button
-                    buttons.forEach(function(button) {
-                        button.addEventListener("click", function() {
-                            // Get the subject name from the "data-subject" attribute
-                            const subject = button.getAttribute("data-subject");
+        // Add click event listeners to each button
+        buttons.forEach(function(button) {
+            button.addEventListener("click", function() {
+                // Get the subject name from the "data-subject" attribute
+                const subject = button.getAttribute("data-subject");
 
-                            // Hide all content sections
-                            const contentSections = document.querySelectorAll(".subject-content");
-                            contentSections.forEach(function(section) {
-                                section.style.display = "none";
-                            });
-
-                            // Show the content section corresponding to the clicked button
-                            const subjectContent = document.getElementById(subject + "-content");
-                            subjectContent.style.display = "block";
-
-                            // Scroll to the content section
-                            subjectContent.scrollIntoView({
-                                behavior: "smooth"
-                            });
-                        });
-                    });
+                // Hide all content sections
+                const contentSections = document.querySelectorAll(".subject-content");
+                contentSections.forEach(function(section) {
+                    section.style.display = "none";
                 });
-            </script>
+
+                // Show the content section corresponding to the clicked button
+                const subjectContent = document.getElementById(subject + "-content");
+                subjectContent.style.display = "block";
+
+                // Scroll to the content section
+                subjectContent.scrollIntoView({
+                    behavior: "smooth"
+                });
+            });
+        });
+    });
+</script>

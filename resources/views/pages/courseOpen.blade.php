@@ -40,7 +40,7 @@
                         <td>{{ $course->teaching_days }}</td>
                         <td>{{ $course->teaching_times }}</td>
                         <td>{{ $course->course_price }}</td>
-                        <td>{{ $registeredUsersCount }}/{{ $course->number_of_students }}</td>
+                        <td>{{ $course->number_of_students }}</td>
                         <td>{{ $course->std_name }}</td>
                         <td>
                             <div class="btn-group" role="group" aria-label="First group">

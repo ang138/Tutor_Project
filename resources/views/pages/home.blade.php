@@ -4,39 +4,31 @@
 @endsection
 @section('content')
     <!-- Slide Image -->
-    <div class="container">
-        <div class="card col-md-12 mx-auto" style="border: none; height: auto;">
-            <div class="card-body">
-                <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-                    <div class="carousel-indicators">
-                        @foreach ($images as $key => $image)
-                            <button type="button" data-bs-target="#carouselExampleIndicators"
-                                data-bs-slide-to="{{ $key }}" {{ $key == 0 ? 'class=active' : '' }}></button>
-                        @endforeach
-                    </div>
-                    <div class="carousel-inner">
-                        @foreach ($images as $key => $image)
-                            <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
-                                <img src="{{ asset($image->image_path) }}" class="d-block mx-auto"
-                                    alt="{{ $image->alt_text }}" style="width: 100%; height: auto;">
-                            </div>
-                        @endforeach
-                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
-                            data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
-                            data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
-                    </div>
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            @foreach ($images as $key => $image)
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{ $key }}"
+                    {{ $key == 0 ? 'class=active' : '' }}></button>
+            @endforeach
+        </div>
+        <div class="carousel-inner">
+            @foreach ($images as $key => $image)
+                <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                    <img src="{{ asset($image->image_path) }}" class="d-block w-100" alt="{{ $image->alt_text }}">
                 </div>
-            </div>
+            @endforeach
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
         </div>
     </div>
-
     <!--ส่วนของ Feature -->
     <div class="container mt-5">
         <div class="row">

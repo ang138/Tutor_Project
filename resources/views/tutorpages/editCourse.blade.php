@@ -24,7 +24,8 @@
                                     </div>
                                 @endif
 
-                                <form action="{{ url('update-course/' . $course->course_id) }}" method="POST" enctype="multipart/form-data">
+                                <form action="{{ url('update-course/' . $course->course_id) }}" method="POST"
+                                    enctype="multipart/form-data" id="editcourse-form">
                                     @csrf
                                     @method('PUT')
 
@@ -139,10 +140,13 @@
 
                                     <div class="d-flex justify-content-center mt-3">
                                         <div class="btn-group" role="group" aria-label="First group">
-                                            <a href="{{ url('manageSubject') }}" class="btn btn-danger btn-sm me-2">ย้อนกลับ</a>
+                                            <a href="{{ url('manageSubject') }}"
+                                                class="btn btn-danger btn-sm me-2">ย้อนกลับ</a>
                                         </div>
                                         <div class="btn-group" role="group" aria-label="Second group">
-                                            <button type="submit" class="btn btn-primary btn-sm">ยืนยันแก้ไข</button>
+                                            <!-- Add a function to display SweetAlert confirmation -->
+                                            <button type="button" class="btn btn-primary btn-sm"
+                                                id="confirm-update-button">ยืนยันแก้ไข</button>
                                         </div>
                                     </div>
                                 </form>
@@ -192,5 +196,26 @@
                 numberOfStudentsInput.value = 1;
             }
         }
+
+        // Add an event listener to the Confirm Update button
+        document.getElementById('confirm-update-button').addEventListener('click', function() {
+            // Use SweetAlert to show a confirmation dialog
+            Swal.fire({
+                title: 'ยืนยันการแก้ไขข้อมูล?',
+                text: 'คุณแน่ใจที่จะแก้ไขข้อมูลนี้หรือไม่?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'ยืนยัน',
+                cancelButtonText: 'ยกเลิก'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // If confirmed, submit the form
+                    document.querySelector('#editcourse-form').submit();
+                }
+            });
+        });
     </script>
+
 @endsection

@@ -12,7 +12,7 @@
                         <div class="card" style="border: 0;">
                             <div class="card-body pt-3 pb-2">
                                 <form action="{{ route('insertEnrollCourseAction', ['course_id' => $course->course_id]) }}"
-                                    method="POST" enctype="multipart/form-data">
+                                    method="POST" enctype="multipart/form-data" id="enroll-form">
                                     @csrf <!-- CSRF token -->
 
                                     @if (session('error'))
@@ -61,9 +61,12 @@
                                             <div class="col-lg-4">
                                                 <select class="form-select" id="birth_month" name="birth_month" required>
                                                     <option value="">เดือน</option>
-                                                    @for ($month = 1; $month <= 12; $month++)
-                                                        <option value="{{ $month }}">{{ $month }}</option>
-                                                    @endfor
+                                                    @php
+                                                    $thaiMonths = ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'];
+                                                @endphp
+                                                @foreach ($thaiMonths as $key => $month)
+                                                    <option value="{{ $key + 1 }}">{{ $month }}</option>
+                                                @endforeach
                                                 </select>
                                             </div>
                                             <div class="col-lg-4">
@@ -122,7 +125,7 @@
                                     </div>
                                     <div class="d-flex justify-content-center mt-3">
                                         <div class="btn-group" role="group" aria-label="Second group">
-                                            <button type="submit" class="btn-detail btn-sm">ลงทเบียนเรียน</button>
+                                            <button type="submit" class="btn-detail btn-sm">ลงทะเบียนเรียน</button>
                                         </div>
                                     </div>
                                 </form>
@@ -133,4 +136,26 @@
             </div>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        // จับการส่งฟอร์มเมื่อกดปุ่ม "ลงทะเบียนเรียน"
+        document.getElementById('enroll-form').addEventListener('submit', function (e) {
+            e.preventDefault(); // หยุดการส่งฟอร์มเพื่อใช้ SweetAlert
+
+            Swal.fire({
+                title: 'คุณต้องการลงทะเบียนเรียนหรือไม่?',
+                text: 'กรุณาตรวจสอบข้อมูลให้ถูกต้องก่อนกดยืนยัน',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'ยืนยันลงทะเบียน',
+                cancelButtonText: 'ยกเลิก',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // ถ้าผู้ใช้กด "ยืนยันลงทะเบียน" ให้ส่งฟอร์ม
+                    document.getElementById('enroll-form').submit();
+                }
+            });
+        });
+    </script>
 @endsection

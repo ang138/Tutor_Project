@@ -18,6 +18,6 @@ class Status
         if (auth()->user()->status == 1) {
             return $next($request);
         }
-        return redirect('home')->with('error', "You don't have admin");
+        return redirect('adminHome')->with('error', "You don't have admin");
     }
 }

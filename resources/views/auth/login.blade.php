@@ -1,39 +1,6 @@
 @extends('layouts.main_template')
 
 @section('content')
-    {{-- <div class="wrapper">
-        <form action="">
-            <div class="input-box">
-                <input id="email" type="email" placeholder="Enter Email" @error('email') is-invalid @enderror"
-                    name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-                <i class='bx bx-envelope'></i>
-                @error('email')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                @enderror
-            </div>
-
-            <div class="input-box">
-                <input id="password" type="password" placeholder="Enter Password" @error('password') is-invalid @enderror"
-                    name="password" required autocomplete="current-password">
-
-                @error('password')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                @enderror
-            </div>
-
-            <button type="submit" class="btn btn-primary">
-                {{ __('Login') }}
-            </button>
-        </form>
-    </div> --}}
-
-
-
-
     <div class="container pt-5">
         <h1 style="text-align: center; font-weight: bold;">เข้าสู่ระบบ</h1>
         <div class="row justify-content-center">
@@ -54,17 +21,6 @@
                                         </span>
                                     @enderror
                                 </div>
-                                {{-- <div class="col-md-6 d-flex justify-content-center">
-                                    <input id="email" type="email" placeholder="Enter Email"
-                                        class="form-control @error('email') is-invalid @enderror" name="email"
-                                        value="{{ old('email') }}" required autocomplete="email" autofocus>
-
-                                    @error('email')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div> --}}
                             </div>
 
                             <div class="row mb-3">
@@ -78,17 +34,6 @@
                                         </span>
                                     @enderror
                                 </div>
-                                {{-- <div class="col-md-6">
-                                    <input id="password" type="password" placeholder="Enter Password"
-                                        class="form-control @error('password') is-invalid @enderror" name="password"
-                                        required autocomplete="current-password">
-
-                                    @error('password')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div> --}}
                             </div>
                             @if (session('error'))
                                 <div class="alert alert-danger">

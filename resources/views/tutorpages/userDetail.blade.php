@@ -68,8 +68,8 @@
                             </div>
                             <div class="col-sm-9">
                                 @if ($user->cus_facebook)
-                                    <p class="text-muted mb-0">{{ $user->cus_facebook }} <i class="fa fa-arrow-right"></i>
-                                        <a href="https://www.facebook.com/{{ $user->cus_facebook }}" target="_blank"> ไปยังโปรไฟล์ Facebook</a>
+                                    <p class="text-muted mb-0">
+                                        <a href="{{ $user->cus_facebook }}" target="_blank"> ไปยังโปรไฟล์ Facebook</a>
                                     </p>
                                 @else
                                     <p class="text-muted mb-0">ไม่ได้ระบุลิงค์ Facebook</p>

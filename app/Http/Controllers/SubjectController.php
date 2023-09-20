@@ -36,13 +36,13 @@ class SubjectController extends Controller
             ->select('courses.*', 'students.*', 'subjects.subject_name')
             ->get();
 
-        $registeredUsersCount = DB::table('courses')
-            ->where('courses.course_name', '=', $subject_id)
-            ->join('enrollment_courses', function ($join)
-        {
-                $join->on('courses.course_id', '=', 'enrollment_courses.course_id');
-            })
-            ->count();
+        // $registeredUsersCount = DB::table('courses')
+        //     ->where('courses.course_name', '=', $subject_id)
+        //     ->join('enrollment_courses', function ($join)
+        // {
+        //         $join->on('courses.course_id', '=', 'enrollment_courses.course_id');
+        //     })
+        //     ->count();
 
         // $tutors = DB::table('student_courses')
         //     ->join('students', 'student_courses.std_id', '=', 'students.std_id')
@@ -51,7 +51,7 @@ class SubjectController extends Controller
         //     ->select('students.std_id', 'students.std_name', 'students.std_email')
         //     ->get();
 
-        return view('pages.courseOpen', ['subjects' => $subjects, 'courses' => $courses, 'registeredUsersCount' => $registeredUsersCount]);
+        return view('pages.courseOpen', ['subjects' => $subjects, 'courses' => $courses]);
     }
 
     public function courseOpenDetail($course_id)
@@ -165,12 +165,26 @@ class SubjectController extends Controller
 
         $enrollmentCourse->save();
 
-        $enrollmentsCount = DB::table('enrollment_courses')->where('course_id', $course_id)->count();
-        $course           = DB::table('courses')->where('course_id', $course_id)->first();
+        // $enrollmentsCount = DB::table('enrollment_courses')->where('course_id', $course_id)->count();
+        // $course           = DB::table('courses')->where('course_id', $course_id)->first();
 
-        if ($enrollmentsCount >= $course->number_of_students)
+        // if ($enrollmentsCount >= $course->number_of_students)
+        // {
+        //     // อัปเดตสถานะของคอร์สเป็น "เต็ม" หรือสถานะที่คุณต้องการ
+        //     DB::table('courses')
+        //         ->where('course_id', $course_id)
+        //         ->update(['course_status' => 3]);
+        // }
+
+        DB::table('courses')
+            ->where('course_id', $course_id) // กำหนดคอร์สที่ต้องการลดจำนวนที่เปิดสอน
+            ->decrement('number_of_students', 1);
+
+// ตรวจสอบถ้า number_of_students เท่ากับ 0 ให้เปลี่ยนสถานะ course_status เป็น 3
+        $course = DB::table('courses')->where('course_id', $course_id)->first();
+
+        if ($course->number_of_students == 0)
         {
-            // อัปเดตสถานะของคอร์สเป็น "เต็ม" หรือสถานะที่คุณต้องการ
             DB::table('courses')
                 ->where('course_id', $course_id)
                 ->update(['course_status' => 3]);

@@ -20,17 +20,9 @@ class CourseController extends Controller
         $stdId = Auth::user()->user_id; // Adjust this according to your user structure
 
         $students = DB::table('students')
-            ->join('faculties', 'students.std_faculty', '=', 'faculties.id')
-            ->join('majors', 'students.std_major', '=', 'majors.id')
             ->where('students.std_id', $stdId)
-            ->select('students.*', 'faculties.name as faculty_name', 'majors.name as major_name')
+            ->select('students.*')
             ->first();
-
-        if (!$students)
-        {
-            // Handle case when tutor information is not found
-            return redirect()->route('home')->with('error', 'Tutor information not found');
-        }
 
         return view('tutorpages.addCourse', ['subjects' => $subjects, 'students' => $students]);
     }
@@ -98,7 +90,7 @@ class CourseController extends Controller
         $studentCourse->course_id = $course->id;
         $studentCourse->save();
 
-        return redirect('manageSubject')->with('success', 'เพิ่มข้อมูลนิสิตเรียบร้อยแล้ว');
+        return redirect('manageSubject')->with('success', 'เพิ่มข้อมูลรายวิชาเรียบร้อยแล้ว');
     }
 
     public function viewCourseDetails($course_id)
@@ -114,17 +106,10 @@ class CourseController extends Controller
         $stdId = Auth::user()->user_id; // Adjust this according to your user structure
 
         $students = DB::table('students')
-            ->join('faculties', 'students.std_faculty', '=', 'faculties.id')
-            ->join('majors', 'students.std_major', '=', 'majors.id')
             ->where('students.std_id', $stdId)
-            ->select('students.*', 'faculties.name as faculty_name', 'majors.name as major_name')
+            ->select('students.*')
             ->first();
 
-        if (!$students)
-        {
-            // Handle case when tutor information is not found
-            return redirect()->route('home')->with('error', 'Tutor information not found');
-        }
 
         // Query the subjects table to get the subject name
         $subject = DB::table('subjects')->where('subject_id', $course->course_name)->value('subject_name');
@@ -147,17 +132,9 @@ class CourseController extends Controller
         $stdId = Auth::user()->user_id; // Adjust this according to your user structure
 
         $students = DB::table('students')
-            ->join('faculties', 'students.std_faculty', '=', 'faculties.id')
-            ->join('majors', 'students.std_major', '=', 'majors.id')
             ->where('students.std_id', $stdId)
-            ->select('students.*', 'faculties.name as faculty_name', 'majors.name as major_name')
+            ->select('students.*')
             ->first();
-
-        if (!$students)
-        {
-            // Handle case when tutor information is not found
-            return redirect()->route('home')->with('error', 'Tutor information not found');
-        }
 
         // Retrieve the subject name based on course_name
         $subject = Subject::where('subject_id', $course->course_name)->value('subject_name');
@@ -257,7 +234,7 @@ class CourseController extends Controller
             ]);
         }
 
-        return redirect('manageSubject')->with('success', 'แก้ไขข้อมูลนิสิตเรียบร้อยแล้ว');
+        return redirect('manageSubject')->with('success', 'แก้ไขข้อมูลรายวิชารียบร้อยแล้ว');
     }
 
     public function updateCourseStatus(Request $request, $course_id)
@@ -297,17 +274,9 @@ class CourseController extends Controller
         $stdId = Auth::user()->user_id; // Adjust this according to your user structure
 
         $students = DB::table('students')
-            ->join('faculties', 'students.std_faculty', '=', 'faculties.id')
-            ->join('majors', 'students.std_major', '=', 'majors.id')
             ->where('students.std_id', $stdId)
-            ->select('students.*', 'faculties.name as faculty_name', 'majors.name as major_name')
+            ->select('students.*')
             ->first();
-
-        if (!$students)
-        {
-            // Handle case when tutor information is not found
-            return redirect()->route('home')->with('error', 'Tutor information not found');
-        }
 
         $subject = DB::table('subjects')->where('subject_id', $course->course_name)->value('subject_name');
 
@@ -351,17 +320,9 @@ class CourseController extends Controller
         $stdId = Auth::user()->user_id; // Adjust this according to your user structure
 
         $students = DB::table('students')
-            ->join('faculties', 'students.std_faculty', '=', 'faculties.id')
-            ->join('majors', 'students.std_major', '=', 'majors.id')
             ->where('students.std_id', $stdId)
-            ->select('students.*', 'faculties.name as faculty_name', 'majors.name as major_name')
+            ->select('students.*')
             ->first();
-
-        if (!$students)
-        {
-            // Handle case when tutor information is not found
-            return redirect()->route('home')->with('error', 'Tutor information not found');
-        }
 
         // Pass the course and subject details to a view and return it
 

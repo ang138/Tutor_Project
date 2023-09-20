@@ -10,6 +10,8 @@
             <div class="col-lg-4">
                 <div class="card mb-4">
                     <div class="card-body">
+                        <h3>ข้อมูลติวเตอร์</h3>
+                            <hr>
                         <div class="text-center">
                         <img src="{{ asset($students->std_image) }}"
                             style="width: 200px; height: 185px;">
@@ -97,6 +99,8 @@
                 <div class="card mb-4">
                     <div class="card-body">
                         <div class="row">
+                            <h3>ข้อมูลรายวิชา</h3>
+                            <hr>
                             <div class="col-sm-3">
                                 <p class="mb-0">รายวิชา</p>
                             </div>
@@ -167,10 +171,11 @@
                                 <p class="text-muted mb-0">{{ $students->message_to_students }}</p>
                             </div>
                         </div>
+                        <hr>
                         <div class="d-flex justify-content-center mt-3">
-                            <div class="btn-group" role="group" aria-label="First group">
-                                <a href="{{ url('course-open', ['id' => $students->subject_id]) }}" class="btn-detail btn-sm">ย้อนกลับ</a>
-                            </div>
+                            {{-- <div class="btn-group" role="group" aria-label="First group">
+                                <a href="{{ url('course-open', ['id' => $students->subject_id]) }}" class="btn-detail btn-sm"><i class="fa fa-backward"></i> ย้อนกลับ</a>
+                            </div> --}}
                             <div class="btn-group" role="group" aria-label="Second group">
                                 <a href="{{ url('enroll-form', ['course_id' => $course->course_id]) }}" class="btn-detail btn-sm">ลงทะเบียนเรียน</a>
                             </div>

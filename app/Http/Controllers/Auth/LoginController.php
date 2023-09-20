@@ -38,6 +38,10 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+    public function showLoginForm()
+    {
+        return view('auth.login');
+    }
 
     public function login(Request $request)
     {
@@ -60,14 +64,11 @@ class LoginController extends Controller
             {
                 return redirect()->route('advisorHome');
             }
-            elseif ($user->status == 3)
+            elseif ($user->status == 3 || $user->status == 4)
             {
-                return view('auth.login');
-                // return redirect('login')->with('error', 'You need to register as a tutor before.');
-            }
-            elseif ($user->status == 4)
-            {
-                return redirect('login')->with('error', 'Please wait for admin approval.');
+                auth()->logout(); // ลงชื่อออกจากระบบ
+
+                return redirect('login')->with('error', 'คุณยังไม่ได้เป็นติวเตอร์ โปรดสมัครเป็นติวเอตร์และตรวจสอบสถานะก่อนเข้าสู่ระบบ');
             }
             elseif ($user->status == 5)
             {
@@ -79,15 +80,12 @@ class LoginController extends Controller
             // Authentication failed
             $userWithEmail = User::where('email', $input['email'])->first();
 
-            // if ($userWithEmail) {
-            //     if ($userWithEmail->status !== 1 && $userWithEmail->status !== 2 && $userWithEmail->status !== 5) {
-            //         // Email exists in the database, but status is not 1, 2, or 5
-            //         return redirect('login')->with('error', 'Invalid status for this email.');
-            //     }
-            // }
+            // Handle other cases if needed
 
-            // // Email and Password are wrong
+            // Email and Password are wrong
+
             return redirect('login')->with('error', 'Email and Password are wrong.');
         }
     }
+
 }

@@ -294,6 +294,12 @@ class StudentController extends Controller
             ->join('subjects', 'courses.course_name', '=', 'subjects.subject_id')
             ->where('student_courses.std_id', $stdId)
             ->select('courses.*', 'subjects.subject_name')
+            ->orderByRaw('CASE
+                         WHEN courses.course_status = 1 THEN 1   -- เปิด
+                         WHEN courses.course_status = 2 THEN 2   -- ปิด
+                         WHEN courses.course_status = 3 THEN 3   -- เต็ม
+                         ELSE 4                                   -- สถานะอื่น ๆ
+                            END')
             ->get();
 
         return view('tutorpages.manageSubject', ['courses' => $courses, 'students' => $students]);

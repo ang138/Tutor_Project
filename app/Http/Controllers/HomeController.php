@@ -48,7 +48,7 @@ class HomeController extends Controller
         else
         {
             // Student not found, display a message or handle it as needed
-            return view('pages.applyTutor')->with('error', 'ไม่พบนิสิตด้วยรหัสนิสิตที่ระบุ');
+            return redirect()->back()->with('error', 'ไม่พบข้อมูลนิสิต โปรดกรอกข้อมูลใหม่');
         }
     }
 
@@ -119,6 +119,7 @@ class HomeController extends Controller
         // Query the students table and join with faculties and majors
         $enrollments = DB::table('enrollment_courses')
             ->where('enrollment_courses.cus_email', $cus_email)
+            ->whereDate('cus_birthdate', "{$birth_year}-{$birth_month}-{$birth_day}")
             ->join('enrollments', 'enrollment_courses.cus_email', '=', 'enrollments.cus_email')
             ->join('courses', 'enrollment_courses.course_id', '=', 'courses.course_id')
             ->join('subjects', 'courses.course_name', '=', 'subjects.subject_id')
@@ -148,17 +149,7 @@ class HomeController extends Controller
         }
         else
         {
-            return view('pages.enrollHistory')->with('error', 'ไม่พบข้อมูลการลงทะเบียน');
-        }
-
-        if ($enrollments)
-        {
-            return view('pages.checkEnrollHistory', compact('enrollments'));
-        }
-        else
-        {
-            // Student not found, display a message or handle it as needed
-            return view('pages.enrollHistory')->with('error', 'ไม่พบนิสิตด้วยรหัสนิสิตที่ระบุ');
+            return redirect()->back()->with('error', 'ไม่พบข้อมูลการลงทะเบียน โปรดข้อมูลใหม่');
         }
     }
     /**
