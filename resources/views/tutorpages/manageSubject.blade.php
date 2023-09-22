@@ -31,7 +31,7 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th>รายวิชา</th>
+                                    <th>รหัสรายวิชา</th>
                                     <th>รายวิชา</th>
                                     <th>สถานที่</th>
                                     <th>รูปแบบการสอน</th>
@@ -49,7 +49,7 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>รายวิชา</th>
+                                        <th>รหัสรายวิชา</th>
                                         <th>รายวิชา</th>
                                         <th style="width: 20%;">สถานที่</th>
                                         <th>รูปแบบการสอน</th>
@@ -141,7 +141,7 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>รหัสวิชา</th>
+                                        <th>รหัสรายวิชา</th>
                                         <th>รายวิชา</th>
                                         <th style="width: 20%;">สถานที่</th>
                                         <th>รูปแบบการสอน</th>
@@ -172,10 +172,13 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>รหัสวิชา</th>
+                                        <th>รหัสรายวิชา</th>
                                         <th>รายวิชา</th>
-                                        <th>สถานที่</th>
+                                        <th style="width: 20%;">สถานที่</th>
                                         <th>รูปแบบการสอน</th>
+                                        <th>วันที่สะดวกสอน</th>
+                                        <th>เวลาที่สะดวกสอน</th>
+                                        <th>สถานะรายวิชา</th>
                                         <!-- Add more columns as needed -->
                                     </tr>
                                 </thead>
