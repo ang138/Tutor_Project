@@ -40,7 +40,7 @@
                                     onsubmit="return confirm('ยืนยันการลบรูปภาพ?')">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-sm"><i class="fas fa-trash"></i></button>
+                                    <button type="submit" class="btn btn-sm" style="background-color: red"><i class="fas fa-trash"></i></button>
                                 </form>
                             </div>
                         </td>

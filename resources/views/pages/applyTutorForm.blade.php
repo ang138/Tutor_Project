@@ -23,7 +23,9 @@
                             <div class="card-body pt-3 pb-2">
                                 <h4>ตรวจสอบข้อมูลส่วนตัว</h4>
                                 <hr>
-                                <form action="{{ route('updateStudent', $student->std_id) }}" method="POST">
+                                {{-- <form action="{{ route('updateStudent', $student->std_id) }}" method="POST"> --}}
+                                <form id="updateStudentForm" action="{{ url('updateStudent/' . $student->std_id) }}"
+                                    method="POST" onsubmit="return validateForm()">
                                     @csrf
                                     @method('PUT')
                                     <div class="form-group pt-3 row">
@@ -161,8 +163,9 @@
                                     <div class="form-group pt-1 row">
                                         <label for="name" class="col-lg-2 col-form-label">GPAX:</label>
                                         <div class="col-lg-10">
-                                            <input type="number" min=0 max=4 class="form-control" placeholder="เกรดเฉลี่ยสะสม"
-                                                name="std_gpax" value="{{ old('std_gpax', $student->std_gpax) }}">
+                                            <input type="number" id="std_gpax" min="0" max="4"
+                                                class="form-control" placeholder="เกรดเฉลี่ยสะสม" name="std_gpax"
+                                                required>
                                         </div>
                                     </div>
                                     <h4 class="pt-5">กรอกข้อมูลช่องทางติดต่อ</h4>
@@ -170,22 +173,24 @@
                                     <div class="form-group pt-3 row">
                                         <label for="name" class="col-lg-2 col-form-label">เบอร์มือถือ:</label>
                                         <div class="col-lg-10">
-                                            <input type="text" class="form-control" placeholder="เกรดเฉลี่ยสะสม"
-                                                name="std_tel" value="{{ old('std_tel', $student->std_tel) }}">
+                                            <input type="number" id="std_tel" class="form-control"
+                                                placeholder="เบอร์มือถือ" name="std_tel" min="0" max="9999999999"
+                                                required>
                                         </div>
                                     </div>
+
                                     <div class="form-group pt-3 row">
-                                        <label for="name" class="col-lg-2 col-form-label">Facebook:</label>
+                                        <label for="name" class="col-lg-2 col-form-label">ลิ้งค์เฟสบุ๊ค:</label>
                                         <div class="col-lg-10">
-                                            <input type="text" class="form-control" placeholder="เกรดเฉลี่ยสะสม"
-                                                name="std_facebook" value="{{ old('std_facebook', $student->std_facebook) }}">
+                                            <input type="url" class="form-control" placeholder="ลิ้งค์เฟสบุ๊ค"
+                                                name="std_facebook" id="std_facebook" required>
                                         </div>
                                     </div>
                                     <div class="form-group pt-3 row">
                                         <label for="name" class="col-lg-2 col-form-label">Line ID:</label>
                                         <div class="col-lg-10">
-                                            <input type="text" class="form-control" placeholder="เกรดเฉลี่ยสะสม"
-                                                name="std_line" value="{{ old('std_line', $student->std_line) }}">
+                                            <input type="text" class="form-control" placeholder="Line ID"
+                                                name="std_line" required>
                                         </div>
                                     </div>
                             </div>
@@ -194,10 +199,10 @@
                 </div>
 
                 <div class="d-flex justify-content-center mt-3">
-                    <div class="btn-group" role="group" aria-label="First group">
+                    {{-- <div class="btn-group" role="group" aria-label="First group">
                         <a href="{{ url('applyTutor') }}" class="btn-submittutor">ย้อนกลับ</a>
                         </a>
-                    </div>
+                    </div> --}}
                     <div class="btn-group" role="group" aria-label="Second group">
                         <button type="submit" value="Update student" class="btn-submittutor">สมัครติวเตอร์</button>
                     </div>
@@ -206,4 +211,63 @@
             </div>
         </div>
     </div>
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function validateForm() {
+            const stdTelInput = document.getElementById("std_tel");
+            const stdGpaxInput = document.getElementById("std_gpax");
+            const stdFacebookInput = document.getElementById("std_facebook");
+
+            const telValue = stdTelInput.value;
+            const gpaxValue = parseFloat(stdGpaxInput.value);
+            const facebookURL = stdFacebookInput.value;
+            const facebookPattern = /^(https?:\/\/)?(www\.)?facebook\.com\/[a-zA-Z0-9._-]+$/;
+
+            let isValid = true;
+
+            if (!/^\d{10}$/.test(telValue)) {
+                stdTelInput.setCustomValidity("โปรดป้อนเบอร์มือถือที่ถูกต้อง (10 หลัก)");
+                isValid = false;
+            } else {
+                stdTelInput.setCustomValidity("");
+            }
+
+            if (isNaN(gpaxValue) || gpaxValue < 0 || gpaxValue > 4) {
+                stdGpaxInput.setCustomValidity("โปรดป้อน GPAX ที่อยู่ในช่วง 0 ถึง 4");
+                isValid = false;
+            } else {
+                stdGpaxInput.setCustomValidity("");
+            }
+
+            if (!facebookPattern.test(facebookURL)) {
+                stdFacebookInput.setCustomValidity("โปรดป้อนลิงค์ Facebook ที่ถูกต้อง");
+                isValid = false;
+            } else {
+                stdFacebookInput.setCustomValidity("");
+            }
+
+            if (isValid) {
+                // ถ้าข้อมูลถูกต้องให้แสดง Sweet Alert และยืนยันการสมัคร
+                Swal.fire({
+                    title: 'ยืนยันการสมัครติวเตอร์',
+                    text: 'คุณต้องการที่จะสมัครติวเตอร์ใช่หรือไม่?',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'ใช่',
+                    cancelButtonText: 'ไม่ใช่'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // ถ้าผู้ใช้กด "ใช่" ให้ส่งคำร้องขอไปยังฟังก์ชัน updateStudent()
+                        document.getElementById('updateStudentForm').submit();
+                    }
+                });
+            }
+
+            // ไม่ต้องส่งคำร้องขอในขั้นตอนนี้
+            return false;
+        }
+    </script>
 @endsection

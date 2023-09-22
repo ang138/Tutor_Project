@@ -247,9 +247,9 @@ class CourseController extends Controller
         }
 
         $currentStatus = $course->course_status;
-        $newStatus     = $currentStatus == 1 ? 2 : 1; // เปลี่ยนสถานะ
+        $newStatus = $currentStatus == 1 ? 2 : 1; // Toggle the status (change 1 to 2 or 2 to 1)
 
-        // ใช้ SQL เพื่ออัปเดตสถานะของรายวิชา
+        // Update the course's status in the database
         DB::table('courses')
             ->where('course_id', $course_id)
             ->update(['course_status' => $newStatus]);

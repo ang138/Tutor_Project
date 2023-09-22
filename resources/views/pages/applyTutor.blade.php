@@ -6,6 +6,12 @@
     <div class="container pt-5">
         <h1 style="text-align: center; font-weight: bold;">ค้นหาข้อมูลนิสิต</h1>
         <h3 style="text-align: center;">เพื่อทำการสมัครติวเตอร์/ตรวจสอบสถานะการเป็นติวเตอร์</h3>
+
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
         <!-- Tutor Application Form -->
         <div class="container pt-5">
             <div class="row justify-content-center">

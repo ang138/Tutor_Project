@@ -35,6 +35,9 @@
                                         <div class="col-lg-10">
                                             <input type="text" class="form-control" placeholder="ชื่อ"
                                                 name="advisor_name">
+                                            @error('advisor_name')
+                                                <div class="text-danger">โปรดป้อนชื่อ</div>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="form-group pt-3 row">
@@ -42,6 +45,9 @@
                                         <div class="col-lg-10">
                                             <input type="text" class="form-control" placeholder="นามสกุล"
                                                 name="advisor_surname">
+                                            @error('advisor_surname')
+                                                <div class="text-danger">โปรดป้อนนามสกุล</div>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="form-group pt-3 row">
@@ -49,6 +55,9 @@
                                         <div class="col-lg-10">
                                             <input type="email" class="form-control" placeholder="อีเมล"
                                                 name="advisor_email">
+                                            @error('advisor_email')
+                                                <div class="text-danger">โปรดป้อนอีเมล</div>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="form-group pt-3 row">
@@ -56,6 +65,9 @@
                                         <div class="col-lg-10">
                                             <input type="password" class="form-control" placeholder="รหัสผ่าน"
                                                 name="advisor_password">
+                                            @error('advisor_password')
+                                                <div class="text-danger">โปรดป้อนรหัสผ่าน</div>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="form-group pt-3 row" style="display: none">
@@ -73,6 +85,9 @@
                                                     <option value="{{ $faculty->id }}">{{ $faculty->name }}</option>
                                                 @endforeach
                                             </select>
+                                            @error('advisor_faculty')
+                                                <div class="text-danger">โปรดเลือกคณะ</div>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="form-group pt-3 row">
@@ -81,17 +96,21 @@
                                             <select id="major-dd" class="form-control" name="advisor_major">
                                                 <option value="">เลือกสาขา</option>
                                             </select>
+                                            @error('advisor_major')
+                                                <div class="text-danger">โปรดเลือกสาขา</div>
+                                            @enderror
                                         </div>
                                     </div>
 
                                     {{-- ------------------------------ --}}
                                     <div class="d-flex justify-content-center mt-3">
-                                        <div class="btn-group" role="group" aria-label="First group">
+                                        {{-- <div class="btn-group" role="group" aria-label="First group">
                                             <a href="{{ url('manageAdvisor') }}"
                                                 class="btn btn-danger btn-sm me-2">ย้อนกลับ</a>
-                                        </div>
+                                        </div> --}}
                                         <div class="btn-group" role="group" aria-label="Second group">
-                                            <button type="submit" class="btn btn-primary btn-sm">ยืนยันการเพิ่ม</button>
+                                            <button type="submit" class="btn btn-primary btn-sm"
+                                                id="submit-button">ยืนยันการเพิ่ม</button>
                                         </div>
                                     </div>
                                 </form>
@@ -122,6 +141,27 @@
                         $("#major-dd").append('<option value="' + value.id + '">' + value.name +
                             '</option>');
                     });
+                }
+            });
+        });
+
+        $('form').submit(function(event) {
+            event.preventDefault(); // Prevent the form from submitting normally
+
+            var form = $(this);
+
+            // Show a SweetAlert to confirm the submission
+            Swal.fire({
+                title: 'ยืนยันการเพิ่มข้อมูล',
+                text: 'คุณแน่ใจที่จะเพิ่มข้อมูลอาจารย์ที่ปรึกษา?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'ใช่',
+                cancelButtonText: 'ไม่ใช่'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // If confirmed, submit the form
+                    form.unbind('submit').submit();
                 }
             });
         });

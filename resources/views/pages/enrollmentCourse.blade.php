@@ -87,7 +87,7 @@
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
-                                    <label for="basic-url" class="form-label pt-3">Facebook</label>
+                                    <label for="basic-url" class="form-label pt-3">กรอกลิงค์เฟสบุ๊คของคุณ</label>
                                     <div class="input-group mb-3">
                                         <span class="input-group-text" id="basic-addon3">https://www.facebook.com/</span>
                                         <input type="text" class="form-control" id="basic-url"
@@ -95,7 +95,7 @@
                                             required>
                                     </div>
                                     <div class="form-group pt-3">
-                                        <label for="cus_line">Line</label>
+                                        <label for="cus_line">กรอกไอดีใลน์ หรือ หมายเลขโทรศัพท์</label>
                                         <input type="text" class="form-control" id="cus_line" name="cus_line"
                                             placeholder="Line" required>
                                         @error('cus_line')

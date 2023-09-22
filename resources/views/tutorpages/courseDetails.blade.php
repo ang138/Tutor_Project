@@ -105,9 +105,9 @@
                         </div>
                         <hr>
                         <div class="d-flex justify-content-center mt-3">
-                            <div class="btn-group" role="group" aria-label="First group">
+                            {{-- <div class="btn-group" role="group" aria-label="First group">
                                 <a href="{{ url('manageSubject') }}" class="btn btn-danger btn-sm me-2">ย้อนกลับ</a>
-                            </div>
+                            </div> --}}
                             <div class="btn-group" role="group" aria-label="Second group">
                                 <a href="{{ url('edit-course/' . $course->course_id) }}" class="btn btn-danger btn-sm me-2">แก้ไขข้อมูล</a>
                             </div>

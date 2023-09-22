@@ -125,10 +125,10 @@
                                         </div>
                                     </div>
                                     <div class="d-flex justify-content-center mt-3">
-                                        <div class="btn-group" role="group" aria-label="First group">
+                                        {{-- <div class="btn-group" role="group" aria-label="First group">
                                             <a href="{{ url('manageSubject') }}"
                                                 class="btn btn-danger btn-sm me-2">ย้อนกลับ</a>
-                                        </div>
+                                        </div> --}}
                                         <div class="btn-group" role="group" aria-label="Second group">
                                             <!-- Add a function to display SweetAlert confirmation -->
                                             <button type="button" class="btn btn-primary btn-sm"

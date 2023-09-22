@@ -20,9 +20,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('applyTutor') }}">สมัครติวเตอร์</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url('contact') }}">ติดต่อเรา</a>
-                </li>
                 @guest
                     @if (Route::has('login'))
                         <li class="nav-item">

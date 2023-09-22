@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Advisor;
 use App\Models\Faculty;
 use App\Models\Major;
 use Illuminate\Http\Request;
@@ -86,6 +87,12 @@ class StudentController extends Controller
         $faculties = Faculty::all();
         $majors    = Major::all();
 
+        $advisors = Advisor::all();
+
+        $studentAdvisors = DB::table('student_advisors')
+            ->where('std_id', $std_id)
+            ->first();
+
         // Check if the student exists
         if (!$student)
         {
@@ -93,72 +100,97 @@ class StudentController extends Controller
             return redirect()->back()->with('error', 'Student not found.');
         }
 
+        $decryptedPassword = bcrypt($student->std_password);
+
         // Extract the birthdate into separate variables (day, month, year)
         list($birth_year, $birth_month, $birth_day) = explode('-', $student->birthdate);
 
         // Pass the student data to the view for editing, including birthdate variables
 
-        return view('adminpages.editStudent', compact('student', 'faculties', 'majors', 'birth_year', 'birth_month', 'birth_day'));
+        return view('adminpages.editStudent', compact('student', 'faculties', 'majors', 'birth_year', 'birth_month', 'birth_day', 'decryptedPassword', 'advisors', 'studentAdvisors'));
 
     }
 
     public function updateStudent(Request $request, $std_id)
     {
         // Validate the incoming request data here
-        $request->validate([
-            'std_id'       => 'required',
-            'std_name'     => 'required',
-            'std_surname'  => 'required',
-            'std_email'    => 'required|email',
-            'std_password' => 'required',
-            'std_status'   => 'required',
-            'std_faculty'  => 'required',
-            'std_major'    => 'required',
-            'std_class'    => 'required',
-            'std_gpax'     => 'nullable|numeric',
-            'birth_day'    => 'required',
-            'birth_month'  => 'required',
-            'birth_year'   => 'required',
-        ]);
 
         // Use the query builder to update the student's information
-
         $birthdate = $request->input('birth_year') . '-' . $request->input('birth_month') . '-' . $request->input('birth_day');
 
-        DB::table('students')
-            ->where('std_id', $std_id)
-            ->update([
-                'std_id'       => $request->input('std_id'),
+        DB::beginTransaction(); // Start a database transaction
+
+        try {
+            $updateData = [
                 'std_name'     => $request->input('std_name'),
                 'std_surname'  => $request->input('std_surname'),
                 'std_email'    => $request->input('std_email'),
-                'std_password' => $request->input('std_password'),
+                'std_password' => bcrypt($request->input('std_password')),
                 'std_status'   => $request->input('std_status'),
                 'std_faculty'  => $request->input('std_faculty'),
                 'std_major'    => $request->input('std_major'),
                 'std_class'    => $request->input('std_class'),
                 'std_gpax'     => $request->input('std_gpax'),
-
-                // Update the birthdate
                 'birthdate'    => $birthdate,
+            ];
 
-                // Add more fields to update as needed
-            ]);
+            // Check if each field has a value before updating
+            foreach ($updateData as $key => $value)
+            {
+                if ($value !== null)
+                {
+                    DB::table('students')
+                        ->where('std_id', $std_id)
+                        ->update([$key => $value]);
+                }
+            }
 
-        DB::table('users')
-            ->where('user_id', $std_id)
-            ->update([
+            // Update user data (assuming the user_id remains the same)
+            $updateUserData = [
                 'name'     => $request->input('std_name'),
                 'email'    => $request->input('std_email'),
                 'password' => bcrypt($request->input('std_password')),
                 'status'   => $request->input('std_status'),
-                'user_id'  => $request->input('std_id'), // หากคุณต้องการอัปเดต user_id
-                // เพิ่มคอลัมน์อื่นๆ ที่คุณต้องการอัปเดต
-            ]);
+            ];
 
-        return redirect('manageStudent')->with('success', 'แก้ไขข้อมูลนิสิตเรียบร้อยแล้ว');
+            foreach ($updateUserData as $key => $value)
+            {
+                if ($value !== null)
+                {
+                    DB::table('users')
+                        ->where('user_id', $std_id)
+                        ->update([$key => $value]);
+                }
+            }
 
+            // Update student_advisors data
+            $updateAdvisorsData = [
+                'advisor1_id' => $request->input('advisor1_id'),
+                'advisor2_id' => $request->input('advisor2_id'),
+            ];
+
+            foreach ($updateAdvisorsData as $key => $value)
+            {
+                if ($value !== null)
+                {
+                    DB::table('student_advisors')
+                        ->where('std_id', $std_id)
+                        ->update([$key => $value]);
+                }
+            }
+
+            DB::commit(); // Commit the transaction
+
+            return redirect('manageStudent')->with('success', 'แก้ไขข้อมูลนิสิตเรียบร้อยแล้ว');
+        }
+        catch (\Exception $e)
+        {
+            DB::rollback(); // Rollback the transaction in case of an error
+
+            return redirect()->back()->with('error', 'เกิดข้อผิดพลาดในการอัปเดตข้อมูล: ' . $e->getMessage());
+        }
     }
+
     // -----สิ้นสุดการอัปเดตข้อมูลนิสิต-----
 
     // ----------------การลบข้อมูลนิสิต-----------------
@@ -293,6 +325,7 @@ class StudentController extends Controller
             ->join('courses', 'student_courses.course_id', '=', 'courses.course_id')
             ->join('subjects', 'courses.course_name', '=', 'subjects.subject_id')
             ->where('student_courses.std_id', $stdId)
+            ->whereIn('courses.course_status', [1, 2, 3])
             ->select('courses.*', 'subjects.subject_name')
             ->orderByRaw('CASE
                          WHEN courses.course_status = 1 THEN 1   -- เปิด
@@ -302,7 +335,12 @@ class StudentController extends Controller
                             END')
             ->get();
 
-        return view('tutorpages.manageSubject', ['courses' => $courses, 'students' => $students]);
+        $coursesWithStatus3 = $courses->filter(function ($course)
+        {
+            return $course->course_status == 3;
+        });
+
+        return view('tutorpages.manageSubject', ['courses' => $courses, 'students' => $students, 'coursesWithStatus3' => $coursesWithStatus3]);
     }
 
     public function enrollment()

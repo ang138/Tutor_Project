@@ -66,11 +66,14 @@ class HomeController extends Controller
     {
         // Validate the form data
         $validator = Validator::make($request->all(), [
-            'std_gpax' => 'required|numeric', // Add validation rules for GPAX
-            'std_tel' => 'required|numeric', // Add validation rules for mobile number
-            'std_facebook' => 'required|string', // Add validation rules for Facebook
-            'std_line' => 'required|string', // Add validation rules for Line ID
+
+            'std_gpax'     => 'required|numeric|between:0,4', // Validate GPAX is numeric and between 0 and 4
+            'std_tel' => 'required|numeric|digits:10', // Validate mobile number is numeric and 10 digits
+            'std_facebook' => 'required|string',
+            'std_line'     => 'required|string', // Add validation rules for Line ID
         ]);
+
+        $birthdate = $request->input('birth_year') . '-' . $request->input('birth_month') . '-' . $request->input('birth_day');
 
         // If validation fails, return back with errors
         if ($validator->fails())

@@ -24,8 +24,11 @@
                                         <div class="form-group pt-3 row">
                                             <label for="name" class="col-lg-2 col-form-label">รหัสนิสิต:</label>
                                             <div class="col-lg-10">
-                                                <input type="text" class="form-control" placeholder="First name"
-                                                    name="std_id">
+                                                <input type="number" class="form-control" placeholder="รหัสนิสิต"
+                                                    name="std_id"  min="0" max="999999999">
+                                                @error('std_id')
+                                                    <div class="text-danger">โปรดป้อนรหัสนิสิต</div>
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class="form-group pt-3 row">
@@ -33,6 +36,9 @@
                                             <div class="col-lg-10">
                                                 <input type="text" class="form-control" placeholder="ชื่อ"
                                                     name="std_name">
+                                                @error('std_name')
+                                                    <div class="text-danger">โปรดป้อนชื่อ</div>
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class="form-group pt-3 row">
@@ -40,6 +46,9 @@
                                             <div class="col-lg-10">
                                                 <input type="text" class="form-control" placeholder="นามสกุล"
                                                     name="std_surname">
+                                                @error('std_surname')
+                                                    <div class="text-danger">โปรดป้อนนามสกุล</div>
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class="form-group pt-3 row">
@@ -54,15 +63,24 @@
                                                                 </option>
                                                             @endfor
                                                         </select>
+                                                        @error('birth_day')
+                                                            <div class="text-danger">โปรดเลือกวันที่เกิด</div>
+                                                        @enderror
                                                     </div>
                                                     <div class="col-lg-4">
                                                         <select class="form-select" name="birth_month">
                                                             <option value="">เดือน</option>
-                                                            @for ($month = 1; $month <= 12; $month++)
-                                                                <option value="{{ $month }}">{{ $month }}
+                                                            @php
+                                                                $thaiMonths = ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'];
+                                                            @endphp
+                                                            @foreach ($thaiMonths as $key => $month)
+                                                                <option value="{{ $key + 1 }}">{{ $month }}
                                                                 </option>
-                                                            @endfor
+                                                            @endforeach
                                                         </select>
+                                                        @error('birth_month')
+                                                            <div class="text-danger">โปรดเลือกเดือนที่เกิด</div>
+                                                        @enderror
                                                     </div>
                                                     <div class="col-lg-4">
                                                         <select class="form-select" name="birth_year">
@@ -72,6 +90,9 @@
                                                                 </option>
                                                             @endfor
                                                         </select>
+                                                        @error('birth_year')
+                                                            <div class="text-danger">โปรดเลือกปีที่เกิด</div>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                             </div>
@@ -81,6 +102,9 @@
                                             <div class="col-lg-10">
                                                 <input type="email" class="form-control" placeholder="อีเมล"
                                                     name="std_email">
+                                                @error('std_email')
+                                                    <div class="text-danger">โปรดป้อนอีเมล</div>
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class="form-group pt-3 row">
@@ -88,6 +112,9 @@
                                             <div class="col-lg-10">
                                                 <input type="text" class="form-control" placeholder="รหัสผ่าน"
                                                     name="std_password">
+                                                @error('std_password')
+                                                    <div class="text-danger">โปรดป้อนรหัสผ่าน</div>
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class="form-group pt-3 row" style="display: none">
@@ -101,11 +128,14 @@
                                             <label for="faculty" class="col-lg-2 col-form-label">คณะ:</label>
                                             <div class="col-lg-10">
                                                 <select id="faculty-dd" class="form-select" name="std_faculty">
-                                                    <option value="">Select Faculty</option>
+                                                    <option value="">เลือกคณะ</option>
                                                     @foreach ($faculties as $faculty)
                                                         <option value="{{ $faculty->id }}">{{ $faculty->name }}</option>
                                                     @endforeach
                                                 </select>
+                                                @error('std_faculty')
+                                                    <div class="text-danger">โปรดเลือกคณะ</div>
+                                                @enderror
                                             </div>
                                         </div>
 
@@ -114,8 +144,11 @@
                                             <label for="major" class="col-lg-2 col-form-label">สาขา:</label>
                                             <div class="col-lg-10">
                                                 <select id="major-dd" class="form-select" name="std_major" disabled>
-                                                    <option value="">Select Major</option>
+                                                    <option value="">เลือกสาขา</option>
                                                 </select>
+                                                @error('std_major')
+                                                    <div class="text-danger">โปรดเลือกสาขา</div>
+                                                @enderror
                                             </div>
                                         </div>
 
@@ -124,8 +157,11 @@
                                             <label for="advisor" class="col-lg-2 col-form-label">อาจารที่ปรึกษา:</label>
                                             <div class="col-lg-10">
                                                 <select id="advisor-dd" class="form-select" name="advisor1_id" disabled>
-                                                    <option value="">Select Advisor</option>
+                                                    <option value="">เลือกอาจารที่ปรึกษา</option>
                                                 </select>
+                                                @error('advisor1_id')
+                                                    <div class="text-danger">โปรดเลือกอาจารย์ที่ปรึกษา</div>
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class="form-group pt-3 row">
@@ -133,7 +169,7 @@
                                                 (ถ้ามี):</label>
                                             <div class="col-lg-10">
                                                 <select id="advisor2-dd" class="form-select" name="advisor2_id" disabled>
-                                                    <option value="">Select Advisor</option>
+                                                    <option value="">เลือกอาจารที่ปรึกษาคนที่2 (ถ้ามี)</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -149,6 +185,9 @@
                                                     <option value="3">3</option>
                                                     <option value="4">4</option>
                                                 </select>
+                                                @error('std_class')
+                                                    <div class="text-danger">โปรดเลือกชั้นปี</div>
+                                                @enderror
                                             </div>
                                         </div>
 
@@ -191,12 +230,12 @@
                     {{-- ------------------------------ --}}
 
                     <div class="d-flex justify-content-center mt-3">
-                        <div class="btn-group" role="group" aria-label="First group">
+                        {{-- <div class="btn-group" role="group" aria-label="First group">
                             <a href="{{ url('manageStudent') }}" class="btn btn-danger btn-sm me-2">ย้อนกลับ</a>
-                        </div>
+                        </div> --}}
                         <div class="btn-group" role="group" aria-label="Second group">
-                            <button type="submit" value="Add student"
-                                class="btn btn-primary  btn-sm">ยืนยันการเพิ่ม</button>
+                            <button type="submit" value="Add student" class="btn btn-primary  btn-sm"
+                                id="student-form"> ยืนยันการเพิ่ม</button>
                         </div>
                     </div>
                     </form>
@@ -310,6 +349,38 @@
                     if (advisor1 === advisor2) {
                         alert('คุณไม่สามารถเลือกอาจารย์คนที่ 1 และ 2 เหมือนกันได้');
                         $(this).val('').trigger('change'); // Reset the selected value
+                    }
+                });
+
+                $('form').submit(function(event) {
+                    event.preventDefault(); // Prevent the form from submitting normally
+
+                    var form = $(this);
+
+                    // Show a SweetAlert to confirm the submission
+                    Swal.fire({
+                        title: 'ยืนยันการเพิ่มข้อมูล',
+                        text: 'คุณแน่ใจที่จะเพิ่มข้อมูลนิสิต?',
+                        icon: 'question',
+                        showCancelButton: true,
+                        confirmButtonText: 'ใช่',
+                        cancelButtonText: 'ไม่ใช่'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // If confirmed, submit the form
+                            form.unbind('submit').submit();
+                        }
+                    });
+                });
+
+                // JavaScript สำหรับตรวจสอบความยาวของรหัสนิสิต
+                const stdIdInput = document.querySelector('input[name="std_id"]');
+
+                stdIdInput.addEventListener('input', function() {
+                    if (this.value.length > 9) {
+                        this.setCustomValidity('รหัสนิสิตต้องมีความยาวไม่เกิน 9 ตัวอักษร');
+                    } else {
+                        this.setCustomValidity('');
                     }
                 });
             });

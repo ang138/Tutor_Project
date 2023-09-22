@@ -225,7 +225,8 @@ class AdvisorController extends Controller
 
         // Redirect back or to a success page
 
-        return redirect()->back()->with('success', 'นิสิตถูกอนุมัติเป็นติวเตอร์แล้ว');
+        // return redirect()->back()->with('success', 'นิสิตถูกอนุมัติเป็นติวเตอร์แล้ว');
+        return redirect('approveTutor')->with('success', 'นิสิตถูกอนุมัติเป็นติวเตอร์แล้ว');
     }
 
     /**

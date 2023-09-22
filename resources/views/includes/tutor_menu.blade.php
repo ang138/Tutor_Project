@@ -14,7 +14,7 @@
                     <a class="nav-link" href="{{ url('manageSubject') }}">จัดการรายวิชา</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('enrollment') }}">ดูรายการผู้ลงทะเบียน</a>
+                    <a class="nav-link" href="{{ url('enrollment') }}">ดูรายชื่อผู้ลงทะเบียน</a>
                 </li>
                 @guest
                     @if (Route::has('login'))

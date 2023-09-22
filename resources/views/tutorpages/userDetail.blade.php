@@ -98,11 +98,11 @@
                             </div>
                         </div>
                         <hr>
-                        <div class="d-flex justify-content-center mt-3">
+                        {{-- <div class="d-flex justify-content-center mt-3">
                             <div class="btn-group" role="group" aria-label="First group">
                                 <a href="{{ url('user-enroll', ['id' => $user->course_id]) }}" class="btn btn-danger btn-sm me-2">ย้อนกลับ</a>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
 
                 </div>

@@ -109,12 +109,20 @@
                             </div>
                         </div>
                         <hr>
+
+
                         <div class="row">
                             <div class="col-sm-3">
                                 <p class="mb-0">Facebook</p>
                             </div>
                             <div class="col-sm-9">
-                                <p class="text-muted mb-0">{{ $student->std_facebook }}</p>
+                                @if ($student->std_facebook)
+                                    <p class="text-muted mb-0">
+                                        <a href="{{ $student->std_facebook }}" target="_blank"> ไปยังโปรไฟล์ Facebook</a>
+                                    </p>
+                                @else
+                                    <p class="text-muted mb-0">ไม่ได้ระบุลิงค์ Facebook</p>
+                                @endif
                             </div>
                         </div>
                         <hr>
@@ -128,12 +136,19 @@
                         </div>
                         <hr>
                         <div class="d-flex justify-content-center mt-3">
-                            <div class="btn-group" role="group" aria-label="First group">
+                            {{-- <div class="btn-group" role="group" aria-label="First group">
                                 <a href="{{ url('approveTutor') }}"
                                     class="btn btn-danger btn-sm me-2">ย้อนกลับ</a>
-                            </div>
+                            </div> --}}
                             <div class="btn-group" role="group" aria-label="Second group">
-                                <button type="submit" class="btn btn-primary btn-sm">อนุมัติการเป็นติวเตอร์</button>
+                                <form id="approvalForm{{ $student->std_id }}"
+                                    action="{{ route('approveStudent', ['std_id' => $student->std_id]) }}"
+                                    method="post">
+                                    @csrf
+                                    <!-- Add any hidden fields if needed -->
+                                    <button type="button" class="btn btn-success"
+                                        onclick="showConfirmation('{{ $student->std_id }}')">อนุมัติ</button>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -143,61 +158,28 @@
         </div>
         <!-- You can add more HTML and details about the student as necessary -->
     </div>
+
+    <!-- Include SweetAlert CSS and JS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+    <script>
+        function showConfirmation(studentId) {
+            Swal.fire({
+                title: "ยืนยันการอนุมัติ",
+                text: "คุณต้องการที่จะอนุมัตินิสิตรหัส " + studentId + " เป็นติวเตอร์ใช่หรือไม่?",
+                icon: "question",
+                showCancelButton: true,
+                confirmButtonText: "ใช่, อนุมัติ",
+                cancelButtonText: "ยกเลิก"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // If the user confirms, manually submit the form
+                    document.getElementById('approvalForm' + studentId).submit();
+                }
+            });
+        }
+    </script>
 @endsection
 
-
-{{-- <div class="container py-5">
-    <div class="row">
-        <div class="col-lg-8">
-            <div class="card mb-4">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <p class="mb-0">Full Name</p>
-                        </div>
-                        <div class="col-sm-9">
-                            <p class="text-muted mb-0">Johnatan Smith</p>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <p class="mb-0">Email</p>
-                        </div>
-                        <div class="col-sm-9">
-                            <p class="text-muted mb-0">example@example.com</p>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <p class="mb-0">Phone</p>
-                        </div>
-                        <div class="col-sm-9">
-                            <p class="text-muted mb-0">(097) 234-5678</p>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <p class="mb-0">Mobile</p>
-                        </div>
-                        <div class="col-sm-9">
-                            <p class="text-muted mb-0">(098) 765-4321</p>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <p class="mb-0">Address</p>
-                        </div>
-                        <div class="col-sm-9">
-                            <p class="text-muted mb-0">Bay Area, San Francisco, CA</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</div> --}}

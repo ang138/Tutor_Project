@@ -67,10 +67,12 @@
                                         <div class="form-group pt-3 row">
                                             <label for="name" class="col-lg-2 col-form-label">คณะ:</label>
                                             <div class="col-lg-10">
-                                                <select id="faculty-dd" class="form-select" aria-label="Default select example" name="advisor_faculty">
+                                                <select id="faculty-dd" class="form-select"
+                                                    aria-label="Default select example" name="advisor_faculty">
                                                     <option value="">เลือกคณะ</option>
                                                     @foreach ($faculties as $faculty)
-                                                        <option value="{{ $faculty->id }}" {{ $advisor->advisor_faculty == $faculty->id ? 'selected' : '' }}>
+                                                        <option value="{{ $faculty->id }}"
+                                                            {{ $advisor->advisor_faculty == $faculty->id ? 'selected' : '' }}>
                                                             {{ $faculty->name }}
                                                         </option>
                                                     @endforeach
@@ -81,11 +83,13 @@
                                         <div class="form-group pt-3 row">
                                             <label for="name" class="col-lg-2 col-form-label">สาขา:</label>
                                             <div class="col-lg-10">
-                                                <select id="major-dd" class="form-select" aria-label="Default select example" name="advisor_major">
+                                                <select id="major-dd" class="form-select"
+                                                    aria-label="Default select example" name="advisor_major">
                                                     <option value="">เลือกสาขา</option>
                                                     @foreach ($majors as $major)
                                                         @if ($advisor->advisor_faculty == $major->faculty_id)
-                                                            <option value="{{ $major->id }}" {{ $advisor->advisor_major == $major->id ? 'selected' : '' }}>
+                                                            <option value="{{ $major->id }}"
+                                                                {{ $advisor->advisor_major == $major->id ? 'selected' : '' }}>
                                                                 {{ $major->name }}
                                                             </option>
                                                         @endif
@@ -106,7 +110,7 @@
                         </div>
                         <div class="btn-group" role="group" aria-label="Second group">
                             <button type="submit" value="Update advisor"
-                                class="btn btn-primary btn-sm">ยืนยันแก้ไข</button>
+                                class="btn btn-primary btn-sm" id="update-button">ยืนยันแก้ไข</button>
                         </div>
                     </div>
                     </form>
@@ -134,6 +138,28 @@
                                 '</option>');
                         });
                     }
+                });
+            });
+
+            $(document).ready(function() {
+                $('#update-button').click(function(e) {
+                    e.preventDefault(); // ป้องกันฟอร์มส่งค่าไปก่อนที่เราจะแสดง Sweet Alert
+
+                    Swal.fire({
+                        title: 'คุณแน่ใจหรือไม่?',
+                        text: "คุณต้องการที่จะแก้ไขข้อมูลอาจารย์ที่ปรึกษาหรือไม่?",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'ยืนยัน',
+                        cancelButtonText: 'ยกเลิก'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // หากผู้ใช้คลิก "ยืนยัน" ให้ส่งค่าฟอร์ม
+                            $('form').submit();
+                        }
+                    });
                 });
             });
         </script>
