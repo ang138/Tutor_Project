@@ -19,8 +19,9 @@
                         <div class="col-md-9 pt-1 ">
                             <div class="card" style="border: 0;">
                                 <div class="card-body pt-3 pb-2">
-                                    <form action="/insert-student" method="post">
-                                        <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+                                    <form action="{{ url('/insert-student') }}" method="post">
+                                        @csrf
+                                        {{-- <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>"> --}}
                                         <div class="form-group pt-3 row">
                                             <label for="name" class="col-lg-2 col-form-label">รหัสนิสิต:</label>
                                             <div class="col-lg-10">
@@ -235,7 +236,7 @@
                         </div> --}}
                         <div class="btn-group" role="group" aria-label="Second group">
                             <button type="submit" value="Add student" class="btn btn-primary  btn-sm"
-                                id="student-form"> ยืนยันการเพิ่ม</button>
+                                id="submit-button"> ยืนยันการเพิ่ม</button>
                         </div>
                     </div>
                     </form>

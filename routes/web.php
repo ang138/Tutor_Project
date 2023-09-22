@@ -87,8 +87,8 @@ Route::middleware(['auth'])->group(function ()
     Route::get('manageStudent', [StudentController::class, 'manageStudent'])->name('manageStudent');
 
     // -----เพิ่มข้อมูลนิสิต-----
-    Route::get('addStudent', [StudentController::class, 'insertstdform']);
-    Route::post('insert-student', [StudentController::class, 'insertstd']);
+    Route::get('/addStudent', [StudentController::class, 'insertstdform']);
+    Route::post('/insert-student', [StudentController::class, 'insertstd']);
 
     // -----อัปเดตข้อมูลนิสิต------
     Route::get('edit-student/{std_id}', [StudentController::class, 'editStudent']);

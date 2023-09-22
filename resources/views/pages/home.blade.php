@@ -6,6 +6,13 @@
     <!-- Slide Image -->
     <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-indicators">
+
+            @php
+                ini_set('display_errors', '1');
+                ini_set('display_startup_errors', '1');
+                error_reporting(E_ALL);
+            @endphp
+
             @foreach ($images as $key => $image)
                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{ $key }}"
                     {{ $key == 0 ? 'class=active' : '' }}></button>

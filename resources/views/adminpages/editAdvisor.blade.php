@@ -51,7 +51,7 @@
                                                     name="advisor_email" value="{{ $advisor->advisor_email }}">
                                             </div>
                                         </div>
-                                        <div class="form-group pt-3 row">
+                                        <div class="form-group pt-3 row" style="display: none">
                                             <label for="name" class="col-lg-2 col-form-label">รหัสผ่าน:</label>
                                             <div class="col-lg-10">
                                                 <input type="text" class="form-control" placeholder="รหัสผ่าน"
@@ -104,10 +104,10 @@
                     {{-- ------------------------------ --}}
 
                     <div class="d-flex justify-content-center mt-3">
-                        <div class="btn-group" role="group" aria-label="First group">
+                        {{-- <div class="btn-group" role="group" aria-label="First group">
                             <a href="{{ url('manageAdvisor') }}" class="btn btn-danger btn-sm me-2">ย้อนกลับ</a>
                             </a>
-                        </div>
+                        </div> --}}
                         <div class="btn-group" role="group" aria-label="Second group">
                             <button type="submit" value="Update advisor"
                                 class="btn btn-primary btn-sm" id="update-button">ยืนยันแก้ไข</button>

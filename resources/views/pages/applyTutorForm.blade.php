@@ -164,7 +164,7 @@
                                         <label for="name" class="col-lg-2 col-form-label">GPAX:</label>
                                         <div class="col-lg-10">
                                             <input type="number" id="std_gpax" min="0" max="4"
-                                                class="form-control" placeholder="เกรดเฉลี่ยสะสม" name="std_gpax"
+                                                class="form-control" placeholder="เกรดเฉลี่ยสะสม" name="std_gpax" step="0.01"
                                                 required>
                                         </div>
                                     </div>
@@ -235,13 +235,14 @@
                 stdTelInput.setCustomValidity("");
             }
 
+            gpaxValue = parseFloat(gpaxValue.toFixed(2));
+
             if (isNaN(gpaxValue) || gpaxValue < 0 || gpaxValue > 4) {
                 stdGpaxInput.setCustomValidity("โปรดป้อน GPAX ที่อยู่ในช่วง 0 ถึง 4");
                 isValid = false;
             } else {
                 stdGpaxInput.setCustomValidity("");
             }
-
             if (!facebookPattern.test(facebookURL)) {
                 stdFacebookInput.setCustomValidity("โปรดป้อนลิงค์ Facebook ที่ถูกต้อง");
                 isValid = false;

@@ -209,6 +209,10 @@ class StudentController extends Controller
                 ->where('std_id', $std_id)
                 ->delete();
 
+            DB::table('student_advisors')
+                ->where('std_id', $std_id)
+                ->delete();
+
             // ลบข้อมูลผู้ใช้ในตาราง 'users' โดยใช้ email เพื่อระบุ
             DB::table('users')
                 ->where('user_id', $std_id)
@@ -242,7 +246,7 @@ class StudentController extends Controller
     public function studentImageProfile(Request $request, $std_id)
     {
         $validator = Validator::make($request->all(), [
-            'std_image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'std_image' => 'image|mimes:jpeg,png,jpg,gif|max:5000',
             // Add validation rules for other fields as needed
         ]);
 

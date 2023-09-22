@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container py-5">
-        <h1 style="text-align: center; font-weight: bold;">ข้อมูลส่วนตัวของติวเตอร์</h1>
+        <h1 style="text-align: center; font-weight: bold;">ข้อมูลส่วนตัวของอาจารย์ที่ปรึกษา</h1>
         <div class="row pt-3">
             <div class="col-lg-4">
                 <div class="card mb-4">

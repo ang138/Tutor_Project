@@ -104,7 +104,7 @@
                                         @enderror
                                     </div>
                                     <div class="mb-3 pt-3">
-                                        <label for="formFile" class="form-label">ใบชำระเงิน</label>
+                                        <label for="formFile" class="form-label">ช่องทางการชำระเงิน (QR Code)</label>
                                         <input class="form-control" type="file" id="formFile" name="payment_receipt"
                                             accept="image/*">
                                         @error('payment_receipt')
