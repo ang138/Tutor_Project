@@ -8,6 +8,12 @@
     /*src: url('fonts/sukhumvit-set/SukhumvitSet-Thin.ttf');*/
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Sriracha&display=swap');
+
+.f-family{
+    font-family: "Sriracha", sans-serif;
+}
+
 body {
     font-family: "Sukhumvit", sans-serif;
     background-color: #FCF6F5;

@@ -89,9 +89,6 @@
                         <h3 class="pt-3">หลักฐานการชำระเงิน</h3>
                         <hr>
                         <div class="row">
-                            <div class="col-sm-3">
-                                <p class="mb-0">Line</p>
-                            </div>
                             <div class="col-sm-9">
                                 <img src="{{ asset($user->cus_bill) }}"
                             style="width: 200px; height: 185px;">

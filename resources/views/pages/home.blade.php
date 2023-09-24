@@ -38,28 +38,24 @@
     </div>
     <!--ส่วนของ Feature -->
     <div class="container mt-5">
-        <div class="row">
-            <div class="col-md-4 text-center">
-                <i class="fas fa-home fa-3x text-success mb-3"></i>
-                <h2 class="head-title">หน้าหลัก</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi enim magnam, ex provident doloribus
-                    reprehenderit doloremque tenetur pariatur temporibus quisquam excepturi. Totam iusto aliquam nostrum
-                    praesentium soluta laudantium quibusdam. Accusamus!</p>
+        <div class="f-family text-center">
+            <h1 style="font-weight: bold">เลือกเรียนกับติวเตอร์ของเราดีอย่างไร ?</h1>
+        </div>
+        <hr>
+        <div class="row justify-content-center">
+            <div class="col-md-5 text-center">
+                <div class="card">
+                    <img src="{{ url('/assets/images/promote1.png') }}" alt="">
+                </div>
             </div>
-            <div class="col-md-4 text-center">
-                <i class="fas fa-concierge-bell fa-3x text-warning mb-3"></i>
-                <h2 class="head-title">เกี่ยวกับเรา</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus, omnis nisi cumque nesciunt sed
-                    beatae hic magni modi laboriosam ullam quam doloremque tempore commodi maiores, fugiat, porro
-                    necessitatibus debitis placeat?</p>
+            <div class="col-md-1 text-center">
             </div>
-            <div class="col-md-4 text-center">
-                <i class="fas fa-cloud-showers-heavy fa-3x text-danger mb-3"></i>
-                <h2 class="head-title">บริการ</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt sequi hic aliquam magni odio
-                    accusantium vero numquam quo labore odit? Totam, eius. Aperiam sapiente, eius accusantium distinctio
-                    tempore iure minima.</p>
+            <div class="col-md-5 text-center">
+                <div class="card">
+                    <img src="{{ url('/assets/images/promote2.png') }}" alt="">
+                </div>
             </div>
         </div>
+        <hr>
     </div>
 @endsection

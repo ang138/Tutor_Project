@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-light fixed-top">
     <div class="container">
-        <a class="navbar-brand" href="{{ url('/') }}"><img src="{{ url('/assets/images/logotutor.png') }}" alt=""
-                style="width: 140px; height: 50px;""></a>
+        <a class="navbar-brand" href="{{ url('/') }}"><img src="{{ url('/assets/images/logoweb.png') }}" alt=""
+                style="width: 158px; height: 55px;"></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -12,11 +12,12 @@
                     <a class="nav-link" href="{{ url('/') }}">หน้าหลัก <span class="sr-only"></span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('enrollHistory') }}">สำหรับผู้ใช้ทั่วไป</a>
+                    <a class="nav-link" href="{{ url('subject') }}">หมวดหมู่วิชา</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('subject') }}">หาติวเตอร์</a>
+                    <a class="nav-link" href="{{ url('enrollHistory') }}">ประวัติการลงทะเบียนเรียน</a>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('applyTutor') }}">สมัครติวเตอร์</a>
                 </li>

@@ -14,7 +14,6 @@
                             <thead>
                                 <tr>
                                     <th>ชื่อ</th>
-                                    <th>ชื่อ</th>
                                     <th>นามสกุล</th>
                                     <th>อีเมล</th>
                                     <th>ดูรายละเอียดเพิ่มเติม</th>
@@ -24,7 +23,6 @@
                             <tbody>
                                 @foreach ($enrollments as $enrollment)
                                     <tr>
-                                        <td>{{ $enrollment->cus_id }}</td>
                                         <td>{{ $enrollment->cus_name }}</td>
                                         <td>{{ $enrollment->cus_surname }}</td>
                                         <td>{{ $enrollment->cus_email }}</td>
@@ -46,7 +44,6 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th>ชื่อ</th>
                                     <th>ชื่อ</th>
                                     <th>นามสกุล</th>
                                     <th>อีเมล</th>

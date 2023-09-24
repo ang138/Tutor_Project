@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light fixed-top">
     <div class="container">
-        <a class="navbar-brand" href="{{ url('tutorHome') }}"><img src="{{url('/assets/images/logotutor.png')}}" alt="" style="width: 120px; height: 45px;"></a>
+        <a class="navbar-brand" href="{{ url('tutorHome') }}"><img src="{{url('/assets/images/logoweb.png')}}" alt="" style="width: 158px; height: 55px;"></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
