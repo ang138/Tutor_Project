@@ -45,14 +45,14 @@
         <div class="row justify-content-center">
             <div class="col-md-5 text-center">
                 <div class="card">
-                    <img src="{{ url('/assets/images/promote1.png') }}" alt="">
+                    <img src="{{ asset('/assets/images/promote1.png') }}" alt="">
                 </div>
             </div>
             <div class="col-md-1 text-center">
             </div>
             <div class="col-md-5 text-center">
                 <div class="card">
-                    <img src="{{ url('/assets/images/promote2.png') }}" alt="">
+                    <img src="{{ asset('/assets/images/promote2.png') }}" alt="">
                 </div>
             </div>
         </div>
