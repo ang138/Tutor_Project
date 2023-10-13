@@ -32,41 +32,15 @@
 
                                 <div class="form-group">
                                     <label for="std_id">ค้นหานิสิตโดยรหัสนิสิต (Student ID):</label>
-                                    <input type="text" class="form-control" id="std_id" name="std_id"
+                                    <input type="number" class="form-control" id="std_id" name="std_id"
                                         placeholder="กรอกรหัสนิสิต" maxlength="9">
                                 </div>
-                                <div class="form-group pt-3 row">
-                                    <label for="birthdate" class="col-lg-2 col-form-label">วันเกิด:</label>
-                                    <div class="row">
-                                        <div class="col-lg-4">
-                                            <select class="form-select" name="birth_day" id="birth_day">
-                                                <option value="">วัน</option>
-                                                @for ($day = 1; $day <= 31; $day++)
-                                                    <option value="{{ $day }}">{{ $day }}</option>
-                                                @endfor
-                                            </select>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <select class="form-select" name="birth_month" id="birth_month">
-                                                <option value="">เดือน</option>
-                                                @php
-                                                    $thaiMonths = ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'];
-                                                @endphp
-                                                @foreach ($thaiMonths as $key => $month)
-                                                    <option value="{{ $key + 1 }}">{{ $month }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <select class="form-select" name="birth_year" id="birth_year">
-                                                <option value="">ปี</option>
-                                                @for ($year = date('Y'); $year >= 1900; $year--)
-                                                    <option value="{{ $year }}">{{ $year }}</option>
-                                                @endfor
-                                            </select>
-                                        </div>
-                                    </div>
+                                <div class="form-group pt-3">
+                                    <label for="std_id">วันเกิด:</label>
+                                    <input type="date" class="form-control" id="birthdate" name="birthdate" min="2000-01-01" max="2023-12-31" />
                                 </div>
+                                
+                               
                                 <div class="d-flex justify-content-center mt-3">
                                     <div class="btn-group" role="group">
                                         <button type="submit" class="btn-search">ค้นหา</button>

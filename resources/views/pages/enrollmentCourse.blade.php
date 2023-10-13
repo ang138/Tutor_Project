@@ -48,6 +48,14 @@
                                         @enderror
                                     </div>
                                     <div class="form-group pt-3">
+                                        <label for="cus_birthdate" class="col-lg-2 col-form-label">วันเกิด</label>
+                                        <input type="date" class="form-control" id="cus_birthdate" name="cus_birthdate" min="2000-01-01" max="2023-12-31" />
+                                        @error('cus_birthdate')
+                                            <div class="text-danger">โปรดป้อนวันเกิด</div>
+                                        @enderror
+                                        
+                                    </div>
+                                    {{-- <div class="form-group pt-3">
                                         <label for="cus_birthdate">วันเกิด</label>
                                         <div class="row">
                                             <div class="col-lg-4">
@@ -78,11 +86,13 @@
                                                 </select>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="form-group pt-3">
                                         <label for="cus_tel">เบอร์โทรศัพท์</label>
-                                        <input type="text" class="form-control" id="cus_tel" name="cus_tel"
-                                            placeholder="เบอร์โทรศัพท์" required>
+                                        <input type="number" class="form-control" placeholder="เบอร์โทรศัพท์"name="cus_tel" 
+                                        min="0" max="9999999999" pattern="[0-9]{10}" title="เบอร์โทรศัพท์ต้องประกอบด้วยเลข 10 หลักเท่านั้น" required>
+                                        {{-- <input type="text" class="form-control" id="cus_tel" name="cus_tel"
+                                            placeholder="เบอร์โทรศัพท์" required> --}}
                                         @error('cus_tel')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
@@ -95,7 +105,7 @@
                                             required>
                                     </div>
                                     <div class="form-group pt-3">
-                                        <label for="cus_line">กรอกไอดีใลน์ หรือ หมายเลขโทรศัพท์</label>
+                                        <label for="cus_line">กรอกไอดีใลน์</label>
                                         <input type="text" class="form-control" id="cus_line" name="cus_line"
                                             placeholder="Line" required>
                                         @error('cus_line')

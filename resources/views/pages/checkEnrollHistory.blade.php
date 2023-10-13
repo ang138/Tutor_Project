@@ -19,7 +19,6 @@
                                 <tr>
                                     <th>ชื่อ</th>
                                     <th>นามสกุล</th>
-                                    <th>อีเมล</th>
                                     <th>คอร์สเรียน</th>
                                     <th>ติวเตอร์</th>
                                 </tr>
@@ -29,7 +28,6 @@
                                     <tr>
                                         <td>{{ $enrollment->cus_name }}</td>
                                         <td>{{ $enrollment->cus_surname }}</td>
-                                        <td>{{ $enrollment->cus_email }}</td>
                                         <td>{{ $enrollment->subject_name }}</td>
                                         <td>{{ $enrollment->std_name }}</td>
                                     </tr>

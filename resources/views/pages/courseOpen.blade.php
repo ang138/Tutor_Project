@@ -50,12 +50,12 @@
                                 <thead>
                                     <tr>
                                         <th>ชื่อคอร์ส</th>
+                                        <th>ติวเตอร์</th>
                                         <th>สถานที่สะดวกสอน</th>
                                         <th>วันที่สะดวกสอน</th>
                                         <th>เวลาที่สะดวกสอน</th>
                                         <th>ราคา/ชั่วโมง</th>
                                         <th>จำนวนที่รับสอน</th>
-                                        <th>ติวเตอร์</th>
                                         <th>ดูรายละเอียดเพิ่มเติม</th>
                                         <!-- Add more table headers for other course details as needed -->
                                     </tr>
@@ -65,12 +65,12 @@
                                         <!-- Adjust the conditions to match the subject_id -->
                                         <tr>
                                             <td>{{ $course->subject_name }}</td>
+                                            <td>{{ $course->std_name }}</td>
                                             <td>{{ $course->location }}</td>
                                             <td>{{ $course->teaching_days }}</td>
                                             <td>{{ $course->teaching_times }}</td>
                                             <td>{{ $course->course_price }}</td>
                                             <td>{{ $course->number_of_students }}</td>
-                                            <td>{{ $course->std_name }}</td>
                                             <td>
                                                 <div class="btn-group" role="group" aria-label="First group">
                                                     <a href="{{ url('course-open-detail/' . $course->course_id) }}"

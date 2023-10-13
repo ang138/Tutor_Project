@@ -26,8 +26,9 @@
                                         <div class="form-group pt-3 row">
                                             <label for="name" class="col-lg-2 col-form-label">รหัสนิสิต:</label>
                                             <div class="col-lg-10">
-                                                <input type="text" class="form-control" placeholder="First name"
-                                                    name="std_id" value="{{ $student->std_id }}">
+                                                <input type="number" class="form-control" placeholder="First name"
+                                                    name="std_id" min="0" max="999999999" pattern="[0-9]{9}" title="รหัสนิสิตต้องประกอบด้วยเลข 9 หลักเท่านั้น"
+                                                     value="{{ $student->std_id }}">
                                             </div>
                                         </div>
                                         <div class="form-group pt-3 row">
@@ -44,8 +45,17 @@
                                                     name="std_surname" value="{{ $student->std_surname }}">
                                             </div>
                                         </div>
-                                        <!-- แก้ไขส่วนนี้เพื่อรับข้อมูลวัน เดือน ปีเกิด -->
                                         <div class="form-group pt-3 row">
+                                            <label for="name" class="col-lg-2 col-form-label">วันเกิด:</label>
+                                            <div class="col-lg-10">
+                                                <input type="date" class="form-control" id="birthdate" name="birthdate" value="{{ $student->birthdate }}" min="2000-01-01" max="2023-12-31" />
+                                                @error('birthdate')
+                                                    <div class="text-danger">โปรดป้อนวันเกิด</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <!-- แก้ไขส่วนนี้เพื่อรับข้อมูลวัน เดือน ปีเกิด -->
+                                        {{-- <div class="form-group pt-3 row">
                                             <label for="name" class="col-lg-2 col-form-label">วันเกิด:</label>
                                             <div class="col-lg-10">
                                                 <div class="row">
@@ -83,7 +93,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         <div class="form-group pt-3 row">
                                             <label for="name" class="col-lg-2 col-form-label">อีเมล:</label>
                                             <div class="col-lg-10">
@@ -370,6 +380,17 @@
                             }
                         });
                     });
+                });
+
+                // JavaScript สำหรับตรวจสอบความยาวของรหัสนิสิต
+                const stdIdInput = document.querySelector('input[name="std_id"]');
+
+                stdIdInput.addEventListener('input', function() {
+                    if (this.value.length > 9) {
+                        this.setCustomValidity('รหัสนิสิตต้องมีความยาวไม่เกิน 9 ตัวอักษร');
+                    } else {
+                        this.setCustomValidity('');
+                    }
                 });
             });
         </script>

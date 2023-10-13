@@ -104,9 +104,10 @@ class SubjectController extends Controller
             'cus_name'     => 'required|string',
             'cus_surname'  => 'required|string',
             'cus_email'    => 'required|email',
-            'birth_day'    => 'required|numeric',
-            'birth_month'  => 'required|numeric',
-            'birth_year'   => 'required|numeric',
+            // 'birth_day'    => 'required|numeric',
+            // 'birth_month'  => 'required|numeric',
+            // 'birth_year'   => 'required|numeric',
+            'cus_birthdate'    => 'required|date',
             'cus_tel'      => 'required|string',
             'cus_facebook' => 'required|string',
             'cus_line'     => 'required|string',
@@ -141,7 +142,8 @@ class SubjectController extends Controller
             $enrollment->cus_name      = $request->input('cus_name');
             $enrollment->cus_surname   = $request->input('cus_surname');
             $enrollment->cus_email     = $request->input('cus_email');
-            $enrollment->cus_birthdate = $request->input('birth_year') . '-' . $request->input('birth_month') . '-' . $request->input('birth_day');
+            // $enrollment->cus_birthdate = $request->input('birth_year') . '-' . $request->input('birth_month') . '-' . $request->input('birth_day');
+            $enrollment->cus_birthdate = $request->input('cus_birthdate');
             $enrollment->cus_tel       = $request->input('cus_tel');
             $enrollment->cus_facebook  = $request->input('cus_facebook');
             $enrollment->cus_line      = $request->input('cus_line');

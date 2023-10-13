@@ -16,14 +16,18 @@ class HomeController extends Controller
     public function searchStudent(Request $request)
     {
         $std_id      = $request->input('std_id');
-        $birth_day   = $request->input('birth_day');
-        $birth_month = $request->input('birth_month');
-        $birth_year  = $request->input('birth_year');
+        $birthdate = $request->input('birthdate');
+        // $birth_day   = $request->input('birth_day');
+        // $birth_month = $request->input('birth_month');
+        // $birth_year  = $request->input('birth_year');
+
+        $birthdate = date('Y-m-d', strtotime($birthdate));
 
         // Query the students table and join with faculties and majors
         $student = DB::table('students')
             ->where('std_id', $std_id)
-            ->whereDate('birthdate', "{$birth_year}-{$birth_month}-{$birth_day}")
+            ->whereDate('birthdate', $birthdate)
+            // ->whereDate('birthdate', "{$birth_year}-{$birth_month}-{$birth_day}")
             ->join('faculties', 'students.std_faculty', '=', 'faculties.id')
             ->join('majors', 'students.std_major', '=', 'majors.id')
             ->select('students.*', 'faculties.name as faculty_name', 'majors.name as major_name')
@@ -42,7 +46,8 @@ class HomeController extends Controller
             else
             {
                 // Student found, redirect to the applyTutorForm route with student data
-                return view('pages.applyTutorForm', compact('student', 'faculties', 'majors', 'birth_year', 'birth_month', 'birth_day'));
+                // return view('pages.applyTutorForm', compact('student', 'faculties', 'majors', 'birth_year', 'birth_month', 'birth_day'));
+                return view('pages.applyTutorForm', compact('student', 'faculties', 'majors', 'birthdate'));
             }
         }
         else
@@ -115,14 +120,14 @@ class HomeController extends Controller
     public function searcheEroll(Request $request)
     {
         $cus_email   = $request->input('cus_email');
-        $birth_day   = $request->input('birth_day');
-        $birth_month = $request->input('birth_month');
-        $birth_year  = $request->input('birth_year');
+        // $birth_day   = $request->input('birth_day');
+        // $birth_month = $request->input('birth_month');
+        // $birth_year  = $request->input('birth_year');
 
         // Query the students table and join with faculties and majors
         $enrollments = DB::table('enrollment_courses')
             ->where('enrollment_courses.cus_email', $cus_email)
-            ->whereDate('cus_birthdate', "{$birth_year}-{$birth_month}-{$birth_day}")
+            // ->whereDate('cus_birthdate', "{$birth_year}-{$birth_month}-{$birth_day}")
             ->join('enrollments', 'enrollment_courses.cus_email', '=', 'enrollments.cus_email')
             ->join('courses', 'enrollment_courses.course_id', '=', 'courses.course_id')
             ->join('subjects', 'courses.course_name', '=', 'subjects.subject_id')

@@ -35,12 +35,14 @@ class StudentController extends Controller
             'std_faculty'  => 'required',
             'std_major'    => 'required',
             'std_class'    => 'required',
-            'birth_day'    => 'required',
-            'birth_month'  => 'required',
-            'birth_year'   => 'required',
+            // 'birth_day'    => 'required',
+            // 'birth_month'  => 'required',
+            // 'birth_year'   => 'required',
+            'birthdate'    => 'required|date',
         ]);
 
-        $birthdate = $request->input('birth_year') . '-' . $request->input('birth_month') . '-' . $request->input('birth_day');
+        // $birthdate = $request->input('birth_year') . '-' . $request->input('birth_month') . '-' . $request->input('birth_day');
+        $birthdate = $request->input('birthdate');
 
         // เพิ่มข้อมูลในตาราง 'students' โดยใช้ Query Builder
         DB::table('students')->insert([
@@ -116,7 +118,8 @@ class StudentController extends Controller
         // Validate the incoming request data here
 
         // Use the query builder to update the student's information
-        $birthdate = $request->input('birth_year') . '-' . $request->input('birth_month') . '-' . $request->input('birth_day');
+        // $birthdate = $request->input('birth_year') . '-' . $request->input('birth_month') . '-' . $request->input('birth_day');
+        $birthdate = $request->input('birthdate');
 
         DB::beginTransaction(); // Start a database transaction
 

@@ -26,7 +26,7 @@
                                             <label for="name" class="col-lg-2 col-form-label">รหัสนิสิต:</label>
                                             <div class="col-lg-10">
                                                 <input type="number" class="form-control" placeholder="รหัสนิสิต"
-                                                    name="std_id"  min="0" max="999999999">
+                                                    name="std_id" min="0" max="999999999" pattern="[0-9]{9}" title="รหัสนิสิตต้องประกอบด้วยเลข 9 หลักเท่านั้น">
                                                 @error('std_id')
                                                     <div class="text-danger">โปรดป้อนรหัสนิสิต</div>
                                                 @enderror
@@ -53,6 +53,17 @@
                                             </div>
                                         </div>
                                         <div class="form-group pt-3 row">
+                                            <label for="name" class="col-lg-2 col-form-label">วันเกิด:</label>
+                                            <div class="col-lg-10">
+                                                <input type="date" class="form-control" id="birthdate" name="birthdate" min="2000-01-01" max="2023-12-31" />
+                                                @error('birthdate')
+                                                    <div class="text-danger">โปรดป้อนวันเกิด</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        
+
+                                        {{-- <div class="form-group pt-3 row">
                                             <label for="birthdate" class="col-lg-2 col-form-label">วันเกิด:</label>
                                             <div class="col-lg-10">
                                                 <div class="row">
@@ -97,7 +108,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         <div class="form-group pt-3 row">
                                             <label for="name" class="col-lg-2 col-form-label">อีเมล:</label>
                                             <div class="col-lg-10">
